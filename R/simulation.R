@@ -13,7 +13,7 @@
 #' @return A data frame where the first column is t and second column is simulated values of X(t).
 #'
 #' @details
-#' The following formula defined in XXXXXX was used in simulating Gaussian Haar-based multifractional process.
+#' The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2025) was used in simulating Gaussian Haar-based multifractional process.
 #'
 #' \eqn{X(t) \coloneqq \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k}},
 #'
@@ -32,31 +32,34 @@
 #' @importFrom parallelly availableCores makeClusterPSOCK
 #' @importFrom stats rnorm
 #'
-#' @references On Construction, Properties and Simulation of Haar-Based Multifractional Processes
+#' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
+#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes.
+#' Applied and Computational Harmonic Analysis.
 #'
+#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}
 #' @examples
 #' #Constant Hurst function
-#' T <- seq(0,1,by=(1/2)^10)
+#' t <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5 +0*t)}
-#' GHBMP(T,H)
+#' GHBMP(t,H)
 #'
 #' #Linear Hurst function
-#' T <- seq(0,1,by=(1/2)^10)
+#' t <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.2+0.45*t)}
-#' GHBMP(T,H)
+#' GHBMP(t,H)
 #'
 #' #Oscillating Hurst function
-#' T <- seq(0,1,by=(1/2)^10)
+#' t <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' GHBMP(T,H)
+#' GHBMP(t,H)
 #'
 #' #Piecewise Hurst function
-#' T <- seq(0,1,by=(1/2)^10)
+#' t <- seq(0,1,by=(1/2)^10)
 #' H <- function(x) {
 #' ifelse(x >= 0 & x <= 0.8, 0.375 * x + 0.2,
 #'       ifelse(x > 0.8 & x <= 1,-1.5 * x + 1.7, NA))
 #' }
-#' GHBMP(T,H)
+#' GHBMP(t,H)
 #'
 GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 {
@@ -127,31 +130,4 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 
   stopCluster(cl)
 
-}
-
-
-#' Title
-#'
-#' @param X.t object of class mp
-#' @param ... other args
-#'
-#' @return plot
-#' @importFrom ggplot2 ggplot geom_line labs autoplot aes
-#' @importFrom rlang .data
-#' @exportS3Method GHBMP1::plot
-#' @examples
-#' T <- seq(0,1,by=(1/2)^10)
-#' Hurst <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' Process <- GHBMP(T,Hurst)
-#' plot(Process)
-#'
-plot.mp <- function(X.t, ...) {
-  print(autoplot(X.t, ...))
-}
-
-autoplot.mp<-function(X.t, ...)
-{
-  ggplot(X.t, aes(x=.data$t, y=.data$X)) +
-    geom_line(color="red") +
-    labs(title="main",x="xlab",y="ylab")
 }

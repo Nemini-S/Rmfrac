@@ -15,11 +15,13 @@
 #' @param plot Logical: if \code{TRUE}, the time series, constant level and the sojourn measure is plotted.
 #'
 #' @return Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure is plotted.
-#' @importFrom ggplot2 geom_line geom_hline geom_ribbon labs aes
+#' @importFrom ggplot2 geom_line geom_hline geom_ribbon labs aes ggtitle theme element_text scale_color_manual guides guide_legend
 #' @importFrom stats approx
 #' @importFrom rlang .data
 #'
 #' @export sojourn
+#'
+#' @seealso \code{\link{A.excursion}}
 #'
 #' @examples
 #' t <- seq(0,1,length=1000)
@@ -65,9 +67,11 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
           geom_line() +
-          geom_hline(yintercept = A,color='blue')+
-          geom_point(data = data_segments, aes(x = t, y = 0), color = "red",size=0.1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 10))
 
         print(p)
       }
@@ -84,9 +88,12 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
           geom_line() +
-          geom_hline(yintercept = A,color='blue')+
-          geom_point(data = data_segments, aes(x = t, y = 0), color = "red",size=0.1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 10))
+
 
         print(p)
       }
@@ -123,9 +130,12 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
           geom_line() +
-          geom_hline(yintercept = A,color='blue')+
-          geom_point(data = data_segments, aes(x = t, y = 0), color = "red",size=0.1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 10))
+
 
         print(p)
       }
@@ -142,9 +152,13 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
           geom_line() +
-          geom_hline(yintercept = A,color='blue')+
-          geom_point(data = data_segments, aes(x = t, y = 0), color = "red",size=0.1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 10))
+
+
 
         print(p)
       }
@@ -163,38 +177,40 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
 }
 
-#' Area represented by the sojourn measure
+#' Excursion area
 #'
 #' @description
-#' Provides the area represented by sojourn measure for X(t) greater or lower than the
+#' Provides the excursion area where X(t) is greater or lower than the
 #' constant level A for the provided time sequence (t) interval or a given sub interval of t.
 #'
 #' @param X Data frame where the first column is a time sequence (t)
 #' and the second the data of the time series (X(t)).
 #' @param A Constant level as a numeric value. Checks whether X(t) greater or lower than A.
 #' @param n Number of points time sequence to be split into. Default set to 10000.
-#' @param level A vector of character strings which specifies whether the sojourn
-#' measure required for X \code{"greater"} or \code{"lower"} than A. Default set to \code{"greater"}.
+#' @param level A vector of character strings which specifies whether the excursion
+#' area is required for X \code{"greater"} or \code{"lower"} than A. Default set to \code{"greater"}.
 #' @param subI Sub interval of the time sequence as a vector where the lower bound
-#' the first element and upper bound the second. Optional; if provided area represented by
-#' the sojourn measure of the sub interval is returned. Otherwise the whole time sequence is considered.
+#' the first element and upper bound the second. Optional; if provided the excursion area
+#' of the sub interval is returned. Otherwise the whole time sequence is considered.
 #' @param plot Logical: if \code{TRUE}, the time series, constant level and area represented by the sojourn measure
 #' is plotted.
 #'
-#' @return Area represented by the sojourn measure. If \code{plot=TRUE}, the time series, constant level and Area
-#'  represented by the sojourn measure is plotted.
-#' @importFrom ggplot2 geom_line geom_hline geom_point labs aes
+#' @return Excursion area. If \code{plot=TRUE}, the time series, constant level and excursion area
+#' is plotted.
+#' @importFrom ggplot2 geom_line geom_hline geom_point labs aes ggtitle theme element_text scale_color_manual scale_fill_manual
 #' @importFrom stats approx
 #' @importFrom rlang .data
 #'
-#' @export A.sojourn
+#' @export A.excursion
+#'
+#' @seealso \code{\link{sojourn}}
 #'
 #' @examples
 #' t <- seq(0,1,length=1000)
 #' TS <- data.frame("t"=t,"X(t)"=rnorm(1000))
-#' A.sojourn(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
+#' A.excursion(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
 #'
-A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
+A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 {
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))) {
     stop("X must be a numeric data frame")
@@ -235,12 +251,16 @@ A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         data_plot$ymin<-ifelse(interpolated_X > A,A,NA)
         data_plot$ymax<-ifelse(interpolated_X > A,interpolated_X,NA)
+        data_plot<-na.omit(data_plot)
 
         p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
           geom_line(data=X,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color='blue')+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax), fill = "lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 9))
+
 
         print(p)
       }
@@ -252,12 +272,16 @@ A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         data_plot$ymin<-ifelse(interpolated_X < A,A,NA)
         data_plot$ymax<-ifelse(interpolated_X < A,interpolated_X,NA)
+        data_plot<-na.omit(data_plot)
 
         p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
           geom_line(data=X,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color='blue')+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax), fill = "lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 9))
+
 
         print(p)
       }
@@ -288,12 +312,16 @@ A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         data_plot$ymin<-ifelse(interpolated_X > A,A,NA)
         data_plot$ymax<-ifelse(interpolated_X > A,interpolated_X,NA)
+        data_plot<-na.omit(data_plot)
 
         p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
           geom_line(data=X.I,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color='blue')+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax), fill = "lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 9))
+
 
         print(p)
       }
@@ -305,12 +333,17 @@ A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 
         data_plot$ymin<-ifelse(interpolated_X < A,A,NA)
         data_plot$ymax<-ifelse(interpolated_X < A,interpolated_X,NA)
+        data_plot<-na.omit(data_plot)
 
         p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
           geom_line(data=X.I,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color='blue')+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax), fill = "lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")
+          geom_hline(yintercept = A,color="blue")+
+          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
+          labs(y="X(t)",x="t")+
+          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          theme(plot.title = element_text(size = 9))
+
+
 
         print(p)
       }
@@ -329,14 +362,14 @@ A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #'
 #' @description
 #' This function finds the local maximum of a time series for the provided
-#' time sequence (t) interval or a given sub interval of t ,with corresponding t value(s).
+#' time sequence (t) interval or a given sub interval of t, with corresponding t value(s).
 #'
 #' @param X  Data frame where the first column is a time sequence (t)
 #' and the second the data of the time series (X(t)).
 #' @param subI Sub interval of the time sequence as a vector where the lower bound
 #' the first element and upper bound the second. Optional; if provided maximum of the
 #' sub interval is returned. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if \code{TRUE}, the time series and constant level is plotted.
+#' @param plot Logical: if TRUE, the time series, the maximum and corresponding t values are plotted.
 #'
 #' @return Print the maximum of the time series for a given sub interval and
 #' the corresponding t values. If \code{plot=TRUE}, a plot of the time series with
@@ -345,8 +378,9 @@ A.sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #' @importFrom rlang .data
 #' @export X_max
 #'
+#' @seealso \code{\link{X_min}}
+#'
 #' @examples
-#' #Example 1
 #' t <- seq(0,1,length=100)
 #' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
 #' X_max(TS,subI=c(0.5,0.8),plot=TRUE)
@@ -422,14 +456,14 @@ X_max<-function(X,subI=NULL,plot=FALSE){
 #'
 #' @description
 #' This function finds the local minimum of a time series for the provided
-#' time sequence (t) interval or a given sub interval of t ,with corresponding t value(s).
+#' time sequence (t) interval or a given sub interval of t, with corresponding t value(s).
 #'
 #' @param X  Data frame where the first column is a time sequence (t)
 #' and the second the data of the time series (X(t)).
 #' @param subI Sub interval of the time sequence as a vector where the lower bound
 #' the first element and upper bound the second. Optional; if provided minimum of the
 #' sub interval is returned. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if \code{TRUE}, the time series and constant level is plotted.
+#' @param plot Logical: if TRUE, the time series, the minimum and corresponding t values are plotted.
 #'
 #' @return Print the minimum of the time series for a given sub interval and
 #' the corresponding t values. If \code{plot=TRUE}, a plot of the time series with
@@ -439,8 +473,9 @@ X_max<-function(X,subI=NULL,plot=FALSE){
 #'
 #' @export X_min
 #'
+#' @seealso \code{\link{X_max}}
+#'
 #' @examples
-#' #Example 1
 #' t <- seq(0,1,length=100)
 #' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
 #' X_min(TS,subI=c(0.2,0.8),plot=TRUE)
@@ -477,7 +512,7 @@ X_min<-function(X,subI=NULL,plot=FALSE){
       print(p)
     }
 
-    cat("Maximum is ",X.minimum,"\n")
+    cat("Minimum is ",X.minimum,"\n")
     cat("Corresponding t ",t.X.minimum,"\n")
   }
 
@@ -534,7 +569,6 @@ X_min<-function(X,subI=NULL,plot=FALSE){
 #' @export T.level
 #'
 #' @examples
-#' #Example 1
 #' t <- seq(0,1,length=100)
 #' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
 #' T.level(TS,0.1,subI=c(0.2,0.8),plot=TRUE)
@@ -543,17 +577,17 @@ X_min<-function(X,subI=NULL,plot=FALSE){
 #'
 T.level<-function(X,A,subI=NULL,plot=FALSE){
 
-    if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))) {
-      stop("X must be a numeric data frame")
-    }
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))) {
+    stop("X must be a numeric data frame")
+  }
 
-    if (!is.numeric(A)) {
-      stop("A must be numeric")
-    }
+  if (!is.numeric(A)) {
+    stop("A must be numeric")
+  }
 
-    if (!is.logical(plot)) {
+  if (!is.logical(plot)) {
     stop("plot should have logical inputs either TRUE or FALSE")
-    }
+  }
 
   X <- X[order(X[,1]), ]
   colnames(X)<-c("C1","C2")
@@ -564,26 +598,28 @@ T.level<-function(X,A,subI=NULL,plot=FALSE){
     x<-X.I[,1]
     y<-X.I[,2]
 
-    crossing_indices <- which(diff(sign(y - A)) != 0)
+    crossing_indices <- which((y[-length(y)] - A) * (y[-1] - A) < 0)
 
     crossing_x <- x[crossing_indices] + (A - y[crossing_indices]) /
       (y[crossing_indices + 1] - y[crossing_indices]) *
       (x[crossing_indices + 1] - x[crossing_indices])
 
-    cross_points_df<-data.frame(t = crossing_x, x = rep(A, length(crossing_x)))
+    touching_x <- x[y == A]
+    ct<-sort(unique(c(crossing_x, touching_x)))
+    ct_df<-data.frame(t = ct, x = rep(A, length(ct)))
 
     if (plot){
 
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
         geom_line() +
         geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
-        geom_point(data = cross_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 2) +
-        geom_vline(xintercept = crossing_x, linetype = "dashed", color = "blue") +
+        geom_point(data = ct_df, aes(x = .data$t, y = .data$x), color = "red", size = 2) +
+        geom_vline(xintercept = ct, linetype = "dashed", color = "blue") +
         labs(x = "t",y = "X(t)")
 
       print(p)
     }
-    return(crossing_x )
+    return(ct)
   }
 
   else{
@@ -598,28 +634,28 @@ T.level<-function(X,A,subI=NULL,plot=FALSE){
     x<-X.I[,1]
     y<-X.I[,2]
 
-    crossing_indices <- which(diff(sign(y - A)) != 0)
-
+    crossing_indices <- which((y[-length(y)] - A) * (y[-1] - A) < 0)
 
     crossing_x <- x[crossing_indices] + (A - y[crossing_indices]) /
       (y[crossing_indices + 1] - y[crossing_indices]) *
       (x[crossing_indices + 1] - x[crossing_indices])
 
-    cross_points_df<-data.frame(t = crossing_x, x = rep(A, length(crossing_x)))
+    touching_x <- x[y == A]
+    ct<-sort(unique(c(crossing_x, touching_x)))
+    ct_df<-data.frame(t = ct, x = rep(A, length(ct)))
+
     if (plot){
 
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
         geom_line() +
         geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
-        geom_point(data = cross_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 2) +
-        geom_vline(xintercept = crossing_x, linetype = "dashed", color = "blue") +
+        geom_point(data = ct_df, aes(x = .data$t, y = .data$x), color = "red", size = 2) +
+        geom_vline(xintercept = ct, linetype = "dashed", color = "blue") +
         labs(x = "t",y = "X(t)")
 
       print(p)
     }
-    return(crossing_x )
+    return(ct)
   }
 
 }
-
-
