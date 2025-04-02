@@ -2,23 +2,23 @@
 #'
 #' @description
 #' This function performs hierarchical clustering of multifractional
-#' processes based on the Hurst function.
+#' processes based on the Hurst functions.
 #'
 #' @param X.t A list of data frames where the first column is a time sequence
-#' from 0 to 1 and the second the data of the multifractional process.
+#' from 0 to 1 and the second the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
-#' @param h The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is considered.
-#' @param dist.method A string which indicates a registered distance in \link[proxy]{dist}. The default
+#' @param h The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is used.
+#' @param dist.method A string which specifies a registered distance in \link[proxy]{dist}. The default
 #' is \code{"euclidean"}.
-#' @param method A string which indicates the hierarchical method used. Available methods
+#' @param method A string which specifies the hierarchical method used. Available methods
 #' are \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} and \code{"centroid"}.
 #' The default method is \code{"complete"}.
-#' @param dendrogram Logical; if \code{TRUE} the dendrogram is plotted indicating
+#' @param dendrogram Logical: If \code{TRUE} the dendrogram is plotted indicating
 #' the clusters.
-#' @param N Argument used for estimation of Hurst function. Number of sub intervals the estimation is performed on. Default is set to 100 sub intervals.
-#' @param Q Argument used for estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param L Argument used for estimation of Hurst function. Arbitrary fixed integer greater than or equal to 2. Default is set to 2.
+#' @param N Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
+#' @param Q Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param L Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
 #'
 #' @return An object list of class \code{"hc_hurst"} with print and plot methods. The list has following components:
 #' \describe{
@@ -26,7 +26,7 @@
 #'   each multifractional process (Item). Distance is obtained from the \code{dist.method}.}
 #'   \item{\code{cluster}}{A vector of cluster number of each process.}
 #'   \item{\code{cluster_sizes}}{Number of processes in each cluster.}
-#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each estimated Hurst function in the cluster. Columns denote each time point.
+#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster. Columns denote each time point.
 #'   Row names denote cluster number.}
 #'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote each time point. Rows denote estimates for each process.}
 #'   \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
@@ -35,7 +35,7 @@
 #'
 #'
 #' @details
-#' The multifractional processes are estimated using the \code{\link{Hurst}} function and the smoothed Hurst estimates are used
+#' The Hurst function of each multifractional process is estimated using \code{\link{Hurst}} and the smoothed Hurst estimates are used
 #' for the cluster analysis. The distances between each smoothed Hurst estimate is computed by the dist.method provided and passed into
 #' the \code{\link[stats]{hclust}} for hierarchical clustering.
 #'
@@ -43,7 +43,7 @@
 #' @importFrom stats loess hclust cutree rect.hclust as.dendrogram
 #' @export hclust_hurst
 #'
-#' @seealso \code{\link{plot.hc_hurst}}, \code{\link{print.hc_hurst}}, \code{\link{kmeans_hurst}}
+#' @seealso \code{\link{print.hc_hurst}}, \code{\link{plot.hc_hurst}}, \code{\link{kmeans_hurst}}
 #'
 #' @examples
 #' #Simulation of multifractional processes
@@ -178,7 +178,7 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
 #' Prints the results of hierarchical clustering of multifractional processes.
 #'
 #'
-#' @param x Object from "hc_hurst" class.
+#' @param x Object of class \code{"hc_hurst"}.
 #' @param ... Unused arguments
 #'
 #' @seealso \code{\link{hclust_hurst}}
@@ -273,7 +273,7 @@ autoplot.hc_hurst<-function(x,type="estimates")
 #' }
 #' @param ... Unused arguments
 #'
-#' @return Plot based on the relevant \code{type}.
+#' @return A ggplot object which plots the relevant \code{type}.
 #' @exportS3Method Rmultifractional::plot
 #' @importFrom ggplot2 ggplot facet_wrap geom_line labs aes
 #'

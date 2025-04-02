@@ -7,28 +7,28 @@
 sojourn(X, A, n = 10000, level = "greater", subI = NULL, plot = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence (t)
-and the second the data of the time series (X(t)).}
+\item{X}{Data frame where the first column is a time sequence \eqn{(t)}
+and the second the values of the time series \eqn{(X(t))}.}
 
-\item{A}{Constant level as a numeric value. Checks whether X(t) greater or lower than A.}
+\item{A}{Constant level as a numeric value. Checks whether \eqn{X(t)} greater or lower than \code{A}.}
 
-\item{n}{Number of points time sequence to be split into. Default set to 10000.}
+\item{n}{Number of points a time interval to be split into. Default set to 10000.}
 
 \item{level}{A vector of character strings which specifies whether the sojourn
-measure required for X \code{"greater"} or \code{"lower"} than A. Default set to \code{"greater"}.}
+measure required for \code{X} \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.}
 
-\item{subI}{Sub interval of the time sequence as a vector where the lower bound
-the first element and upper bound the second. Optional; if provided area represented by
-the sojourn measure of the sub interval is returned. Otherwise the whole time sequence is considered.}
+\item{subI}{Time sub-interval is a vector where the lower bound is
+the first element and upper bound is the second. Optional: If provided area represented by
+the sojourn measure of the sub-interval is returned, otherwise the whole time sequence is considered.}
 
-\item{plot}{Logical: if \code{TRUE}, the time series, constant level and the sojourn measure is plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.}
 }
 \value{
-Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure is plotted.
+Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure are plotted.
 }
 \description{
-Provides sojourn measure for X(t) greater or lower than the
-constant level \code{A} for the provided time sequence (t) interval or a given sub interval of t.
+Computes the sojourn measure for \eqn{X(t)} greater or lower than the
+constant level \code{A} for the provided time interval or its sub-interval.
 }
 \examples{
 t <- seq(0,1,length=1000)

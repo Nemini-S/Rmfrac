@@ -4,18 +4,18 @@
 #' This function simulates a Gaussian Haar-based multifractional process at any
 #' time point or time sequence on the interval [0,1].
 #'
-#' @param t Time point or Time sequence on the interval [0,1].
-#' @param H Hurst function which depends on t (H(t)). See Examples for usage.
-#' @param J Positive integer. J is recommended to be greater than \eqn{\log_2(length(t))}. For large J values could
+#' @param t Time point or time sequence on the interval [0,1].
+#' @param H Hurst function which depends on \code{t} \eqn{(H(t))}. See Examples for usage.
+#' @param J Positive integer. \code{J} is recommended to be greater than \eqn{\log_2(length(t))}. For large \code{J} values could
 #' be rather time consuming. Default is set to 15.
 #' @param num.cores Number of cores to set up the clusters for parallel computing.
 #'
-#' @return A data frame where the first column is t and second column is simulated values of X(t).
+#' @return A data frame of class \code{"mp"} where the first column is \code{t} and second column is simulated values of \eqn{X(t)}.
 #'
 #' @details
 #' The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2025) was used in simulating Gaussian Haar-based multifractional process.
 #'
-#' \eqn{X(t) \coloneqq \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k}},
+#' \eqn{X(t) := \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k},}
 #'
 #' where \eqn{  \int_{0}^{1} (t-s)_{+}^{H_{j,k}-\frac{1}{2}} h_{j,k} (s) ds = 2^{-j H_{j,k}} h^{[H_{j,k}]} (2^jt-k)}
 #' with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}} h(s) ds}.
@@ -24,7 +24,7 @@
 #' For simulations, the truncated version of this formula with first summation up to J is considered.
 #'
 #' @note
-#' See Examples for the usage of constant Hurst functions and Hurst functions which need \code{if else} conditions (piecewise or step functions).
+#' See Examples for the usage of constant Hurst functions and other Hurst functions, for example, piecewise or step functions.
 #'
 #' @export GHBMP
 #'
@@ -33,8 +33,8 @@
 #' @importFrom stats rnorm
 #'
 #' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes.
-#' Applied and Computational Harmonic Analysis.
+#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes. (submitted).
+#'
 #'
 #' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}
 #' @examples
@@ -82,8 +82,9 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
     stop("num.cores must be numeric")
    } else if (!(num.cores %% 1 == 0) | !(num.cores > 0)) {
       stop("num.cores must be a positive integer")
-    }
+   }
 
+  options(warn = -1)
   cl <- makeClusterPSOCK(num.cores) #Creation of a cluster using PSOCK connections for parallel computing
 
   t<-sort(t)
@@ -129,5 +130,5 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
   return(sim_data)
 
   stopCluster(cl)
-
+  options(warn = 0)
 }

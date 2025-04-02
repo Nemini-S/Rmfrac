@@ -7,7 +7,7 @@
 \method{print}{hc_hurst}(x, ...)
 }
 \arguments{
-\item{x}{Object from "hc_hurst" class.}
+\item{x}{Object of class \code{"hc_hurst"}.}
 
 \item{...}{Unused arguments}
 }

@@ -1,15 +1,12 @@
 Package: Rmultifractional
 Type: Package
-Title: Simulation of multifractional processes and analyses of multifractional processes
+Title: Simulation and analyses of multifractional processes
 Version: 0.1.0
 Author: Andriy Olenko, Nemini Samarakoon 
 Maintainer: Nemini Samarakoon <NWijesingheS@ltu.edu.au> 
-Description: Simulation of the Guassian Haar Based Multifractional Process (GHBMP). Analyses includes estimation of the Hurst function of the multifractional process, clustering multifractional processes based on the Hurst function and functions to get an overview of the process.
+Description: Simulation of the Guassian Haar Based Multifractional Process (GHBMP). Analyses includes estimation of the Hurst function, clustering multifractional processes based on the Hurst functions and several functions to compute and plot characteristics of the processes.
 License: GPL-3
 Encoding: UTF-8
-Imports: parallel (>= 4.2.2), parallelly (>= 1.37.1), ggplot2 (>= 3.5.1), zoo (>= 1.8-12), matrixStats (>= 1.2.0), proxy, rlang, stats
+Imports: parallel (>= 4.2.2), parallelly (>= 1.37.1), ggplot2 (>= 3.5.1), zoo (>= 1.8-12), matrixStats (>= 1.2.0), proxy, rlang, stats, foreach, doParallel, plotly, shiny
 LazyData: false
 RoxygenNote: 7.3.1
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3

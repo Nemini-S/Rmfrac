@@ -5,13 +5,13 @@
 #' processes based on the Hurst function.
 #'
 #' @param X.t A list of data frames where the first column is a time sequence
-#' from 0 to 1 and the second the data of the multifractional process.
+#' from 0 to 1 and the second the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
 #' @param ... Optional arguments passed to \code{\link[stats]{kmeans}}. For example \code{algorithm}.
-#' @param N Parameter used for estimation of Hurst function. Number of sub intervals the estimation is performed on. Default is set to 100 sub intervals.
-#' @param Q Parameter used for estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param L Parameter used for estimation of Hurst function. Arbitrary fixed integer greater than or equal to 2. Default is set to 2.
+#' @param N Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
+#' @param Q Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param L Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
 #'
 #' @return An object list of class \code{"k_hurst"} with print and plot methods. The list has following components:
 #' \describe{
@@ -19,7 +19,7 @@
 #'   each multifractional process (Item). }
 #'   \item{\code{cluster}}{A vector of cluster number of each process.}
 #'   \item{\code{cluster_sizes}}{Number of processes in each cluster.}
-#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each process in the cluster. Columns denote each time point.
+#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster. Columns denote each time point.
 #'   Row names denote cluster number}
 #'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote each time point. Rows denote estimates for each process.}
 #'   \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
@@ -27,16 +27,15 @@
 #' }
 #'
 #' @details
-#' The multifractional processes are estimated using the \code{\link{Hurst}} function and the smoothed Hurst estimates are
+#' The Hurst function of each multifractional processe is estimated using \code{\link{Hurst}} and the smoothed Hurst estimates are
 #' used for k-means clustering in \code{\link[stats]{kmeans}}. The Hartigan and Wong algorithm is used as the default algorithm.
 #'
 #' @importFrom proxy dist
 #' @importFrom stats loess kmeans
-#' @importFrom rlang .data
 #'
 #' @export kmeans_hurst
 #'
-#' @seealso \code{\link{plot.k_hurst}}, \code{\link{print.k_hurst}}, \code{\link{hclust_hurst}}
+#' @seealso \code{\link{print.k_hurst}}, \code{\link{plot.k_hurst}}, \code{\link{hclust_hurst}}
 #'
 #' @examples
 #' #Simulation of multifractional processes
@@ -132,7 +131,7 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
 #' @description
 #' Prints the results of k-means clustering of multifractional processes.
 #'
-#' @param x Object from "k_hurst" class.
+#' @param x Object of class \code{"k_hurst"}.
 #' @param ... Unused arguments
 #'
 #' @seealso \code{\link{kmeans_hurst}}
@@ -228,7 +227,7 @@ autoplot.k_hurst<-function(x,type="estimates")
 #' }
 #' @param ... Other arguments
 #'
-#' @return Plot based on the relevant \code{type}.
+#' @return A ggplot object which plots the relevant \code{type}.
 #' @exportS3Method Rmultifractional::plot
 #' @importFrom ggplot2 ggplot facet_wrap geom_line labs aes
 #' @importFrom rlang .data

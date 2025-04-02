@@ -18,28 +18,28 @@ hclust_hurst(
 }
 \arguments{
 \item{X.t}{A list of data frames where the first column is a time sequence
-from 0 to 1 and the second the data of the multifractional process.
+from 0 to 1 and the second the values of the multifractional process.
 See Examples for usage.}
 
 \item{k}{The desired number of clusters.}
 
-\item{h}{The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is considered.}
+\item{h}{The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is used.}
 
-\item{dist.method}{A string which indicates a registered distance in \link[proxy]{dist}. The default
+\item{dist.method}{A string which specifies a registered distance in \link[proxy]{dist}. The default
 is \code{"euclidean"}.}
 
-\item{method}{A string which indicates the hierarchical method used. Available methods
+\item{method}{A string which specifies the hierarchical method used. Available methods
 are \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} and \code{"centroid"}.
 The default method is \code{"complete"}.}
 
-\item{dendrogram}{Logical; if \code{TRUE} the dendrogram is plotted indicating
+\item{dendrogram}{Logical: If \code{TRUE} the dendrogram is plotted indicating
 the clusters.}
 
-\item{N}{Argument used for estimation of Hurst function. Number of sub intervals the estimation is performed on. Default is set to 100 sub intervals.}
+\item{N}{Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
-\item{Q}{Argument used for estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.}
+\item{Q}{Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.}
 
-\item{L}{Argument used for estimation of Hurst function. Arbitrary fixed integer greater than or equal to 2. Default is set to 2.}
+\item{L}{Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.}
 }
 \value{
 An object list of class \code{"hc_hurst"} with print and plot methods. The list has following components:
@@ -48,7 +48,7 @@ An object list of class \code{"hc_hurst"} with print and plot methods. The list 
   each multifractional process (Item). Distance is obtained from the \code{dist.method}.}
   \item{\code{cluster}}{A vector of cluster number of each process.}
   \item{\code{cluster_sizes}}{Number of processes in each cluster.}
-  \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each estimated Hurst function in the cluster. Columns denote each time point.
+  \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster. Columns denote each time point.
   Row names denote cluster number.}
   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote each time point. Rows denote estimates for each process.}
   \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
@@ -57,10 +57,10 @@ An object list of class \code{"hc_hurst"} with print and plot methods. The list 
 }
 \description{
 This function performs hierarchical clustering of multifractional
-processes based on the Hurst function.
+processes based on the Hurst functions.
 }
 \details{
-The multifractional processes are estimated using the \code{\link{Hurst}} function and the smoothed Hurst estimates are used
+The Hurst function of each multifractional process is estimated using \code{\link{Hurst}} and the smoothed Hurst estimates are used
 for the cluster analysis. The distances between each smoothed Hurst estimate is computed by the dist.method provided and passed into
 the \code{\link[stats]{hclust}} for hierarchical clustering.
 }
@@ -83,5 +83,5 @@ print(HC1)
 plot(HC1,type ="ec")
 }
 \seealso{
-\code{\link{plot.hc_hurst}}, \code{\link{print.hc_hurst}}, \code{\link{kmeans_hurst}}
+\code{\link{print.hc_hurst}}, \code{\link{plot.hc_hurst}}, \code{\link{kmeans_hurst}}
 }

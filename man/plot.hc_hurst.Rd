@@ -19,7 +19,7 @@
 \item{...}{Unused arguments}
 }
 \value{
-Plot based on the relevant \code{type}.
+A ggplot object which plots the relevant \code{type}.
 }
 \description{
 Creates a plot of the smoothed Hurst functions of each multifractional process in each cluster with cluster centers using the return from

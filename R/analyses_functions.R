@@ -1,20 +1,20 @@
 #' Sojourn measure
 #'
-#' @description Provides sojourn measure for X(t) greater or lower than the
-#' constant level \code{A} for the provided time sequence (t) interval or a given sub interval of t.
+#' @description Computes the sojourn measure for \eqn{X(t)} greater or lower than the
+#' constant level \code{A} for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence (t)
-#' and the second the data of the time series (X(t)).
-#' @param A Constant level as a numeric value. Checks whether X(t) greater or lower than A.
-#' @param n Number of points time sequence to be split into. Default set to 10000.
+#' @param X Data frame where the first column is a time sequence \eqn{(t)}
+#' and the second the values of the time series \eqn{(X(t))}.
+#' @param A Constant level as a numeric value. Checks whether \eqn{X(t)} greater or lower than \code{A}.
+#' @param n Number of points a time interval to be split into. Default set to 10000.
 #' @param level A vector of character strings which specifies whether the sojourn
-#' measure required for X \code{"greater"} or \code{"lower"} than A. Default set to \code{"greater"}.
-#' @param subI Sub interval of the time sequence as a vector where the lower bound
-#' the first element and upper bound the second. Optional; if provided area represented by
-#' the sojourn measure of the sub interval is returned. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if \code{TRUE}, the time series, constant level and the sojourn measure is plotted.
+#' measure required for \code{X} \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
+#' @param subI Time sub-interval is a vector where the lower bound is
+#' the first element and upper bound is the second. Optional: If provided area represented by
+#' the sojourn measure of the sub-interval is returned, otherwise the whole time sequence is considered.
+#' @param plot Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.
 #'
-#' @return Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure is plotted.
+#' @return Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure are plotted.
 #' @importFrom ggplot2 geom_line geom_hline geom_ribbon labs aes ggtitle theme element_text scale_color_manual guides guide_legend
 #' @importFrom stats approx
 #' @importFrom rlang .data
@@ -180,23 +180,22 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #' Excursion area
 #'
 #' @description
-#' Provides the excursion area where X(t) is greater or lower than the
-#' constant level A for the provided time sequence (t) interval or a given sub interval of t.
+#' Computes the excursion area where \eqn{X(t)} is greater or lower than the
+#' constant level \code{A} for the provided time interval or a its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence (t)
-#' and the second the data of the time series (X(t)).
-#' @param A Constant level as a numeric value. Checks whether X(t) greater or lower than A.
-#' @param n Number of points time sequence to be split into. Default set to 10000.
+#' and the second the values of the time series \eqn{(X(t))}.
+#' @param A Constant level as a numeric value. Checks whether \eqn{X(t)} greater or lower than \code{A}.
+#' @param n Number of points a time interval to be split into. Default set to 10000.
 #' @param level A vector of character strings which specifies whether the excursion
-#' area is required for X \code{"greater"} or \code{"lower"} than A. Default set to \code{"greater"}.
-#' @param subI Sub interval of the time sequence as a vector where the lower bound
-#' the first element and upper bound the second. Optional; if provided the excursion area
-#' of the sub interval is returned. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if \code{TRUE}, the time series, constant level and area represented by the sojourn measure
-#' is plotted.
+#' area is required for \code{X} \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
+#' @param subI Time sub-interval is a vector where the lower bound is
+#' the first element and upper bound is the second. Optional: If provided the excursion area
+#' of the sub-interval is returned, otherwise the whole time sequence is considered.
+#' @param plot Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted.
 #'
 #' @return Excursion area. If \code{plot=TRUE}, the time series, constant level and excursion area
-#' is plotted.
+#' are plotted.
 #' @importFrom ggplot2 geom_line geom_hline geom_point labs aes ggtitle theme element_text scale_color_manual scale_fill_manual
 #' @importFrom stats approx
 #' @importFrom rlang .data
@@ -361,19 +360,19 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #' Maximum of a time series
 #'
 #' @description
-#' This function finds the local maximum of a time series for the provided
-#' time sequence (t) interval or a given sub interval of t, with corresponding t value(s).
+#' This function finds the maximum of a time series for the provided
+#' time interval or its sub-interval.
 #'
-#' @param X  Data frame where the first column is a time sequence (t)
-#' and the second the data of the time series (X(t)).
-#' @param subI Sub interval of the time sequence as a vector where the lower bound
-#' the first element and upper bound the second. Optional; if provided maximum of the
-#' sub interval is returned. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if TRUE, the time series, the maximum and corresponding t values are plotted.
+#' @param X  Data frame where the first column is a time sequence \eqn{(t)}
+#' and the second the values of the time series \eqn{(X(t))}.
+#' @param subI Time sub-interval is a vector where the lower bound is
+#' the first element and upper bound is the second. Optional: If provided maximum of the
+#' sub-interval is returned, otherwise the whole time sequence is considered.
+#' @param plot Logical: If \code{TRUE}, the time series, the maximum and corresponding \eqn{t} values are plotted.
 #'
-#' @return Print the maximum of the time series for a given sub interval and
-#' the corresponding t values. If \code{plot=TRUE}, a plot of the time series with
-#' with maximum and corresponding t values are plotted.
+#' @return Print the maximum of the time series and
+#' the corresponding \eqn{t} values. If \code{plot=TRUE}, a plot of the time series with
+#' with maximum and corresponding \eqn{t} values are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
 #' @export X_max
@@ -455,19 +454,19 @@ X_max<-function(X,subI=NULL,plot=FALSE){
 #' Minimum of a time series
 #'
 #' @description
-#' This function finds the local minimum of a time series for the provided
-#' time sequence (t) interval or a given sub interval of t, with corresponding t value(s).
+#' This function finds the minimum of a time series for the provided
+#' time interval or its sub-interval.
 #'
-#' @param X  Data frame where the first column is a time sequence (t)
-#' and the second the data of the time series (X(t)).
-#' @param subI Sub interval of the time sequence as a vector where the lower bound
-#' the first element and upper bound the second. Optional; if provided minimum of the
-#' sub interval is returned. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if TRUE, the time series, the minimum and corresponding t values are plotted.
+#' @param X  Data frame where the first column is a time sequence \eqn{(t)}
+#' and the second the values of the time series \eqn{(X(t))}.
+#' @param subI Time sub-interval is a vector where the lower bound is
+#' the first element and upper bound is the second. Optional: If provided minimum of the
+#' sub-interval is returned, otherwise the whole time sequence is considered.
+#' @param plot Logical: If \code{TRUE}, the time series, the minimum and corresponding \eqn{t} values are plotted.
 #'
-#' @return Print the minimum of the time series for a given sub interval and
-#' the corresponding t values. If \code{plot=TRUE}, a plot of the time series with
-#' with minimum and corresponding t values are plotted.
+#' @return Print the minimum of the time series and
+#' the corresponding \eqn{t} values. If \code{plot=TRUE}, a plot of the time series with
+#' with minimum and corresponding \eqn{t} values are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
 #'
@@ -550,16 +549,16 @@ X_min<-function(X,subI=NULL,plot=FALSE){
 #' Level crossing times
 #'
 #' @description
-#' Provides the corresponding t values a time series intersects a specific
-#' constant level for the provided time sequence (t) interval or a provided sub interval of t.
+#' Computes the corresponding \eqn{t} value(s) where a time series intersects a specific
+#' constant level for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence (t)
-#' and the second the data of the time series (X(t)).
+#' @param X Data frame where the first column is a time sequence \eqn{(t)}
+#' and the second the values of the time series \eqn{(X(t))}.
 #' @param A Constant level as a numeric value.
-#' @param subI Sub interval of the time sequence as a vector where the lower bound
-#' the first element and upper bound the second. Optional; if provided level crossing
-#' times of the sub interval is provided. Otherwise the whole time sequence is considered.
-#' @param plot Logical: if \code{TRUE}, the time series and constant level is plotted.
+#' @param subI Time sub-interval is a vector where the lower bound is
+#' the first element and upper bound is the second. Optional: If provided level crossing
+#' times of the sub-interval is returned, otherwise the whole time sequence is considered.
+#' @param plot Logical: If \code{TRUE}, the time series, constant level and corresponding \eqn{t} values are plotted.
 #'
 #' @return The level crossing times. If \code{plot=TRUE}, a plot of the time series with
 #' the constant level crossing and level crossing times are plotted.

@@ -16,31 +16,31 @@
 )
 }
 \arguments{
-\item{x}{Object of class `mp`. For accurate plot of the process, should be of at least 200 data points.}
+\item{x}{Return from \code{\link{GHBMP}}. For accurate plot of the process, should be of at least 500 data points.}
 
-\item{H}{Theoretical Hurst function. Optional; if provided, the theoretical Hurst function is plotted.}
+\item{H}{Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.}
 
-\item{Raw_Est_H}{Logical; if \code{TRUE}, the Hurst function estimated using \code{\link{Hurst}} is plotted.}
+\item{Raw_Est_H}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
-\item{Smooth_Est_H}{Logical; if \code{TRUE}, the smoothed estimated Hurst function is plotted.
-The estimated Hurst function is smoothed using the loess method and is plotted.}
+\item{Smooth_Est_H}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+The estimated Hurst function is smoothed using the loess method.}
 
-\item{N}{Argument used for estimation of Hurst function. Number of sub intervals the estimation is performed on. Default is set to 100 sub intervals.}
+\item{N}{Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
-\item{Q}{Argument used for estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.}
+\item{Q}{Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.}
 
-\item{L}{Argument used for estimation of Hurst function. Arbitrary fixed integer greater than or equal to 2. Default is set to 2.}
+\item{L}{Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.}
 
 \item{...}{Unused arguments.}
 }
 \value{
-Plot of the multifractional process with theoretical, estimated and smoothed Hurst functions.
+A ggplot object which plots the multifractional process with theoretical, estimated and smoothed Hurst functions.
 }
 \description{
-Creates a plot of the Gaussian Haar-based multifractional processes
-of class `mp` simulated using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
-Hurst function estimated using \code{\link{Hurst}} (Logical) and
-the smoothed estimated Hurst function (Logical).
+Creates a plot of the Gaussian Haar-based multifractional process
+simulated using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
+Hurst function estimated using \code{\link{Hurst}} and
+the smoothed estimated Hurst function.
 }
 \examples{
 #Simulation of the multifractional process and estimation of the Hurst function

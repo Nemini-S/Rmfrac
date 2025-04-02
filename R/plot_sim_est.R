@@ -110,23 +110,23 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
 #' Plot Gaussian Haar-based multifractional processes with theoretical and estimated Hurst functions
 #'
 #' @description
-#' Creates a plot of the Gaussian Haar-based multifractional processes
-#' of class `mp` simulated using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
-#' Hurst function estimated using \code{\link{Hurst}} (Logical) and
-#' the smoothed estimated Hurst function (Logical).
+#' Creates a plot of the Gaussian Haar-based multifractional process
+#' simulated using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
+#' Hurst function estimated using \code{\link{Hurst}} and
+#' the smoothed estimated Hurst function.
 #'
 #'
-#' @param x Object of class `mp`. For accurate plot of the process, should be of at least 200 data points.
-#' @param H Theoretical Hurst function. Optional; if provided, the theoretical Hurst function is plotted.
-#' @param Raw_Est_H Logical; if \code{TRUE}, the Hurst function estimated using \code{\link{Hurst}} is plotted.
-#' @param Smooth_Est_H Logical; if \code{TRUE}, the smoothed estimated Hurst function is plotted.
-#' The estimated Hurst function is smoothed using the loess method and is plotted.
-#' @param N Argument used for estimation of Hurst function. Number of sub intervals the estimation is performed on. Default is set to 100 sub intervals.
-#' @param Q Argument used for estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param L Argument used for estimation of Hurst function. Arbitrary fixed integer greater than or equal to 2. Default is set to 2.
+#' @param x Return from \code{\link{GHBMP}}. For accurate plot of the process, should be of at least 500 data points.
+#' @param H Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.
+#' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
+#' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+#' The estimated Hurst function is smoothed using the loess method.
+#' @param N Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
+#' @param Q Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param L Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param ... Unused arguments.
 #'
-#' @return Plot of the multifractional process with theoretical, estimated and smoothed Hurst functions.
+#' @return A ggplot object which plots the multifractional process with theoretical, estimated and smoothed Hurst functions.
 #'
 #' @exportS3Method Rmultifractional::plot
 #'
@@ -257,17 +257,17 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
 #' Plot theoretical and estimated Hurst functions
 #'
 #' @description
-#' Creates a plot of estimated the Hurst function of class `est`with the theoretical
-#' Hurst function and the smoothed estimated Hurst function.
+#' Creates a plot of the estimated Hurst function with the theoretical
+#' Hurst function and the smoothed estimated Hurst function using the return from \code{\link{Hurst}}.
 #'
-#' @param x Object of class `est`.
-#' @param H Theoretical Hurst function. Optional; if provided, the theoretical Hurst function is plotted.
-#' @param Raw_Est_H Logical; if \code{TRUE}, the Hurst function estimated using \code{\link{Hurst}} is plotted.
-#' @param Smooth_Est_H Logical; if \code{TRUE}, the smoothed estimated Hurst function is plotted.
-#' The estimated Hurst function is smoothed using the loess method and is plotted.
+#' @param x Return from \code{\link{Hurst}}.
+#' @param H Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.
+#' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
+#' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+#' The estimated Hurst function is smoothed using the loess method.
 #' @param ... Unused arguments.
 #'
-#' @return Plot of the theoretical, estimated and smoothed Hurst functions.
+#' @return A ggplot object which plots the theoretical, estimated and smoothed Hurst functions.
 #'
 #' @exportS3Method Rmultifractional::plot
 #'
@@ -280,7 +280,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
 #' T <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 #' X <- GHBMP(T,H)
-#' Est_H<-Hurst(X)
+#' Est_H <- Hurst(X)
 #'
 #' #Plot of theoretical, estimated and smoothed Hurst functions
 #' plot(Est_H,H=H)

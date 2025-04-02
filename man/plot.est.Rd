@@ -7,30 +7,30 @@
 \method{plot}{est}(x, H = NULL, Raw_Est_H = TRUE, Smooth_Est_H = TRUE, ...)
 }
 \arguments{
-\item{x}{Object of class `est`.}
+\item{x}{Return from \code{\link{Hurst}}.}
 
-\item{H}{Theoretical Hurst function. Optional; if provided, the theoretical Hurst function is plotted.}
+\item{H}{Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.}
 
-\item{Raw_Est_H}{Logical; if \code{TRUE}, the Hurst function estimated using \code{\link{Hurst}} is plotted.}
+\item{Raw_Est_H}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
-\item{Smooth_Est_H}{Logical; if \code{TRUE}, the smoothed estimated Hurst function is plotted.
-The estimated Hurst function is smoothed using the loess method and is plotted.}
+\item{Smooth_Est_H}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+The estimated Hurst function is smoothed using the loess method.}
 
 \item{...}{Unused arguments.}
 }
 \value{
-Plot of the theoretical, estimated and smoothed Hurst functions.
+A ggplot object which plots the theoretical, estimated and smoothed Hurst functions.
 }
 \description{
-Creates a plot of estimated the Hurst function of class `est`with the theoretical
-Hurst function and the smoothed estimated Hurst function.
+Creates a plot of the estimated Hurst function with the theoretical
+Hurst function and the smoothed estimated Hurst function using the return from \code{\link{Hurst}}.
 }
 \examples{
 #Simulation of the multifractional process and estimation of the Hurst function
 T <- seq(0,1,by=(1/2)^10)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X <- GHBMP(T,H)
-Est_H<-Hurst(X)
+Est_H <- Hurst(X)
 
 #Plot of theoretical, estimated and smoothed Hurst functions
 plot(Est_H,H=H)

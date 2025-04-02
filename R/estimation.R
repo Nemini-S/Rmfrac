@@ -1,21 +1,20 @@
 #' Statistical estimation of the Hurst function
 #'
 #' @description
-#' This function provides statistical estimates for the Hurst function of multifractional processes.
+#' This function computes statistical estimates for the Hurst function of multifractional processes.
 #'
-#' @param X.t Data frame where the first column is a time sequence from 0 to 1 and the second the data of the multifractional process.
-#' For reliable estimates the data frame should be of at least XXX data points.
+#' @param X.t Data frame where the first column is a time sequence from 0 to 1 and the second the values of the multifractional process.
+#' For reliable estimates the data frame should be of at least 500 data points.
 #' @param Q Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param L Arbitrary fixed integer greater than or equal to 2. Default is set to 2.
-#' @param N Number of sub intervals the estimation is performed on. Default is set to 100 sub intervals.
+#' @param L Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param N Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #'
-#' @return A data frame where the first column is a time sequence and second column is estimated data for the Hurst function.
-#' Each row gives estimated values for each time point using \code{N} sub intervals.
+#' @return A data frame of class \code{"est"} where the first column is a time sequence and second column is estimated values of the Hurst function.
 #'
 #' @details
 #' Statistical estimation of the Hurst function is done based on the results of Ayache, A.,
-#' & Bouly, F. (2023) <doi:10.30757/alea.v20-60>. The estimator is built through generalized quadratic variations
-#' of the process associated with its generalized increments.
+#' & Bouly, F. (2023). The estimator is built through generalized quadratic variations
+#' of the process associated with its increments.
 #'
 #' @export Hurst
 #'
@@ -25,7 +24,7 @@
 #'
 #' @references Ayache, A. and Bouly, F. (2023). Uniformly and strongly consistent estimation for
 #' the random Hurst function of a multifractional process. Latin American Journal of
-#' Probability and Mathematical Statistics, 20(2):1587–1614.
+#' Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 #'
 #' @seealso \code{\link{plot.est}}
 #'
@@ -41,7 +40,7 @@
 #' #Example 2: For a Fractional Brownian motion simulated using the fbm function of somebm package.
 #' library(somebm)
 #' T <- seq(0,1,length=10000)
-#' FBM<-data.frame("t"=T,"p"=fbm(hurst=0.7,n=9999))
+#' FBM <- data.frame("t"=T,"p"=fbm(hurst=0.7,n=9999))
 #' Hurst(FBM)
 #' }
 #'

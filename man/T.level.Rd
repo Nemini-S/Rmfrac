@@ -7,24 +7,24 @@
 T.level(X, A, subI = NULL, plot = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence (t)
-and the second the data of the time series (X(t)).}
+\item{X}{Data frame where the first column is a time sequence \eqn{(t)}
+and the second the values of the time series \eqn{(X(t))}.}
 
 \item{A}{Constant level as a numeric value.}
 
-\item{subI}{Sub interval of the time sequence as a vector where the lower bound
-the first element and upper bound the second. Optional; if provided level crossing
-times of the sub interval is provided. Otherwise the whole time sequence is considered.}
+\item{subI}{Time sub-interval is a vector where the lower bound is
+the first element and upper bound is the second. Optional: If provided level crossing
+times of the sub-interval is returned, otherwise the whole time sequence is considered.}
 
-\item{plot}{Logical: if \code{TRUE}, the time series and constant level is plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, constant level and corresponding \eqn{t} values are plotted.}
 }
 \value{
 The level crossing times. If \code{plot=TRUE}, a plot of the time series with
 the constant level crossing and level crossing times are plotted.
 }
 \description{
-Provides the corresponding t values a time series intersects a specific
-constant level for the provided time sequence (t) interval or a provided sub interval of t.
+Computes the corresponding \eqn{t} value(s) where a time series intersects a specific
+constant level for the provided time interval or its sub-interval.
 }
 \examples{
 t <- seq(0,1,length=100)

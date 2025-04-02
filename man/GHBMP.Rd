@@ -7,17 +7,17 @@
 GHBMP(t, H, J = 15, num.cores = availableCores(omit = 1))
 }
 \arguments{
-\item{t}{Time point or Time sequence on the interval [0,1].}
+\item{t}{Time point or time sequence on the interval [0,1].}
 
-\item{H}{Hurst function which depends on t (H(t)). See Examples for usage.}
+\item{H}{Hurst function which depends on \code{t} \eqn{(H(t))}. See Examples for usage.}
 
-\item{J}{Positive integer. J is recommended to be greater than \eqn{\log_2(length(t))}. For large J values could
+\item{J}{Positive integer. \code{J} is recommended to be greater than \eqn{\log_2(length(t))}. For large \code{J} values could
 be rather time consuming. Default is set to 15.}
 
 \item{num.cores}{Number of cores to set up the clusters for parallel computing.}
 }
 \value{
-A data frame where the first column is t and second column is simulated values of X(t).
+A data frame of class \code{"mp"} where the first column is \code{t} and second column is simulated values of \eqn{X(t)}.
 }
 \description{
 This function simulates a Gaussian Haar-based multifractional process at any
@@ -26,7 +26,7 @@ time point or time sequence on the interval [0,1].
 \details{
 The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2025) was used in simulating Gaussian Haar-based multifractional process.
 
-\eqn{X(t) \coloneqq \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k}},
+\eqn{X(t) := \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k},}
 
 where \eqn{  \int_{0}^{1} (t-s)_{+}^{H_{j,k}-\frac{1}{2}} h_{j,k} (s) ds = 2^{-j H_{j,k}} h^{[H_{j,k}]} (2^jt-k)}
 with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}} h(s) ds}.
@@ -35,7 +35,7 @@ with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}}
 For simulations, the truncated version of this formula with first summation up to J is considered.
 }
 \note{
-See Examples for the usage of constant Hurst functions and Hurst functions which need \code{if else} conditions (piecewise or step functions).
+See Examples for the usage of constant Hurst functions and other Hurst functions, for example, piecewise or step functions.
 }
 \examples{
 #Constant Hurst function
@@ -64,8 +64,7 @@ GHBMP(t,H)
 }
 \references{
 Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-On Construction, Properties and Simulation of Haar-Based Multifractional Processes.
-Applied and Computational Harmonic Analysis.
+On Construction, Properties and Simulation of Haar-Based Multifractional Processes. (submitted).
 }
 \seealso{
 \code{\link{Hurst}}, \code{\link{plot.mp}}
