@@ -16,7 +16,7 @@ ui <- fluidPage(
            ),
            wellPanel(
              h4("Estimation"),
-             numericInput("N", "Number of subintervals for estimation", value = 100, min = 1, step = 1),
+             numericInput("N", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
              numericInput("Q", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
              numericInput("L", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
              checkboxGroupInput(
