@@ -15,7 +15,7 @@
 #' @param plot Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.
 #'
 #' @return Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure are plotted.
-#' @importFrom ggplot2 geom_line geom_hline geom_ribbon labs aes ggtitle theme element_text scale_color_manual guides guide_legend
+#' @importFrom ggplot2 ggplot geom_line geom_hline geom_point labs aes ggtitle theme element_text
 #' @importFrom stats approx
 #' @importFrom rlang .data
 #'
@@ -196,7 +196,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #'
 #' @return Excursion area. If \code{plot=TRUE}, the time series, constant level and excursion area
 #' are plotted.
-#' @importFrom ggplot2 geom_line geom_hline geom_point labs aes ggtitle theme element_text scale_color_manual scale_fill_manual
+#' @importFrom ggplot2 ggplot geom_line geom_hline geom_ribbon labs aes ggtitle theme element_text
 #' @importFrom stats approx
 #' @importFrom rlang .data
 #'
