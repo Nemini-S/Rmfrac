@@ -18,7 +18,7 @@
 #'   \item{\code{Hurst function to plot}}{Select: \code{Theoretical Hurst function}, \code{Raw estimate of Hurst function}, \code{Smoothed estimate of Hurst function}}}
 #'
 #' @importFrom shiny runApp
-#'
+#' @importFrom shinycssloaders withSpinner
 #' @export shinyapp_sim
 #'
 #' @seealso \code{\link{GHBMP}}, \code{\link{Hurst}}

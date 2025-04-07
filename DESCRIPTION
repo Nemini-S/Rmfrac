@@ -7,6 +7,6 @@ Maintainer: Nemini Samarakoon <NWijesingheS@ltu.edu.au>
 Description: Simulation of the Guassian Haar Based Multifractional Process (GHBMP). Analyses includes estimation of the Hurst function, clustering multifractional processes based on the Hurst functions and several functions to compute and plot characteristics of the processes.
 License: GPL-3
 Encoding: UTF-8
-Imports: parallel (>= 4.2.2), parallelly (>= 1.37.1), ggplot2 (>= 3.5.1), zoo (>= 1.8-12), matrixStats (>= 1.2.0), proxy, rlang, stats, foreach, doParallel, plotly, shiny
+Imports: parallel, parallelly, ggplot2, zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders
 LazyData: false
 RoxygenNote: 7.3.1
