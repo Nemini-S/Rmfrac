@@ -91,6 +91,7 @@ est_cov<-function(X,plot=FALSE)
 #' @return An \eqn{m \times m} matrix, where \eqn{m} is the length of \code{t}.
 #'
 #' @importFrom parallel makeCluster stopCluster
+#' @importFrom parallelly availableCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
 #' @importFrom plotly plot_ly layout
