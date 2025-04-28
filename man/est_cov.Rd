@@ -8,8 +8,7 @@ est_cov(X, plot = FALSE)
 }
 \arguments{
 \item{X}{A data frame where the first column is the time sequence and the remaining
-columns are the values of each realization of the process.
-Each row represents one out of the N realizations.}
+columns are the values of each realization of the process.}
 
 \item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted.}
 }

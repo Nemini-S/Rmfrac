@@ -40,7 +40,7 @@ See Examples for the usage of constant Hurst functions and other Hurst functions
 \examples{
 #Constant Hurst function
 t <- seq(0,1,by=(1/2)^10)
-H <- function(t) {return(0.5 +0*t)}
+H <- function(t) {return(0.4 +0*t)}
 GHBMP(t,H)
 
 #Linear Hurst function

@@ -6,7 +6,7 @@
 #'
 #' @param X A data frame where the first column is the time sequence and the remaining
 #' columns are the values of each realization of the process.
-#' Each row represents one out of the N realizations.
+#'
 #' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
 #'
 #' @return
