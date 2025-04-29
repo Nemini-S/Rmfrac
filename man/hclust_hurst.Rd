@@ -44,7 +44,7 @@ the clusters.}
 \value{
 An object list of class \code{"hc_hurst"} with print and plot methods. The list has following components:
 \describe{
-  \item{\code{cluster_info}}{A data frame indicating the cluster number and distance to cluster center of
+  \item{\code{cluster_info}}{A data frame indicating the cluster number and distance to cluster center from
   each multifractional process (Item). Distance is obtained from the \code{dist.method}.}
   \item{\code{cluster}}{A vector of cluster number of each process.}
   \item{\code{cluster_sizes}}{Number of processes in each cluster.}

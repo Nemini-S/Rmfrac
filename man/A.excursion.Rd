@@ -29,7 +29,7 @@ are plotted.
 }
 \description{
 Computes the excursion area where \eqn{X(t)} is greater or lower than the
-constant level \code{A} for the provided time interval or a its sub-interval.
+constant level \code{A} for the provided time interval or its sub-interval.
 }
 \examples{
 t <- seq(0,1,length=1000)

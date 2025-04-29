@@ -14,7 +14,7 @@
 #' the sojourn measure of the sub-interval is returned, otherwise the whole time sequence is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.
 #'
-#' @return Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure are plotted.
+#' @return Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the excursion region are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_hline geom_point labs aes ggtitle theme element_text
 #' @importFrom stats approx
 #' @importFrom rlang .data
@@ -181,7 +181,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #'
 #' @description
 #' Computes the excursion area where \eqn{X(t)} is greater or lower than the
-#' constant level \code{A} for the provided time interval or a its sub-interval.
+#' constant level \code{A} for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence (t)
 #' and the second the values of the time series \eqn{(X(t))}.
@@ -258,7 +258,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
           ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
-          theme(plot.title = element_text(size = 9))
+          theme(plot.title = element_text(size = 10))
 
 
         print(p)
@@ -279,7 +279,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
           ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
-          theme(plot.title = element_text(size = 9))
+          theme(plot.title = element_text(size = 10))
 
 
         print(p)
@@ -319,7 +319,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
           ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
-          theme(plot.title = element_text(size = 9))
+          theme(plot.title = element_text(size = 10))
 
 
         print(p)
@@ -340,7 +340,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
           ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
-          theme(plot.title = element_text(size = 9))
+          theme(plot.title = element_text(size = 10))
 
 
 
