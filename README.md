@@ -1,6 +1,8 @@
 **Installation**
 
 To install the development version from GitHub:
-<pre>```r # Install devtools if you don't have it already
+```{r}
+# Install devtools if not available
 # install.packages("devtools")
-devtools::install_github("Nemini-S/Rmultifractional")```</pre>
+devtools::install_github("Nemini-S/Rmultifractional")
+```
