@@ -34,7 +34,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
         geom_line(data = H_est, aes(x =.data$x, y =.data$y,col="Raw Estimate H")) +
         geom_smooth(data = H_est, aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
                     ,method="loess",se=FALSE,span = 0.3) +
-        scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
+        scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
                            values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green"))+
         labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 
@@ -44,7 +44,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
       p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
         geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))+
         geom_line(data = H_est, aes(x =.data$x, y =.data$y,col="Raw Estimate H")) +
-        scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Raw Estimate H"),
+        scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H"),
                            values=c("Theoretical H"="blue", "Raw Estimate H"="red"))+
         labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 
@@ -55,7 +55,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
         geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))+
         geom_smooth(data = H_est, aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
                     ,method="loess",se=FALSE,span = 0.3) +
-        scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Smoothed Estimate H"),
+        scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Smoothed Estimate H"),
                            values=c("Theoretical H"="blue", "Smoothed Estimate H"="green"))+
         labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 
@@ -64,7 +64,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
 
       p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
         geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))+
-        scale_color_manual(name = "Hurst function", breaks=c("Theoretical H"),
+        scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H"),
                            values=c("Theoretical H"="blue"))+
         labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 
@@ -75,7 +75,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
       geom_line(data = H_est, aes(x =.data$x, y =.data$y,col="Raw Estimate H")) +
       geom_smooth(data = H_est, aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
                   ,method="loess",se=FALSE,span = 0.3) +
-      scale_color_manual(name = "Hurst function", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
+      scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
                          values=c( "Raw Estimate H"="red", "Smoothed Estimate H"="green"))+
       labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 
@@ -84,7 +84,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
     p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
       geom_smooth(data = H_est, aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
                   ,method="loess",se=FALSE,span = 0.3) +
-      scale_color_manual(name = "Hurst function", breaks=c( "Smoothed Estimate H"),
+      scale_color_manual(name = "Hurst functions", breaks=c( "Smoothed Estimate H"),
                          values=c(  "Smoothed Estimate H"="green"))+
       labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 
@@ -92,7 +92,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
   } else if(Raw_Est_H && !(Smooth_Est_H)){
     p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
       geom_line(data = H_est, aes(x =.data$x, y =.data$y,col="Raw Estimate H")) +
-      scale_color_manual(name = "Hurst function", breaks=c( "Raw Estimate H"),
+      scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H"),
                          values=c( "Raw Estimate H"="red"))+
       labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
 

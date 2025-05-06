@@ -23,6 +23,7 @@
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 #' t <- seq(0,1,by=(1/2)^8)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+#' #Only 5 realizations of GHBMP are used to reduce the computational time.
 #' X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 #' X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 #' Data <- data.frame(t,t(X))

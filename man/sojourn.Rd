@@ -24,7 +24,7 @@ the sojourn measure of the sub-interval is returned, otherwise the whole time se
 \item{plot}{Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.}
 }
 \value{
-Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the sojourn measure are plotted.
+Sojourn measure. If \code{plot=TRUE}, the time series, constant level and the excursion region are plotted.
 }
 \description{
 Computes the sojourn measure for \eqn{X(t)} greater or lower than the

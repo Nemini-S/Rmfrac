@@ -83,7 +83,7 @@ server <- function(input, output,session) {
           ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
           ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
                       ,method="loess",se=FALSE,span = 0.3) +
-          ggplot2::scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
+          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
                              values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green"))
 
 
@@ -92,7 +92,7 @@ server <- function(input, output,session) {
         p <- p +
           ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
           ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-          ggplot2::scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Raw Estimate H"),
+          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H"),
                              values=c("Theoretical H"="blue", "Raw Estimate H"="red"))
 
 
@@ -102,7 +102,7 @@ server <- function(input, output,session) {
           ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
           ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
                       ,method="loess",se=FALSE,span = 0.3) +
-          ggplot2::scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Smoothed Estimate H"),
+          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Smoothed Estimate H"),
                              values=c("Theoretical H"="blue", "Smoothed Estimate H"="green"))
 
 
@@ -110,7 +110,7 @@ server <- function(input, output,session) {
 
         p <- p +
           ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
-          ggplot2::scale_color_manual(name = "Hurst function", breaks=c("Theoretical H"),
+          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H"),
                              values=c("Theoretical H"="blue"))
 
       }
@@ -119,7 +119,7 @@ server <- function(input, output,session) {
         ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
         ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
                     ,method="loess",se=FALSE,span = 0.3) +
-        ggplot2::scale_color_manual(name = "Hurst function", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
+        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
                            values=c( "Raw Estimate H"="red", "Smoothed Estimate H"="green"))
 
 
@@ -127,14 +127,14 @@ server <- function(input, output,session) {
       p <- p +
         ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
                     ,method="loess",se=FALSE,span = 0.3) +
-        ggplot2::scale_color_manual(name = "Hurst function", breaks=c( "Smoothed Estimate H"),
+        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Smoothed Estimate H"),
                            values=c(  "Smoothed Estimate H"="green"))
 
 
     } else if("Raw_Est_H" %in% input$checkbox_group && !("Smooth_Est_H" %in% input$checkbox_group)){
       p <- p +
         ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-        ggplot2::scale_color_manual(name = "Hurst function", breaks=c( "Raw Estimate H"),
+        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H"),
                            values=c( "Raw Estimate H"="red"))
 
 
