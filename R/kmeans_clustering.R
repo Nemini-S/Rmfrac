@@ -8,7 +8,8 @@
 #' from 0 to 1 and the second the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
-#' @param ... Optional arguments passed to \code{\link[stats]{kmeans}}. For example \code{algorithm}.
+#' @param ... Optional arguments: \code{iter.max}, \code{nstart} and \code{algorithm}.
+#' Refer \code{\link[stats]{kmeans}}.
 #' @param N Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.

@@ -13,7 +13,8 @@ See Examples for usage.}
 
 \item{k}{The desired number of clusters.}
 
-\item{...}{Optional arguments passed to \code{\link[stats]{kmeans}}. For example \code{algorithm}.}
+\item{...}{Optional arguments: \code{iter.max}, \code{nstart} and \code{algorithm}.
+Refer \code{\link[stats]{kmeans}}.}
 
 \item{N}{Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
