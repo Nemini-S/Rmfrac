@@ -190,7 +190,7 @@ print.hc_hurst <- function(x, ...)
       paste(x$cluster_sizes, collapse = ", "), "\n", sep = "")
   cat("\nClustering information with the distance from the cluster center:\n")
   print(x$cluster_info)
-  cat("\nAvailable components:\n", sep = "\n")
+  cat("\nOther available components:\n", sep = "\n")
   print(names(x))
   invisible(x)
 }

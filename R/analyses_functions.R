@@ -70,7 +70,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion region where the trajectory is over the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
         print(p)
@@ -91,7 +91,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion region where the trajectory is under the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 
@@ -133,7 +133,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion region where the trajectory is over the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 
@@ -155,7 +155,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the time series is %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion region where the trajectory is under the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 
@@ -257,7 +257,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion area of the trajectory over the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 
@@ -278,7 +278,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion area of the trajectory under the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 
@@ -318,7 +318,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion area of the trajectory over the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 
@@ -339,7 +339,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
           geom_hline(yintercept = A,color="blue")+
           geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
           labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the time series %s than the level %s", level, A))+
+          ggtitle(sprintf("Excursion area of the trajectory under the level %s", A))+
           theme(plot.title = element_text(size = 10))
 
 

@@ -19,7 +19,7 @@ corresponding time points which are arranged in ascending order.
 }
 \description{
 Computes the empirical covariance estimates of a process, for each pair of time points in the
-time sequence using N realizations of the process.
+time sequence using M realizations of the process.
 }
 \examples{
 #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.

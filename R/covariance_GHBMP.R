@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Computes the empirical covariance estimates of a process, for each pair of time points in the
-#' time sequence using N realizations of the process.
+#' time sequence using M realizations of the process.
 #'
 #' @param X A data frame where the first column is the time sequence and the remaining
 #' columns are the values of each realization of the process.

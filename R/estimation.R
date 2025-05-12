@@ -5,9 +5,9 @@
 #'
 #' @param X.t Data frame where the first column is a time sequence from 0 to 1 and the second the values of the multifractional process.
 #' For reliable estimates the data frame should be of at least 500 data points.
+#' @param N Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param N Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #'
 #' @return A data frame of class \code{"est"} where the first column is a time sequence and second column is estimated values of the Hurst function.
 #'
