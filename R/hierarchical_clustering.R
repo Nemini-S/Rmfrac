@@ -1,15 +1,15 @@
 #' Hierarchical clustering of multifractional processes
 #'
 #' @description
-#' This function performs hierarchical clustering of multifractional
-#' processes based on the Hurst functions.
+#' This function performs hierarchical clustering of realisations of multifractional
+#' processes based on the estimated Hurst functions.
 #'
-#' @param X.t A list of data frames where the first column is a time sequence
-#' from 0 to 1 and the second the values of the multifractional process.
+#' @param X.t A list of data frames. In each data frame, the first column is a time sequence
+#' from 0 to 1 and the second gives the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
 #' @param h The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is used.
-#' @param dist.method A string which specifies a registered distance in \link[proxy]{dist}. The default
+#' @param dist.method A string which specifies a registered distance from [`proxy::dist()`][proxy::dist]. The default
 #' is \code{"euclidean"}.
 #' @param method A string which specifies the hierarchical method used. Available methods
 #' are \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} and \code{"centroid"}.
@@ -23,20 +23,21 @@
 #' @return An object list of class \code{"hc_hurst"} with print and plot methods. The list has following components:
 #' \describe{
 #'   \item{\code{cluster_info}}{A data frame indicating the cluster number and distance to cluster center from
-#'   each multifractional process (Item). Distance is obtained from the \code{dist.method}.}
-#'   \item{\code{cluster}}{A vector of cluster number of each process.}
-#'   \item{\code{cluster_sizes}}{Number of processes in each cluster.}
-#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster. Columns denote each time point.
-#'   Row names denote cluster number.}
-#'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote each time point. Rows denote estimates for each process.}
+#'   each smoothed estimated Hurst function (item). Distance is obtained from the \code{dist.method}.}
+#'   \item{\code{cluster}}{A vector with cluster number of each item.}
+#'   \item{\code{cluster_sizes}}{Number of items in each cluster.}
+#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster.
+#'   Columns denote time points in which estimates were obtained. Row names denote cluster numbers.}
+#'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote time points in which estimates were obtained.
+#'   Rows denote estimates for each realisation.}
 #'   \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
-#'   \item{\code{call}}{The function call consisting the function applied to the provided arguments.}
+#'   \item{\code{call}}{Information about the input parameters used.}
 #' }
 #'
 #'
 #' @details
-#' The Hurst function of each multifractional process is estimated using \code{\link{Hurst}} and the smoothed Hurst estimates are used
-#' for the cluster analysis. The distances between each smoothed Hurst estimate is computed by the dist.method provided and passed into
+#' The Hurst function of each realisation is estimated using the function \code{\link{Hurst}} and the smoothed Hurst estimates are used
+#' for the cluster analysis. The distances between smoothed Hurst estimates are  computed by the dist.method provided and passed into
 #' the \code{\link[stats]{hclust}} for hierarchical clustering.
 #'
 #' @importFrom proxy dist
@@ -105,7 +106,8 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
     return(sm$fitted)
   }
 
-  Smooth_df<-data.frame(rbind(t(sapply(H,loess.fn))))
+  Smooth_df0 <- data.frame(rbind(t(sapply(H,loess.fn))))
+  Smooth_df <- as.data.frame(lapply(Smooth_df0, function(x) pmax(pmin(x, 1), 0)))
 
   Dist<-dist(Smooth_df,method = dist.method)
 
@@ -175,7 +177,7 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
 #' Print method for "hc_hurst" class objects
 #'
 #' @description
-#' Prints the results of hierarchical clustering of multifractional processes.
+#' Prints the results of hierarchical clustering of realisations of processes.
 #'
 #'
 #' @param x Object of class \code{"hc_hurst"}.
@@ -222,7 +224,7 @@ autoplot.hc_hurst<-function(x,type="estimates")
   if (type == "estimates")
   {
     p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
-      facet_wrap(~clus, ncol = 2, scales = "fixed") +
+      facet_wrap(~clus, ncol=2, scales= "fixed") +
       geom_line(color = "black") +
       labs(title = "Smoothed Hurst estimates in each cluster",
            x = "Time", y = "Smoothed Hurst estimates")
@@ -232,7 +234,7 @@ autoplot.hc_hurst<-function(x,type="estimates")
   else if (type == "centers")
   {
     p<-ggplot(DF1,aes(.data$t,.data$values)) +
-      facet_wrap(~clus, ncol = 2, scales = "fixed") +
+      facet_wrap(~clus, ncol=2, scales= "fixed") +
       geom_line(color = "red") +
       labs(title = "Cluster centers",
            x = "Time", y = "Smoothed Hurst estimates")
@@ -244,7 +246,7 @@ autoplot.hc_hurst<-function(x,type="estimates")
     p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
       geom_line(color = "black") +
       geom_line(data = DF1, aes(.data$t, .data$values), color = "red") +
-      facet_wrap(~clus, ncol = 2, scales = "fixed") +
+      facet_wrap(~clus, ncol=2, scales= "fixed") +
       labs(title = "Smoothed Hurst estimates in each cluster and cluster center",
            x = "Time", y = "Smoothed Hurst estimates")
 
@@ -261,26 +263,41 @@ autoplot.hc_hurst<-function(x,type="estimates")
 #' Plot smoothed Hurst functions in each cluster with cluster centers
 #'
 #' @description
-#' Creates a plot of the smoothed Hurst functions of each multifractional process in each cluster with cluster centers using the return from
+#' Creates a plot of the smoothed Hurst functions of realisations of multifractional processes separately in each cluster with cluster centers using the return from
 #' \code{\link{hclust_hurst}}. Options to plot only estimates, only centers or both are available.
 #'
 #' @param x Return from \code{\link{hclust_hurst}}.
 #' @param type The type of plot required:
 #' \describe{
 #' \item{\code{"estimates"}}{Only the smoothed Hurst functions in each cluster.}
-#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of each smoothed Hurst function in the cluster}
+#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster}
 #' \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 #' }
 #' @param ... Unused arguments
 #'
-#' @return A ggplot object which plots the relevant \code{type}.
+#' @return A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.
 #' @exportS3Method Rmultifractional::plot
 #' @importFrom ggplot2 ggplot facet_wrap geom_line labs aes
 #'
 #' @seealso \code{\link{hclust_hurst}}
 #'
-#' @examples-
-#' #See Examples in hclust_hurst().
+#' @examples
+#' #Simulation of multifractional processes
+#' t <- seq(0,1,by=(1/2)^10)
+#' H1 <- function(t) {return(0.1+0*t)}
+#' H2 <- function(t) {return(0.2+0.45*t)}
+#' H3 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+#' X.list.1 <- replicate(3, GHBMP(t,H1),simplify = FALSE)
+#' X.list.2 <- replicate(3, GHBMP(t,H2),simplify = FALSE)
+#' X.list.3 <- replicate(3, GHBMP(t,H3),simplify = FALSE)
+#' X.list <- c(X.list.1,X.list.2,X.list.3)
+#'
+#' #Hierarchical clustering based on k=3 clusters with dendrogram plotted
+#' HC1 <- hclust_hurst(X.list,k=3,dendrogram=TRUE)
+#' print(HC1)
+#'
+#' #Plot of smoothed Hurst functions in each cluster with cluster centers
+#' plot(HC1,type ="ec")
 plot.hc_hurst<-function(x,type="estimates",...) {
   print(autoplot(x,type))
 }

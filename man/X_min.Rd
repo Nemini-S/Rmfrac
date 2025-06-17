@@ -2,19 +2,23 @@
 % Please edit documentation in R/analyses_functions.R
 \name{X_min}
 \alias{X_min}
-\title{Minimum of a time series}
+\title{Estimated minimum of a time series}
 \usage{
-X_min(X, subI = NULL, plot = FALSE)
+X_min(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence \eqn{(t)}
-and the second the values of the time series \eqn{(X(t))}.}
+\item{X}{Data frame where the first column is a time sequence \eqn{t}
+and the second the values of the time series \eqn{X(t)}.}
 
 \item{subI}{Time sub-interval is a vector where the lower bound is
 the first element and upper bound is the second. Optional: If provided minimum of the
-sub-interval is returned, otherwise the whole time sequence is considered.}
+sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series, the minimum and corresponding \eqn{t} values are plotted.}
+
+\item{vline}{Logical: If \code{TRUE}, a vertical line is plotted across the minimum.}
+
+\item{hline}{Logical: If \code{TRUE}, a horizontal line is plotted across the minimum.}
 }
 \value{
 Print the minimum of the time series and
@@ -22,7 +26,7 @@ the corresponding \eqn{t} values. If \code{plot=TRUE}, a plot of the time series
 with minimum and corresponding \eqn{t} values are plotted.
 }
 \description{
-This function finds the minimum of a time series for the provided
+This function computes the minimum of a time series for the provided
 time interval or its sub-interval.
 }
 \examples{

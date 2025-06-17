@@ -35,14 +35,6 @@ X <- GHBMP(T,H)
 Hurst(X)
 
 
-\dontrun{
-#Example 2: For a Fractional Brownian motion simulated using the fbm function of somebm package.
-library(somebm)
-T <- seq(0,1,length=10000)
-FBM <- data.frame("t"=T,"p"=fbm(hurst=0.7,n=9999))
-Hurst(FBM)
-}
-
 }
 \references{
 Ayache, A. and Bouly, F. (2023). Uniformly and strongly consistent estimation for

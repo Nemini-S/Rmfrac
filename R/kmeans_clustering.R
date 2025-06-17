@@ -1,11 +1,11 @@
 #' K-means clustering of multifractional processes
 #'
 #' @description
-#' This function performs k-means clustering of multifractional
-#' processes based on the Hurst function.
+#' This function performs k-means clustering of realisations of multifractional
+#' processes based on the estimated Hurst functions.
 #'
-#' @param X.t A list of data frames where the first column is a time sequence
-#' from 0 to 1 and the second the values of the multifractional process.
+#' @param X.t A list of data frames. In each data frame, the first column is a time sequence
+#' from 0 to 1 and the second gives the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
 #' @param ... Optional arguments: \code{iter.max}, \code{nstart} and \code{algorithm}.
@@ -17,19 +17,21 @@
 #' @return An object list of class \code{"k_hurst"} with print and plot methods. The list has following components:
 #' \describe{
 #'   \item{\code{cluster_info}}{A data frame indicating the cluster number and euclidean distance to cluster center of
-#'   each multifractional process (Item). }
-#'   \item{\code{cluster}}{A vector of cluster number of each process.}
-#'   \item{\code{cluster_sizes}}{Number of processes in each cluster.}
-#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster. Columns denote each time point.
-#'   Row names denote cluster number}
-#'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote each time point. Rows denote estimates for each process.}
+#'   each smoothed estimated Hurst function (item) }
+#'   \item{\code{cluster}}{A vector of cluster number of each item.}
+#'   \item{\code{cluster_sizes}}{Number of item in each cluster.}
+#'   \item{\code{centers}}{A data frame of cluster centers. Center obtained as the average of each smoothed estimated Hurst function in the cluster.
+#'   Columns denote time points in which estimates were obtained. Row names denote cluster numbers.}
+#'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote time points in which estimates were obtained.
+#'   Rows denote estimates for each realisation.}
 #'   \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
-#'   \item{\code{call}}{The function call consisting the function applied to the provided arguments.}
+#'   \item{\code{call}}{Information about the input parameters used}
 #' }
 #'
 #' @details
-#' The Hurst function of each multifractional processe is estimated using \code{\link{Hurst}} and the smoothed Hurst estimates are
-#' used for k-means clustering in \code{\link[stats]{kmeans}}. The Hartigan and Wong algorithm is used as the default algorithm.
+#' The Hurst function of each realisation is estimated using \code{\link{Hurst}}. The smoothed Hurst estimates are
+#' used for k-means clustering in \code{\link[stats]{kmeans}}. The Hartigan and Wong algorithm is used as the
+#' default k-means clustering algorithm.
 #'
 #' @importFrom proxy dist
 #' @importFrom stats loess kmeans
@@ -94,7 +96,8 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
     return(sm$fitted)
   }
 
-  Smooth_df<-data.frame(rbind(t(sapply(H,loess.fn))))
+  Smooth_df0 <- data.frame(rbind(t(sapply(H,loess.fn))))
+  Smooth_df <- as.data.frame(lapply(Smooth_df0, function(x) pmax(pmin(x, 1), 0)))
 
   km<-kmeans(Smooth_df,k,...)
   clusters<-km$cluster
@@ -130,7 +133,7 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
 #' Print method for "k_hurst" class objects
 #'
 #' @description
-#' Prints the results of k-means clustering of multifractional processes.
+#' Prints the results of k-means clustering of realisations of processes.
 #'
 #' @param x Object of class \code{"k_hurst"}.
 #' @param ... Unused arguments
@@ -216,19 +219,19 @@ autoplot.k_hurst<-function(x,type="estimates")
 #' Plot smoothed Hurst functions in each cluster with cluster centers
 #'
 #' @description
-#' Creates a plot of the smoothed Hurst functions of each multifractional process in each cluster with cluster centers using the return from
+#' Creates a plot of the smoothed Hurst functions of realisations of multifractional processes separately in each cluster with cluster centers using the return from
 #' \code{\link{kmeans_hurst}}. Options to plot only estimates, only centers or both are available.
 #'
 #' @param x Return from \code{\link{kmeans_hurst}}.
 #' @param type The type of plot required.
 #' \describe{
 #' \item{\code{"estimates"}}{Only the smoothed Hurst functions in each cluster.}
-#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of each smoothed Hurst function in the cluster}
+#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster}
 #' \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 #' }
 #' @param ... Other arguments
 #'
-#' @return A ggplot object which plots the relevant \code{type}.
+#' @return A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.
 #' @exportS3Method Rmultifractional::plot
 #' @importFrom ggplot2 ggplot facet_wrap geom_line labs aes
 #' @importFrom rlang .data
@@ -236,7 +239,22 @@ autoplot.k_hurst<-function(x,type="estimates")
 #' @seealso \code{\link{kmeans_hurst}}
 #'
 #' @examples
-#' #See Examples in kmeans_hurst().
+#' #Simulation of multifractional processes
+#' t <- seq(0,1,by=(1/2)^10)
+#' H1 <- function(t) {return(0.1+0*t)}
+#' H2 <- function(t) {return(0.2+0.45*t)}
+#' H3 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+#' X.list.1 <- replicate(3, GHBMP(t,H1),simplify = FALSE)
+#' X.list.2 <- replicate(3, GHBMP(t,H2),simplify = FALSE)
+#' X.list.3 <- replicate(3, GHBMP(t,H3),simplify = FALSE)
+#' X.list <- c(X.list.1,X.list.2,X.list.3)
+#'
+#' #K-means clustering based on k=3 clusters
+#' KC1 <- kmeans_hurst(X.list,k=3)
+#' print(KC1)
+#'
+#' #Plot of smoothed Hurst functions in each cluster with cluster centers
+#' plot(KC1,type ="ec")
 plot.k_hurst<-function(x,type="estimates",...) {
   print(autoplot(x,type))
 }

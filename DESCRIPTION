@@ -4,9 +4,10 @@ Title: Simulation and analyses of multifractional processes
 Version: 0.1.0
 Author: Andriy Olenko, Nemini Samarakoon 
 Maintainer: Nemini Samarakoon <NWijesingheS@ltu.edu.au> 
-Description: Simulation of the Guassian Haar Based Multifractional Process (GHBMP). Analyses includes estimation of the Hurst function, clustering multifractional processes based on the Hurst functions and several functions to compute and plot characteristics of the processes.
+Description: Simulation of the Guassian Haar Based Multifractional Processes (GHBMP). Estimation of Hurst functions, clustering realisations based on the Hurst functions and several functions to estimate and plot characteristics of the processes.
 License: GPL-3
 Encoding: UTF-8
-Imports: parallel, parallelly, ggplot2, zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders
+Imports: parallel, parallelly, ggplot2, zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, xts
 LazyData: false
 RoxygenNote: 7.3.1
+Roxygen: list(markdown = TRUE)

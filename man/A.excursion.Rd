@@ -7,24 +7,24 @@
 A.excursion(X, A, n = 10000, level = "greater", subI = NULL, plot = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence (t)
-and the second the values of the time series \eqn{(X(t))}.}
+\item{X}{Data frame where the first column is a time sequence \eqn{t}
+and the second one is the values of the time series \eqn{X(t)}.}
 
-\item{A}{Constant level as a numeric value. Checks whether \eqn{X(t)} greater or lower than \code{A}.}
+\item{A}{Constant level as a numeric value.}
 
 \item{n}{Number of points a time interval to be split into. Default set to 10000.}
 
 \item{level}{A vector of character strings which specifies whether the excursion
-area is required for \code{X} \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.}
+area is required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.}
 
-\item{subI}{Time sub-interval is a vector where the lower bound is
-the first element and upper bound is the second. Optional: If provided the excursion area
-of the sub-interval is returned, otherwise the whole time sequence is considered.}
+\item{subI}{Time sub-interval is a vector, where the lower bound is
+the first element and the upper bound is the second. Optional: If provided, the excursion area
+for the sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted.}
 }
 \value{
-Excursion area. If \code{plot=TRUE}, the time series, constant level and excursion area
+Excursion area. If \code{plot=TRUE}, the time series, the constant level and excursion area
 are plotted.
 }
 \description{

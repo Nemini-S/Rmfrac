@@ -1,7 +1,7 @@
-#' Empirical covariance estimates of a process
+#' Empirical covariance function of a process
 #'
 #' @description
-#' Computes the empirical covariance estimates of a process, for each pair of time points in the
+#' Computes the empirical covariance function of a process, for each pair of time points in the
 #' time sequence using M realizations of the process.
 #'
 #' @param X A data frame where the first column is the time sequence and the remaining
@@ -11,9 +11,8 @@
 #'
 #' @return
 #' An \eqn{m \times m} matrix, where \eqn{m} is the number of time points.
-#' Each element represents the empirical covariance estimate for the
-#' corresponding time points which are arranged in ascending order.
-#'
+#' Each element represents the estimated value of covariance function for the
+#' corresponding time points. Time points are arranged in ascending order.
 #'
 #' @importFrom plotly plot_ly
 #'
@@ -23,7 +22,7 @@
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 #' t <- seq(0,1,by=(1/2)^8)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' #Only 5 realizations of GHBMP are used to reduce the computational time.
+#' #Only 5 realizations of GHBMP are used in this example to reduce the computational time.
 #' X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 #' X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 #' Data <- data.frame(t,t(X))
@@ -81,10 +80,10 @@ est_cov<-function(X,plot=FALSE)
 #' Covariance of Gaussian Haar-based multifractional processes
 #'
 #' @description
-#' Computes the covariance matrix of a Gaussian Haar-based multifractional process.
+#' Computes the theoretical covariance matrix of a Gaussian Haar-based multifractional process.
 #'
-#' @param t Time point or time sequence on the interval [0,1].
-#' @param H Hurst function which depends on \code{t} \eqn{(H(t))}.
+#' @param t Time point or time sequence on the interval \eqn{[0,1]}.
+#' @param H Hurst function \eqn{H(t)} which depends on \code{t}.
 #' @param J Positive integer. For large J values could be rather time consuming. Default is set to 8.
 #' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
 #' @param num.cores Number of cores to set up the clusters for parallel computing.
@@ -98,7 +97,7 @@ est_cov<-function(X,plot=FALSE)
 #' @importFrom plotly plot_ly layout
 #'
 #' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes. (submitted).
+#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 #'
 #' @export cov_GHBMP
 #'

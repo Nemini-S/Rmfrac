@@ -7,9 +7,9 @@
 cov_GHBMP(t, H, J = 8, plot = FALSE, num.cores = availableCores(omit = 1))
 }
 \arguments{
-\item{t}{Time point or time sequence on the interval [0,1].}
+\item{t}{Time point or time sequence on the interval \eqn{[0,1]}.}
 
-\item{H}{Hurst function which depends on \code{t} \eqn{(H(t))}.}
+\item{H}{Hurst function \eqn{H(t)} which depends on \code{t}.}
 
 \item{J}{Positive integer. For large J values could be rather time consuming. Default is set to 8.}
 
@@ -21,7 +21,7 @@ cov_GHBMP(t, H, J = 8, plot = FALSE, num.cores = availableCores(omit = 1))
 An \eqn{m \times m} matrix, where \eqn{m} is the length of \code{t}.
 }
 \description{
-Computes the covariance matrix of a Gaussian Haar-based multifractional process.
+Computes the theoretical covariance matrix of a Gaussian Haar-based multifractional process.
 }
 \examples{
 \dontrun{
@@ -33,7 +33,7 @@ cov_GHBMP(t,H,plot=TRUE)
 }
 \references{
 Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-On Construction, Properties and Simulation of Haar-Based Multifractional Processes. (submitted).
+On Construction, Properties and Simulation of Haar-Based Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 }
 \seealso{
 \code{\link{GHBMP}}

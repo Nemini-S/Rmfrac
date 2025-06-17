@@ -2,29 +2,32 @@
 #'
 #' @description
 #' This function simulates a Gaussian Haar-based multifractional process at any
-#' time point or time sequence on the interval [0,1].
+#' time point or time sequence on the interval \eqn{[0,1]}.
 #'
-#' @param t Time point or time sequence on the interval [0,1].
+#' @param t Time point or time sequence on the interval \eqn{[0,1]}.
 #' @param H Hurst function which depends on \code{t} \eqn{(H(t))}. See Examples for usage.
 #' @param J Positive integer. \code{J} is recommended to be greater than \eqn{\log_2(length(t))}. For large \code{J} values could
 #' be rather time consuming. Default is set to 15.
 #' @param num.cores Number of cores to set up the clusters for parallel computing.
 #'
-#' @return A data frame of class \code{"mp"} where the first column is \code{t} and second column is simulated values of \eqn{X(t)}.
+#' @return A data frame of class \code{"mp"} where the first column is time moments \code{t} and second column is simulated values of \eqn{X(t)}.
 #'
 #' @details
 #' The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2025) was used in simulating Gaussian Haar-based multifractional process.
 #'
 #' \eqn{X(t) := \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k},}
 #'
-#' where \eqn{  \int_{0}^{1} (t-s)_{+}^{H_{j,k}-\frac{1}{2}} h_{j,k} (s) ds = 2^{-j H_{j,k}} h^{[H_{j,k}]} (2^jt-k)}
+#' where
+#'
+#' \eqn{  \int_{0}^{1} (t-s)_{+}^{H_{j,k}-\frac{1}{2}} h_{j,k} (s) ds = 2^{-j H_{j,k}} h^{[H_{j,k}]} (2^jt-k)}
+#'
 #' with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}} h(s) ds}.
 #' \eqn{h} is the Haar mother wavelet, \eqn{j} and \eqn{k} are positive integers, \eqn{t} is time, \eqn{H} is the Hurst function and
 #' \eqn{\varepsilon_{j,k}} is a sequence of independent \eqn{\mathcal{N}(0,1)} Gaussian random variables.
 #' For simulations, the truncated version of this formula with first summation up to J is considered.
 #'
 #' @note
-#' See Examples for the usage of constant Hurst functions and other Hurst functions, for example, piecewise or step functions.
+#' See Examples for the usage of Hurst functions, for example, constant, time-varying, piecewise or step functions.
 #'
 #' @export GHBMP
 #'
@@ -33,7 +36,8 @@
 #' @importFrom stats rnorm
 #'
 #' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes. (submitted).
+#' On Construction, Properties and Simulation of Haar-Based
+#' Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 #'
 #'
 #' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}
@@ -131,4 +135,79 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 
   stopCluster(cl)
   options(warn = 0)
+}
+
+
+
+
+#' Simulation of Brownian motion
+#'
+#' @description
+#' This function simulates a realisation of the Brownian motion over
+#' time interval \eqn{[t1,T]} with \code{N} increments and initial value \code{x1}.
+#'
+#' @param x1 Value of the process at the initial time point.
+#' @param t1 Initial time point.
+#' @param T Terminal time point.
+#' @param N Number of time steps the interval \eqn{[t1,T]} is split into.
+#' Default set to 1000.
+#' @param plot Logical: If \code{TRUE}, the realisation of the Brownian
+#' motion is plotted.
+#'
+#' @return A data frame where the first column is \code{t} and second
+#' column is simulated values of the realisation of Brownian motion.
+#'
+#' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
+#' @importFrom stats rnorm
+#'
+#' @export Bm
+#' @seealso \code{\link{GHBMP}}
+#'
+#' @examples
+#' Bm(x1=0,t1=0,T=2,N=1000,plot=TRUE)
+Bm<-function(x1=0,t1=0,T=1,N=1000,plot=TRUE)
+{
+
+  if (!is.numeric(x1)) {
+    stop("x1 must be numeric")
+  }
+
+  if (!is.numeric(t1)) {
+    stop("t1 must be numeric")
+  }
+
+  if (!is.numeric(T)) {
+    stop("T must be numeric")
+  }
+
+  if (!(t1<T)) {
+    stop("Incorrect inputs for t1 and T")
+  }
+
+  if (!is.numeric(N)) {
+    stop("n must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("n must be a positive integer")
+  }
+
+  if (!is.logical(plot)) {
+    stop("Plot must have logical inputs either TRUE or FALSE")
+  }
+
+  diff.t <- (T-t1)/N
+  increments <- rnorm(N, mean = 0, sd = sqrt(diff.t))
+  X <- c(x1, x1 + cumsum(increments))
+  t <- seq(t1, T, length.out = N + 1)
+  sim_data <- data.frame(t = t, X = X)
+
+  if(plot){
+    p<- ggplot(sim_data, aes(x = .data$t, y = .data$X)) +
+      geom_line() +
+      labs(y="X(t)",x="t") +
+      ggtitle("Realisation of Brownian motion")
+
+    print(p)
+  }
+
+  return(sim_data)
 }

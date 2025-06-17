@@ -36,14 +36,6 @@
 #' Hurst(X)
 #'
 #'
-#' \dontrun{
-#' #Example 2: For a Fractional Brownian motion simulated using the fbm function of somebm package.
-#' library(somebm)
-#' T <- seq(0,1,length=10000)
-#' FBM <- data.frame("t"=T,"p"=fbm(hurst=0.7,n=9999))
-#' Hurst(FBM)
-#' }
-#'
 Hurst<-function(X.t,N=100,Q=2,L=2)
 {
   if (!is.data.frame(X.t) | !ncol(X.t) == 2 | !(all(sapply(X.t, is.numeric))) | !(all(X.t[[1]] >= 0 & X.t[[1]] <= 1))) {
@@ -127,3 +119,53 @@ Hurst<-function(X.t,N=100,Q=2,L=2)
 }
 
 
+#' Estimation of the local fractal dimension
+#'
+#' @description
+#' This function computes the estimates for the local fractal dimension of multifractional processes.
+#'
+#' @param X.t Data frame where the first column is a time sequence from 0 to 1 and the second the values of the multifractional process.
+#' For reliable estimates the data frame should be of at least 500 data points.
+#' @param N Argument used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
+#' @param Q Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param L Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
+#'
+#' @return A data frame where the first column is a time sequence and second column is estimated values of the local fractal dimension.
+#' @export LFD
+#' @seealso \code{\link{Hurst}}, \code{\link{plot.est}}, \code{\link{plot.mp}}
+#' @examples
+#' #Example 1: For a multifractional process simulated using GHBMP function
+#' T <- seq(0,1,by=(1/2)^10)
+#' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+#' X <- GHBMP(T,H)
+#' LFD(X)
+LFD <- function(X.t,N=100,Q=2,L=2)
+{
+  if (!is.data.frame(X.t) | !ncol(X.t) == 2 | !(all(sapply(X.t, is.numeric))) | !(all(X.t[[1]] >= 0 & X.t[[1]] <= 1))) {
+    stop("X.t must be a numeric data frame with time sequence from 0 to 1 given as the first column")
+  }
+
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
+  }
+
+  if (!is.numeric(Q)) {
+    stop("Q must be numeric")
+  } else if (!(Q %% 1 == 0) | !(Q > 1)) {
+    stop("Q must be a positive integer greater than 1")
+  }
+
+  if (!is.numeric(L)) {
+    stop("L must be numeric")
+  } else if (!(L %% 1 == 0) | !(L > 1)) {
+    stop("L must be a positive integer greater than 1")
+  }
+
+  Hurst_est <- Hurst(X.t,N,Q,L)
+
+  D <- data.frame(Time=Hurst_est[,1],LFD_estimate=2-(Hurst_est[,2]))
+
+  return(D)
+}

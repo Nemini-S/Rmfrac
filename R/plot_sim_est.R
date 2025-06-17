@@ -36,7 +36,8 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
                     ,method="loess",se=FALSE,span = 0.3) +
         scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
                            values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green"))+
-        labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
+        ggtitle("GHBMP and Hurst functions")+
+        labs(y="X(t)",x="t")
 
 
     } else if (Raw_Est_H && !(Smooth_Est_H)){
@@ -46,8 +47,8 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
         geom_line(data = H_est, aes(x =.data$x, y =.data$y,col="Raw Estimate H")) +
         scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H"),
                            values=c("Theoretical H"="blue", "Raw Estimate H"="red"))+
-        labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
-
+        ggtitle("GHBMP and Hurst functions")+
+        labs(y="X(t)",x="t")
 
     } else if (!(Raw_Est_H) && (Smooth_Est_H)) {
 
@@ -57,8 +58,8 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
                     ,method="loess",se=FALSE,span = 0.3) +
         scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Smoothed Estimate H"),
                            values=c("Theoretical H"="blue", "Smoothed Estimate H"="green"))+
-        labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
-
+        ggtitle("GHBMP and Hurst functions")+
+        labs(y="X(t)",x="t")
 
     } else if (!(Raw_Est_H) && !(Smooth_Est_H)) {
 
@@ -66,8 +67,8 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
         geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))+
         scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H"),
                            values=c("Theoretical H"="blue"))+
-        labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
-
+        ggtitle("GHBMP and Hurst functions")+
+        labs(y="X(t)",x="t")
     }
 
   } else { if (Raw_Est_H && Smooth_Est_H) {
@@ -77,8 +78,8 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
                   ,method="loess",se=FALSE,span = 0.3) +
       scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
                          values=c( "Raw Estimate H"="red", "Smoothed Estimate H"="green"))+
-      labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
-
+      ggtitle("GHBMP and Hurst functions")+
+      labs(y="X(t)",x="t")
 
   } else if(!(Raw_Est_H) && Smooth_Est_H){
     p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
@@ -86,20 +87,21 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
                   ,method="loess",se=FALSE,span = 0.3) +
       scale_color_manual(name = "Hurst functions", breaks=c( "Smoothed Estimate H"),
                          values=c(  "Smoothed Estimate H"="green"))+
-      labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
-
+      ggtitle("GHBMP and Hurst functions")+
+      labs(y="X(t)",x="t")
 
   } else if(Raw_Est_H && !(Smooth_Est_H)){
     p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
       geom_line(data = H_est, aes(x =.data$x, y =.data$y,col="Raw Estimate H")) +
       scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H"),
                          values=c( "Raw Estimate H"="red"))+
-      labs(main="GHBMP and Hurst functions",y="X(t)",x="t")
-
+      ggtitle("GHBMP and Hurst functions")+
+      labs(y="X(t)",x="t")
 
   } else if(!(Raw_Est_H) && !(Smooth_Est_H)){
     p<-ggplot(X.t, aes(x =.data$t1, y =.data$PP))+geom_line() +
-      labs(main="GHBMP",y="X(t)",x="t")
+      ggtitle("GHBMP")+
+      labs(y="X(t)",x="t")
 
   }
   }
@@ -107,16 +109,16 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
 }
 
 
-#' Plot Gaussian Haar-based multifractional processes with theoretical and estimated Hurst functions
+#' Plot Gaussian Haar-based multifractional processes with their theoretical and estimated Hurst functions
 #'
 #' @description
 #' Creates a plot of the Gaussian Haar-based multifractional process
-#' simulated using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
+#' simulated by using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
 #' Hurst function estimated using \code{\link{Hurst}} and
 #' the smoothed estimated Hurst function.
 #'
 #'
-#' @param x Return from \code{\link{GHBMP}}. For accurate plot of the process, should be of at least 500 data points.
+#' @param x Return from \code{\link{GHBMP}}. For accurate estimated Hurst functions, \code{x} should be of at least 500 data points.
 #' @param H Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.
 #' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
 #' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
@@ -182,7 +184,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
                     ,method="loess",se=FALSE,span = 0.3) +
         scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
                            values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green"))+
-        labs(main="Hurst functions",y="H(t)",x="t")
+        labs(y="H(t)",x="t")
 
 
     } else if (Raw_Est_H && !(Smooth_Est_H)){
@@ -191,7 +193,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
         geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))+
         scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Raw Estimate H"),
                            values=c("Theoretical H"="blue", "Raw Estimate H"="red"))+
-        labs(main="Hurst functions",y="H(t)",x="t")
+        labs(y="H(t)",x="t")
 
 
     } else if (!(Raw_Est_H) && (Smooth_Est_H)) {
@@ -202,7 +204,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
                     ,method="loess",se=FALSE,span = 0.3) +
         scale_color_manual(name = "Hurst function", breaks=c("Theoretical H", "Smoothed Estimate H"),
                            values=c("Theoretical H"="blue", "Smoothed Estimate H"="green"))+
-        labs(main="Hurst functions",y="H(t)",x="t")
+        labs(y="H(t)",x="t")
 
 
     } else if (!(Raw_Est_H) && !(Smooth_Est_H)) {
@@ -210,7 +212,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
         geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))+
                 scale_color_manual(name = "Hurst function", breaks=c("Theoretical H"),
                            values=c("Theoretical H"="blue"))+
-        labs(main="Hurst functions",y="H(t)",x="t")
+        labs(y="H(t)",x="t")
 
     }
 
@@ -221,7 +223,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
                   ,method="loess",se=FALSE,span = 0.3) +
       scale_color_manual(name = "Hurst function", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
                          values=c("Raw Estimate H"="red", "Smoothed Estimate H"="green"))+
-      labs(main="Hurst functions",y="H(t)",x="t")
+      labs(y="H(t)",x="t")
 
 
   } else if(!(Raw_Est_H) && Smooth_Est_H){
@@ -231,7 +233,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
                   ,method="loess",se=FALSE,span = 0.3) +
       scale_color_manual(name = "Hurst function", breaks=c("Smoothed Estimate H"),
                          values=c("Smoothed Estimate H"="green"))+
-      labs(main="Hurst functions",y="H(t)",x="t")
+      labs(y="H(t)",x="t")
 
 
   } else if(Raw_Est_H && !(Smooth_Est_H)){
@@ -240,7 +242,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
       geom_line(aes(col="Raw Estimate H")) +
       scale_color_manual(name = "Hurst function", breaks=c("Raw Estimate H"),
                          values=c("Raw Estimate H"="red"))+
-      labs(main="Hurst functions",y="H(t)",x="t")
+      labs(y="H(t)",x="t")
 
 
   } else if(!(Raw_Est_H) && !(Smooth_Est_H)){
