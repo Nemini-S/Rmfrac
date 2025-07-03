@@ -130,7 +130,7 @@ autoplot.mp<-function(X.t,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,N=100,Q=2,L=2)
 #'
 #' @return A ggplot object which plots the multifractional process with theoretical, estimated and smoothed Hurst functions.
 #'
-#' @exportS3Method Rmultifractional::plot
+#' @exportS3Method Rmfrac::plot
 #'
 #' @importFrom graphics plot
 #'
@@ -271,7 +271,7 @@ autoplot.est<-function(H_est,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE)
 #'
 #' @return A ggplot object which plots the theoretical, estimated and smoothed Hurst functions.
 #'
-#' @exportS3Method Rmultifractional::plot
+#' @exportS3Method Rmfrac::plot
 #'
 #' @importFrom graphics plot
 #'

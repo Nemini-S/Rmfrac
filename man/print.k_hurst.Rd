@@ -12,7 +12,7 @@
 \item{...}{Unused arguments}
 }
 \description{
-Prints the results of k-means clustering of multifractional processes.
+Prints the results of k-means clustering of realisations of processes.
 }
 \seealso{
 \code{\link{kmeans_hurst}}

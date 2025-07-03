@@ -895,7 +895,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' @details To compute the RSI, \eqn{100 \dfrac{Average_gain}{Average_gain+Average_loss}}
 #' formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
 #' @importFrom xts xts is.xts
-#' @importFrom ggplot2 ggplot geom_line geom_hline labs aes facet_grid
+#' @importFrom ggplot2 ggplot geom_line geom_hline labs aes facet_grid vars
 #' @importFrom rlang .data
 #' @importFrom zoo index
 #'
@@ -983,7 +983,7 @@ RS_Index <- function(prices,period=14,plot=FALSE,overbought=70,oversold=30)
     p <- ggplot(RSI_df,aes(x=.data$t, y=.data$value)) +
       geom_line() +
       geom_hline(data=df1,aes(yintercept=.data$hline),color=c("blue","blue"), linetype="dashed") +
-      facet_grid(rows=~group, scales="free_y") +
+      facet_grid(rows = vars(group), scales="free_y") +
       labs(title="Price and Relative Strength Index",y="",x="Time")
 
     print(p)

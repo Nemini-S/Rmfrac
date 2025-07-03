@@ -2,7 +2,7 @@
 % Please edit documentation in R/covariance_GHBMP.R
 \name{est_cov}
 \alias{est_cov}
-\title{Empirical covariance estimates of a process}
+\title{Empirical covariance function of a process}
 \usage{
 est_cov(X, plot = FALSE)
 }
@@ -14,18 +14,18 @@ columns are the values of each realization of the process.}
 }
 \value{
 An \eqn{m \times m} matrix, where \eqn{m} is the number of time points.
-Each element represents the empirical covariance estimate for the
-corresponding time points which are arranged in ascending order.
+Each element represents the estimated value of covariance function for the
+corresponding time points. Time points are arranged in ascending order.
 }
 \description{
-Computes the empirical covariance estimates of a process, for each pair of time points in the
+Computes the empirical covariance function of a process, for each pair of time points in the
 time sequence using M realizations of the process.
 }
 \examples{
 #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 t <- seq(0,1,by=(1/2)^8)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#Only 5 realizations of GHBMP are used to reduce the computational time.
+#Only 5 realizations of GHBMP are used in this example to reduce the computational time.
 X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 Data <- data.frame(t,t(X))

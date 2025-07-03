@@ -12,7 +12,7 @@
 \item{...}{Unused arguments}
 }
 \description{
-Prints the results of hierarchical clustering of multifractional processes.
+Prints the results of hierarchical clustering of realisations of processes.
 }
 \seealso{
 \code{\link{hclust_hurst}}

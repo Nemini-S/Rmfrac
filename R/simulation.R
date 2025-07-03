@@ -40,7 +40,7 @@
 #' Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 #'
 #'
-#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}
+#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBM}}, \code{\link{sim_FGN}}
 #' @examples
 #' #Constant Hurst function
 #' t <- seq(0,1,by=(1/2)^10)
@@ -144,12 +144,12 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 #'
 #' @description
 #' This function simulates a realisation of the Brownian motion over
-#' time interval \eqn{[t1,T]} with \code{N} increments and initial value \code{x1}.
+#' time interval \eqn{[t_{start},t_{end}]} with \code{N} increments and initial value \code{x1}.
 #'
 #' @param x1 Value of the process at the initial time point.
-#' @param t1 Initial time point.
-#' @param T Terminal time point.
-#' @param N Number of time steps the interval \eqn{[t1,T]} is split into.
+#' @param t_start Initial time point.
+#' @param t_end Terminal time point.
+#' @param N Number of time steps the interval \eqn{[t_{start},t_{end}]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian
 #' motion is plotted.
@@ -161,47 +161,47 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 #' @importFrom stats rnorm
 #'
 #' @export Bm
-#' @seealso \code{\link{GHBMP}}
+#' @seealso \code{\link{GHBMP}}, \code{\link{FBM}}, \code{\link{sim_FGN}}
 #'
 #' @examples
-#' Bm(x1=0,t1=0,T=2,N=1000,plot=TRUE)
-Bm<-function(x1=0,t1=0,T=1,N=1000,plot=TRUE)
+#' Bm(x1=0,t_start=0,t_end=2,plot=TRUE)
+Bm<-function(x1=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 {
 
   if (!is.numeric(x1)) {
     stop("x1 must be numeric")
   }
 
-  if (!is.numeric(t1)) {
-    stop("t1 must be numeric")
+  if (!is.numeric(t_start)) {
+    stop("t_start must be numeric")
   }
 
-  if (!is.numeric(T)) {
-    stop("T must be numeric")
+  if (!is.numeric(t_end)) {
+    stop("t_end must be numeric")
   }
 
-  if (!(t1<T)) {
-    stop("Incorrect inputs for t1 and T")
+  if (!(t_start<t_end)) {
+    stop("Incorrect inputs for t_start and t_end")
   }
 
   if (!is.numeric(N)) {
-    stop("n must be numeric")
+    stop("N must be numeric")
   } else if (!(N %% 1 == 0) | !(N > 0)) {
-    stop("n must be a positive integer")
+    stop("N must be a positive integer")
   }
 
   if (!is.logical(plot)) {
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  diff.t <- (T-t1)/N
-  increments <- rnorm(N, mean = 0, sd = sqrt(diff.t))
-  X <- c(x1, x1 + cumsum(increments))
-  t <- seq(t1, T, length.out = N + 1)
-  sim_data <- data.frame(t = t, X = X)
+  diff <- (t_end-t_start)/N
+  increments <- rnorm(N,mean=0,sd=sqrt(diff))
+  X <- c(x1,x1+cumsum(increments))
+  t <- seq(t_start,t_end,length.out=N+1)
+  sim_data <- data.frame(t=t,X=X)
 
   if(plot){
-    p<- ggplot(sim_data, aes(x = .data$t, y = .data$X)) +
+    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
       geom_line() +
       labs(y="X(t)",x="t") +
       ggtitle("Realisation of Brownian motion")
@@ -210,4 +210,140 @@ Bm<-function(x1=0,t1=0,T=1,N=1000,plot=TRUE)
   }
 
   return(sim_data)
+}
+
+
+#' Simulation of fractional Brownian motion
+#'
+#' @description
+#' This function simulates a realisation of the fractional Brownian motion over
+#' time interval \eqn{[0,t_{end}]} for a provided Hurst parameter.
+#'
+#' @param H Hurst parameter which lies between 0 and 1.
+#' @param t_end Terminal time point.
+#' @param N Number of time steps the interval \eqn{[0,t_{end}]} is split into.
+#' Default set to 1000.
+#' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian
+#' motion is plotted.
+#'
+#' @return A data frame where the first column is \code{t} and second
+#' column is simulated values of the realisation of fractional Brownian motion.
+#'
+#' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
+#' @importFrom stats toeplitz rnorm
+#'
+#' @export FBM
+#' @seealso \code{\link{sim_FGN}}, \code{\link{Bm}}, \code{\link{GHBMP}}
+#'
+#' @examples
+#' FBM(H=0.3,t_end=1,plot=TRUE)
+FBM <- function(H,t_end,N=1000,plot=FALSE){
+
+  if (!is.numeric(H) | !(H > 0 & H< 1)) {
+    stop("H must be a number between 0 and 1")
+  }
+
+  if (!is.numeric(t_end)) {
+    stop("t_end must be numeric")
+  } else if ( !(t_end > 0)) {
+    stop("Incorrect input for t_end")
+  }
+
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
+  }
+
+  if (!is.logical(plot)) {
+    stop("Plot must have logical inputs either TRUE or FALSE")
+  }
+
+  diff <- t_end/N
+  t <- seq(0,t_end,by=diff)
+
+  c<- function(k,H){
+    0.5 * ((k+1)^(2*H)+(abs(k-1))^(2*H)-2*(k)^(2*H))
+  }
+
+  cov_mat <- toeplitz(sapply(0:(N-1),c,H=H))
+
+  L <- t(chol(cov_mat))
+
+  z <- rnorm(N,0,1)
+
+  x <- L%*%z
+
+  B <- cumsum(x)
+  B <- append(B, 0, after = 0)
+
+  sim_data <- data.frame(t=t,X=B*diff^H)
+
+  if(plot){
+    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+      geom_line() +
+      labs(y="X(t)",x="t") +
+      ggtitle("Realisation of fractional Brownian motion")
+
+    print(p)
+  }
+
+  return(sim_data)
+
+}
+
+#' Simulation of fractional Gaussian noise
+#'
+#' @description
+#' This function simulates a realisation of the fractional Gaussian noise over
+#' time interval \eqn{[t_{start},t_{end}]} for a provided Hurst parameter.
+#'
+#' @param H Hurst parameter which lies between 0 and 1.
+#' @param t_start Initial time point.
+#' @param t_end Terminal time point.
+#' @param N Number of time steps the interval \eqn{[t_{start},t_{end}]} is split into.
+#' Default set to 1000.
+#' @param plot Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise
+#' is plotted.
+#'
+#' @return A data frame where the first column is \code{t} and second
+#' column is simulated values of the realisation of fractional Gaussian noise.
+#'
+#' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
+#' @importFrom stats toeplitz rnorm
+#'
+#' @export
+#' @seealso \code{\link{FBM}}, \code{\link{Bm}}, \code{\link{GHBMP}}
+#' @examples
+#' sim_FGN(H=0.3,t_start=0,t_end=1,plot=TRUE)
+sim_FGN <- function(H,t_start,t_end,N=1000,plot=FALSE){
+
+  diff <- t_end/N
+  t <- seq(t_start,t_end,length.out=N)
+
+  c<- function(k,H){
+    0.5 * ((k+1)^(2*H)+(abs(k-1))^(2*H)-2*(k)^(2*H))
+  }
+
+  cov_mat <- toeplitz(sapply(0:(N-1),c,H=H))
+
+  L <- t(chol(cov_mat))
+
+  z <- rnorm(N,0,1)
+
+  x <- L%*%z
+
+  sim_data <- data.frame(t=t,X=x)
+
+  if(plot){
+    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X))+
+      geom_line() +
+      labs(y="X(t)",x="t") +
+      ggtitle("Realisation of fractional Guassian noise")
+
+    print(p)
+  }
+
+  return(sim_data)
+
 }

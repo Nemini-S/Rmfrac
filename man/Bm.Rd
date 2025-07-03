@@ -4,16 +4,16 @@
 \alias{Bm}
 \title{Simulation of Brownian motion}
 \usage{
-Bm(x1 = 0, t1 = 0, T = 1, N = 1000, plot = TRUE)
+Bm(x1 = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
 }
 \arguments{
 \item{x1}{Value of the process at the initial time point.}
 
-\item{t1}{Initial time point.}
+\item{t_start}{Initial time point.}
 
-\item{T}{Terminal time point.}
+\item{t_end}{Terminal time point.}
 
-\item{N}{Number of time steps the interval \eqn{[t1,T]} is split into.
+\item{N}{Number of time steps the interval \eqn{[t_{start},t_{end}]} is split into.
 Default set to 1000.}
 
 \item{plot}{Logical: If \code{TRUE}, the realisation of the Brownian
@@ -25,11 +25,11 @@ column is simulated values of the realisation of Brownian motion.
 }
 \description{
 This function simulates a realisation of the Brownian motion over
-time interval \eqn{[t1,T]} with \code{N} increments and initial value \code{x1}.
+time interval \eqn{[t_{start},t_{end}]} with \code{N} increments and initial value \code{x1}.
 }
 \examples{
-Bm(x1=0,t1=0,T=2,N=1000,plot=TRUE)
+Bm(x1=0,t_start=0,t_end=2,plot=TRUE)
 }
 \seealso{
-\code{\link{GHBMP}}
+\code{\link{GHBMP}}, \code{\link{FBM}}, \code{\link{sim_FGN}}
 }

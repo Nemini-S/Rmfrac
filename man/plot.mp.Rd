@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_sim_est.R
 \name{plot.mp}
 \alias{plot.mp}
-\title{Plot Gaussian Haar-based multifractional processes with theoretical and estimated Hurst functions}
+\title{Plot Gaussian Haar-based multifractional processes with their theoretical and estimated Hurst functions}
 \usage{
 \method{plot}{mp}(
   x,
@@ -16,7 +16,7 @@
 )
 }
 \arguments{
-\item{x}{Return from \code{\link{GHBMP}}. For accurate plot of the process, should be of at least 500 data points.}
+\item{x}{Return from \code{\link{GHBMP}}. For accurate estimated Hurst functions, \code{x} should be of at least 500 data points.}
 
 \item{H}{Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.}
 
@@ -38,7 +38,7 @@ A ggplot object which plots the multifractional process with theoretical, estima
 }
 \description{
 Creates a plot of the Gaussian Haar-based multifractional process
-simulated using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
+simulated by using \code{\link{GHBMP}} with theoretical Hurst function (if provided),
 Hurst function estimated using \code{\link{Hurst}} and
 the smoothed estimated Hurst function.
 }

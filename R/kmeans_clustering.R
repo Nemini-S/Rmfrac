@@ -52,11 +52,11 @@
 #' X.list <- c(X.list.1,X.list.2,X.list.3)
 #'
 #' #K-means clustering based on k=3 clusters
-#' KC1 <- kmeans_hurst(X.list,k=3)
-#' print(KC1)
+#' KC <- kmeans_hurst(X.list,k=3)
+#' print(KC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(KC1,type ="ec")
+#' plot(KC,type ="ec")
 kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
 {
   if (!is.list(X.t)) {
@@ -140,7 +140,7 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
 #'
 #' @seealso \code{\link{kmeans_hurst}}
 #'
-#' @exportS3Method Rmultifractional::print
+#' @exportS3Method Rmfrac::print
 print.k_hurst <- function(x, ...)
 {
   cat("K-means clustering with ", length(x$cluster_sizes), " clusters of sizes ",
@@ -232,7 +232,7 @@ autoplot.k_hurst<-function(x,type="estimates")
 #' @param ... Other arguments
 #'
 #' @return A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.
-#' @exportS3Method Rmultifractional::plot
+#' @exportS3Method Rmfrac::plot
 #' @importFrom ggplot2 ggplot facet_wrap geom_line labs aes
 #' @importFrom rlang .data
 #'
@@ -250,11 +250,11 @@ autoplot.k_hurst<-function(x,type="estimates")
 #' X.list <- c(X.list.1,X.list.2,X.list.3)
 #'
 #' #K-means clustering based on k=3 clusters
-#' KC1 <- kmeans_hurst(X.list,k=3)
-#' print(KC1)
+#' KC <- kmeans_hurst(X.list,k=3)
+#' print(KC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(KC1,type ="ec")
+#' plot(KC,type ="ec")
 plot.k_hurst<-function(x,type="estimates",...) {
   print(autoplot(x,type))
 }

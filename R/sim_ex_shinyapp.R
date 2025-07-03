@@ -32,7 +32,7 @@
 #'
 #'
 shinyapp_sim<- function() {
-  appDir <- system.file("GHBMP_app", package = "Rmultifractional")
+  appDir <- system.file("GHBMP_app", package = "Rmfrac")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `Rmultifractional` package.", call. = FALSE)
   }

@@ -58,11 +58,11 @@
 #' X.list <- c(X.list.1,X.list.2,X.list.3)
 #'
 #' #Hierarchical clustering based on k=3 clusters with dendrogram plotted
-#' HC1 <- hclust_hurst(X.list,k=3,dendrogram=TRUE)
-#' print(HC1)
+#' HC <- hclust_hurst(X.list,k=3,dendrogram=TRUE)
+#' print(HC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(HC1,type ="ec")
+#' plot(HC,type ="ec")
 hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complete",dendrogram=FALSE,N=100,Q=2,L=2)
 {
   if (!is.list(X.t)) {
@@ -185,7 +185,7 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
 #'
 #' @seealso \code{\link{hclust_hurst}}
 #'
-#' @exportS3Method Rmultifractional::print
+#' @exportS3Method Rmfrac::print
 print.hc_hurst <- function(x, ...)
 {
   cat("Hierarchical clustering with ", length(x$cluster_sizes), " clusters of sizes ",
@@ -276,7 +276,7 @@ autoplot.hc_hurst<-function(x,type="estimates")
 #' @param ... Unused arguments
 #'
 #' @return A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.
-#' @exportS3Method Rmultifractional::plot
+#' @exportS3Method Rmfrac::plot
 #' @importFrom ggplot2 ggplot facet_wrap geom_line labs aes
 #'
 #' @seealso \code{\link{hclust_hurst}}
@@ -293,11 +293,11 @@ autoplot.hc_hurst<-function(x,type="estimates")
 #' X.list <- c(X.list.1,X.list.2,X.list.3)
 #'
 #' #Hierarchical clustering based on k=3 clusters with dendrogram plotted
-#' HC1 <- hclust_hurst(X.list,k=3,dendrogram=TRUE)
-#' print(HC1)
+#' HC<- hclust_hurst(X.list,k=3,dendrogram=TRUE)
+#' print(HC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(HC1,type ="ec")
+#' plot(HC,type ="ec")
 plot.hc_hurst<-function(x,type="estimates",...) {
   print(autoplot(x,type))
 }
