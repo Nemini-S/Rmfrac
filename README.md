@@ -1,6 +1,6 @@
 **Installation**
 
-To install the development version of [Rmultifractional](https://github.com/Nemini-S/Rmultifractional) package version from GitHub:
+To install the development version of [Rmfrac](https://github.com/Nemini-S/Rmfrac) package version from GitHub:
 ```{r}
 # Install devtools if not available
 # install.packages("devtools")
