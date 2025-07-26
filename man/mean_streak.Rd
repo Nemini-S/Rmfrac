@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyses_functions_2.R
 \name{mean_streak}
 \alias{mean_streak}
-\title{Mean time span of increasing increasing/decreasing streaks}
+\title{Mean time span of increasing/decreasing streaks}
 \usage{
 mean_streak(X, direction = "increasing", subI = NULL, plot = FALSE)
 }
@@ -10,11 +10,11 @@ mean_streak(X, direction = "increasing", subI = NULL, plot = FALSE)
 \item{X}{Data frame where the first column is a time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.}
 
-\item{direction}{A vector of character strings which specifies the direction of
+\item{direction}{A character string which specifies the direction of
 the streak: \code{"increasing"} or \code{"decreasing"}.}
 
 \item{subI}{Time sub-interval is a vector, where the lower bound is
-the first element and upper bound is the second. Optional: If provided level crossing
+the first element and the upper bound is the second. Optional: If provided level crossing
 times of the sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series and the increasing/decreasing

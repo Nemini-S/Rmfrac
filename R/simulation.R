@@ -24,10 +24,10 @@
 #' with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}} h(s) ds}.
 #' \eqn{h} is the Haar mother wavelet, \eqn{j} and \eqn{k} are positive integers, \eqn{t} is time, \eqn{H} is the Hurst function and
 #' \eqn{\varepsilon_{j,k}} is a sequence of independent \eqn{\mathcal{N}(0,1)} Gaussian random variables.
-#' For simulations, the truncated version of this formula with first summation up to J is considered.
+#' For simulations, the truncated version of this formula with first summation up to J is used.
 #'
 #' @note
-#' See Examples for the usage of Hurst functions, for example, constant, time-varying, piecewise or step functions.
+#' See Examples for the usage of constant, time-varying, piecewise or step Hurst functions.
 #'
 #' @export GHBMP
 #'
@@ -39,8 +39,8 @@
 #' On Construction, Properties and Simulation of Haar-Based
 #' Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 #'
-#'
-#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBM}}, \code{\link{sim_FGN}}
+#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBm}},
+#' \code{\link{FGn}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #' @examples
 #' #Constant Hurst function
 #' t <- seq(0,1,by=(1/2)^10)
@@ -143,37 +143,39 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 #' Simulation of Brownian motion
 #'
 #' @description
-#' This function simulates a realisation of the Brownian motion over
-#' time interval \eqn{[t_{start},t_{end}]} with \code{N} increments and initial value \code{x1}.
+#' This function simulates a realisation of the Brownian motion over the
+#' time interval \code{[t_start,t_end]} with \code{N} time steps and initial value \code{x_start}.
 #'
-#' @param x1 Value of the process at the initial time point.
+#' @param x_start Value of the process at the initial time point (additive constant mean).
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of time steps the interval \eqn{[t_{start},t_{end}]} is split into.
+#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian
 #' motion is plotted.
 #'
 #' @return A data frame where the first column is \code{t} and second
-#' column is simulated values of the realisation of Brownian motion.
+#' column is simulated values of the realisation of Brownian motion with added constant mean.
 #'
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @importFrom stats rnorm
 #'
 #' @export Bm
-#' @seealso \code{\link{GHBMP}}, \code{\link{FBM}}, \code{\link{sim_FGN}}
+#' @seealso \code{\link{GHBMP}}, \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #'
 #' @examples
-#' Bm(x1=0,t_start=0,t_end=2,plot=TRUE)
-Bm<-function(x1=0,t_start=0,t_end=1,N=1000,plot=FALSE)
+#' Bm(x_start=0,t_start=0,t_end=2,plot=TRUE)
+Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 {
 
-  if (!is.numeric(x1)) {
-    stop("x1 must be numeric")
+  if (!is.numeric(x_start)) {
+    stop("x_start must be numeric")
   }
 
   if (!is.numeric(t_start)) {
     stop("t_start must be numeric")
+  } else if ( !(t_start >=0)) {
+    stop("Incorrect input for t_start")
   }
 
   if (!is.numeric(t_end)) {
@@ -196,7 +198,7 @@ Bm<-function(x1=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 
   diff <- (t_end-t_start)/N
   increments <- rnorm(N,mean=0,sd=sqrt(diff))
-  X <- c(x1,x1+cumsum(increments))
+  X <- c(x_start,x_start+cumsum(increments))
   t <- seq(t_start,t_end,length.out=N+1)
   sim_data <- data.frame(t=t,X=X)
 
@@ -217,36 +219,55 @@ Bm<-function(x1=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 #'
 #' @description
 #' This function simulates a realisation of the fractional Brownian motion over
-#' time interval \eqn{[0,t_{end}]} for a provided Hurst parameter.
+#' the time interval \code{[t_start,t_end]} for a provided Hurst parameter.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
+#' @param x_start Value of the process at the initial time point (additive constant mean).
+#' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of time steps the interval \eqn{[0,t_{end}]} is split into.
+#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian
 #' motion is plotted.
 #'
 #' @return A data frame where the first column is \code{t} and second
-#' column is simulated values of the realisation of fractional Brownian motion.
+#' column is simulated values of the realisation of fractional Brownian motion
+#' with added constant mean.
 #'
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @importFrom stats toeplitz rnorm
 #'
-#' @export FBM
-#' @seealso \code{\link{sim_FGN}}, \code{\link{Bm}}, \code{\link{GHBMP}}
+#' @export FBm
+#' @references Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian motion:
+#' Approximations and Projections. John Wiley & Sons. \doi{doi/10.1002/9781119476771.app3}.
+#' @seealso \code{\link{FGn}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #'
 #' @examples
-#' FBM(H=0.3,t_end=1,plot=TRUE)
-FBM <- function(H,t_end,N=1000,plot=FALSE){
+#' FBm(H=0.5,plot=TRUE)
+FBm <- function(H,x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
+  }
+
+  if (!is.numeric(x_start)) {
+    stop("x_start must be numeric")
+  }
+
+  if (!is.numeric(t_start)) {
+    stop("t_start must be numeric")
+  } else if ( !(t_start >=0)) {
+    stop("Incorrect input for t_start")
   }
 
   if (!is.numeric(t_end)) {
     stop("t_end must be numeric")
   } else if ( !(t_end > 0)) {
     stop("Incorrect input for t_end")
+  }
+
+  if (!(t_start<t_end)) {
+    stop("Incorrect inputs for t_start and t_end")
   }
 
   if (!is.numeric(N)) {
@@ -259,8 +280,8 @@ FBM <- function(H,t_end,N=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  diff <- t_end/N
-  t <- seq(0,t_end,by=diff)
+  diff <- (t_end-t_start)/N
+  t <- seq(t_start,t_end,length.out=N+1)
 
   c<- function(k,H){
     0.5 * ((k+1)^(2*H)+(abs(k-1))^(2*H)-2*(k)^(2*H))
@@ -275,9 +296,11 @@ FBM <- function(H,t_end,N=1000,plot=FALSE){
   x <- L%*%z
 
   B <- cumsum(x)
-  B <- append(B, 0, after = 0)
+  B <- B*diff^H
+  B <- x_start + B
+  B <- append(B,x_start,after=0)
 
-  sim_data <- data.frame(t=t,X=B*diff^H)
+  sim_data <- data.frame(t=t,X=B)
 
   if(plot){
     p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
@@ -295,13 +318,13 @@ FBM <- function(H,t_end,N=1000,plot=FALSE){
 #' Simulation of fractional Gaussian noise
 #'
 #' @description
-#' This function simulates a realisation of the fractional Gaussian noise over
-#' time interval \eqn{[t_{start},t_{end}]} for a provided Hurst parameter.
+#' This function simulates a realisation of the fractional Gaussian noise over the
+#' time interval \code{[t_start,t_end]} for a provided Hurst parameter.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of time steps the interval \eqn{[t_{start},t_{end}]} is split into.
+#' @param N Number of time points the simulation is performed on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise
 #' is plotted.
@@ -312,24 +335,55 @@ FBM <- function(H,t_end,N=1000,plot=FALSE){
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @importFrom stats toeplitz rnorm
 #'
-#' @export
-#' @seealso \code{\link{FBM}}, \code{\link{Bm}}, \code{\link{GHBMP}}
+#' @export FGn
+#' @references Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian motion:
+#' Approximations and Projections. John Wiley & Sons. \doi{doi/10.1002/9781119476771.app3}.
+#' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #' @examples
-#' sim_FGN(H=0.3,t_start=0,t_end=1,plot=TRUE)
-sim_FGN <- function(H,t_start,t_end,N=1000,plot=FALSE){
+#' FGn(H=0.5,plot=TRUE)
+FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 
-  diff <- t_end/N
-  t <- seq(t_start,t_end,length.out=N)
+  if (!is.numeric(H) | !(H > 0 & H< 1)) {
+    stop("H must be a number between 0 and 1")
+  }
+
+  if (!is.numeric(t_start)) {
+    stop("t_start must be numeric")
+  } else if ( !(t_start >= 0)) {
+    stop("Incorrect input for t_start")
+  }
+
+  if (!is.numeric(t_end)) {
+    stop("t_end must be numeric")
+  } else if ( !(t_end > 0)) {
+    stop("Incorrect input for t_end")
+  }
+
+  if (!(t_start<t_end)) {
+    stop("Incorrect inputs for t_start and t_end")
+  }
+
+  if (!is.numeric(n)) {
+    stop("n must be numeric")
+  } else if (!(n %% 1 == 0) | !(n > 0)) {
+    stop("n must be a positive integer")
+  }
+
+  if (!is.logical(plot)) {
+    stop("Plot must have logical inputs either TRUE or FALSE")
+  }
+
+  t <- seq(t_start,t_end,length.out=n)
 
   c<- function(k,H){
     0.5 * ((k+1)^(2*H)+(abs(k-1))^(2*H)-2*(k)^(2*H))
   }
 
-  cov_mat <- toeplitz(sapply(0:(N-1),c,H=H))
+  cov_mat <- toeplitz(sapply(0:(n-1),c,H=H))
 
   L <- t(chol(cov_mat))
 
-  z <- rnorm(N,0,1)
+  z <- rnorm(n,0,1)
 
   x <- L%*%z
 
@@ -347,3 +401,169 @@ sim_FGN <- function(H,t_start,t_end,N=1000,plot=FALSE){
   return(sim_data)
 
 }
+
+#' Simulation of Brownian bridge
+#'
+#' @description
+#' This function simulates a realisation of the Brownian bridge over the
+#' time interval \code{[t_start,t_end]} which terminates at \code{x_end}
+#' with \code{N} time steps and initial value \code{x_start}.
+#'
+#' @param x_end Value of the process at the terminating time point.
+#' @param t_end Terminal time point.
+#' @param x_start Value of the process at the initial time point.
+#' @param t_start Initial time point.
+#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
+#' Default set to 1000.
+#' @param plot Logical: If \code{TRUE}, the realisation of the Brownian bridge
+#' is plotted.
+#' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
+#' @return A data frame where the first column is \code{t} and second
+#' column is simulated values of the realisation of Brownian bridge.
+#' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{FBbridge }}
+#' @export Bbridge
+#' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
+#' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
+#' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
+#' MAF 2022. Springer, Cham. \doi{doi.org/10.1007/978-3-030-99638-3_16}.
+#' @examples
+#' Bbridge(x_end=2,t_end=1,plot=TRUE)
+Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
+
+  if (!is.numeric(x_start)) {
+    stop("x_start must be numeric")
+  }
+
+  if (!is.numeric(x_end)) {
+    stop("x_end must be numeric")
+  }
+
+  if (!is.numeric(t_start)) {
+    stop("t_start must be numeric")
+  } else if ( !(t_start >=0)) {
+    stop("Incorrect input for t_start")
+  }
+
+  if (!is.numeric(t_end)) {
+    stop("t_end must be numeric")
+  } else if ( !(t_end > 0)) {
+    stop("Incorrect input for t_end")
+  }
+
+  if (!(t_start<t_end)) {
+    stop("Incorrect inputs for t_start and t_end")
+  }
+
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
+  }
+
+  if (!is.logical(plot)) {
+    stop("Plot must have logical inputs either TRUE or FALSE")
+  }
+
+  Bm_sim <- Bm(x_start=x_start,t_start=t_start,t_end=t_end,N=N)
+  X <- Bm_sim[,2]-((Bm_sim[,1]/t_end)*(Bm_sim[N+1,2]-x_end))
+  sim_data <- data.frame(t=Bm_sim[,1],X=X)
+
+  if(plot){
+    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+      geom_line() +
+      labs(y="X(t)",x="t") +
+      ggtitle("Realisation of Brownian bridge")
+
+    print(p)
+  }
+
+  return(sim_data)
+}
+
+
+
+
+#' Simulation of fractional Brownian bridge
+#'
+#' @description
+#' This function simulates a realisation of the fractional Brownian bridge
+#' for a provided Hurst parameter over the time interval \code{[t_start,t_end]}
+#' which terminates at \code{x_end} with \code{N} time steps and initial value \code{x_start}.
+#'
+#' @param H Hurst parameter which lies between 0 and 1.
+#' @param x_end Value of the process at the terminating time point.
+#' @param t_end Terminal time point.
+#' @param x_start Value of the process at the initial time point.
+#' @param t_start Initial time point.
+#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
+#' Default set to 1000.
+#' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
+#' is plotted.
+#' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
+#' @return A data frame where the first column is \code{t} and second
+#' column is simulated values of the realisation of fractional Brownian bridge.
+#' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}
+#' @export FBbridge
+#' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
+#' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
+#' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
+#' MAF 2022. Springer, Cham. \doi{doi.org/10.1007/978-3-030-99638-3_16}.
+#' @examples
+#' Bbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)
+FBbridge <- function(H,x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
+
+  if (!is.numeric(H) | !(H > 0 & H< 1)) {
+    stop("H must be a number between 0 and 1")
+  }
+
+  if (!is.numeric(x_start)) {
+    stop("x_start must be numeric")
+  }
+
+  if (!is.numeric(x_end)) {
+    stop("x_end must be numeric")
+  }
+
+  if (!is.numeric(t_start)) {
+    stop("t_start must be numeric")
+  } else if ( !(t_start >=0)) {
+    stop("Incorrect input for t_start")
+  }
+
+  if (!is.numeric(t_end)) {
+    stop("t_end must be numeric")
+  } else if ( !(t_end > 0)) {
+    stop("Incorrect input for t_end")
+  }
+
+  if (!(t_start<t_end)) {
+    stop("Incorrect inputs for t_start and t_end")
+  }
+
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
+  }
+
+  if (!is.logical(plot)) {
+    stop("Plot must have logical inputs either TRUE or FALSE")
+  }
+
+  FBm_sim <- FBm(H=H,x_start=x_start,t_start=t_start,t_end=t_end,N=N)
+  X <- FBm_sim[,2]-(0.5*(FBm_sim[N+1,2]-x_end)*(1+(FBm_sim[,1]/t_end)^(2*H)-(1-(FBm_sim[,1]/t_end))^(2*H)))
+  sim_data <- data.frame(t=FBm_sim[,1],X=X)
+
+  if(plot){
+    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+      geom_line() +
+      labs(y="X(t)",x="t") +
+      ggtitle("Realisation of fractional Brownian bridge")
+
+    print(p)
+  }
+
+  return(sim_data)
+}
+
+

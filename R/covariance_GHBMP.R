@@ -3,10 +3,9 @@
 #' @description
 #' Computes the empirical covariance function of a process, for each pair of time points in the
 #' time sequence using M realizations of the process.
-#'
+#' @param theta Smoothing parameter.
 #' @param X A data frame where the first column is the time sequence and the remaining
 #' columns are the values of each realization of the process.
-#'
 #' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
 #'
 #' @return
@@ -15,7 +14,7 @@
 #' corresponding time points. Time points are arranged in ascending order.
 #'
 #' @importFrom plotly plot_ly
-#'
+#' @importFrom fields image.smooth
 #' @export est_cov
 #'
 #' @examples
@@ -26,53 +25,66 @@
 #' X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 #' X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 #' Data <- data.frame(t,t(X))
-#' cov.mat <- est_cov(Data,plot=TRUE)
+#' cov.mat <- est_cov(Data,theta=0.2,plot=TRUE)
 #' cov.mat
 #'
-est_cov<-function(X,plot=FALSE)
+est_cov<-function(X,theta=0.1,plot=FALSE)
 {
 
-    if (!is.data.frame(X) | !(all(sapply(X, is.numeric)))) {
-      stop("X must be a numeric data frame")
-    }
+  if (!is.data.frame(X) | !(all(sapply(X, is.numeric)))) {
+    stop("X must be a numeric data frame")
+  }
 
-    if (!is.logical(plot)) {
+  if (!is.numeric(theta)) {
+    stop("theta must be numeric")
+  } else if (!(theta > 0)){
+    stop("theta must be positive")
+  }
+
+  if (!is.logical(plot)) {
     stop("Plot must have logical inputs either TRUE or FALSE")
+  }
+
+  X <- X[order(X[[1]]),]
+
+  X.data <- t(X[,-1])
+  t <- X[,1]
+
+  m <- ncol(X.data)
+
+  X_mean <- colMeans(X.data)
+
+  C <- matrix(0,m,m)
+
+  for (i in 1:m) {
+    for (j in 1:i) {  # Compute only for j ≤ i (lower)
+      C[i, j] <- mean(X.data[,i] * X.data[,j]) - X_mean[i] * X_mean[j]
     }
+  }
 
-    X <- X[order(X[[1]]), ]
+  C[upper.tri(C)] <- t(C)[upper.tri(C)]
 
-    X.data <- t(X[, -1])
-    t <- X[,1]
+  if(!is.null(theta))
+  {
+    D <- mean(diff(t))
+    Smooth_data <- image.smooth(C,theta=theta,dx=D,dy=D)
+    C <- Smooth_data$z
+  }
 
-    m <- ncol(X.data)
+  if(plot)
+  {
+    cov.fig <- plot_ly(
+      x = ~t, y = ~t, z = ~C,
+      type = 'surface',
+      colorbar = list(title = "Covariance"))
 
-    X_mean <- colMeans(X.data)
+    cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"),
+                                             yaxis = list(title = "s"),
+                                             zaxis = list(title = "Covariance")))
+    print(cov.fig)
+  }
 
-    C <- matrix(0, m, m)
-
-    for (i in 1:m) {
-      for (j in 1:i) {  # Compute only for j ≤ i (lower)
-        C[i, j] <- mean(X.data[, i] * X.data[, j]) - X_mean[i] * X_mean[j]
-      }
-    }
-
-    C[upper.tri(C)] <- t(C)[upper.tri(C)]
-
-    if(plot)
-    {
-      cov.fig <- plot_ly(
-        x = ~t, y = ~t, z = ~C,
-        type = 'surface',
-        colorbar = list(title = "Covariance"))
-
-      cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"),
-                                           yaxis = list(title = "s"),
-                                           zaxis = list(title = "Covariance")))
-      print(cov.fig)
-    }
-
-    return(C)
+  return(C)
 
 }
 
@@ -85,6 +97,7 @@ est_cov<-function(X,plot=FALSE)
 #' @param t Time point or time sequence on the interval \eqn{[0,1]}.
 #' @param H Hurst function \eqn{H(t)} which depends on \code{t}.
 #' @param J Positive integer. For large J values could be rather time consuming. Default is set to 8.
+#' @param theta Optional: Smoothing parameter.
 #' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
 #' @param num.cores Number of cores to set up the clusters for parallel computing.
 #'
@@ -95,7 +108,7 @@ est_cov<-function(X,plot=FALSE)
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach %dopar%
 #' @importFrom plotly plot_ly layout
-#'
+#' @importFrom fields image.smooth
 #' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
 #' On Construction, Properties and Simulation of Haar-Based Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 #'
@@ -108,9 +121,9 @@ est_cov<-function(X,plot=FALSE)
 #' #Covariance of a GHBMP with H=0.5-0.4* sin(6*3.14*t)
 #' t <- seq(0,1,by=0.01)
 #' H <- function(t) {return(0.5-0.4* sin(6*3.14*t))}
-#' cov_GHBMP(t,H,plot=TRUE)
+#' cov_GHBMP(t,H,theta=0.1,plot=TRUE)
 #' }
-cov_GHBMP<-function(t,H,J=8,plot=FALSE,num.cores=availableCores(omit = 1))
+cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit = 1))
 {
 
   if (!is.numeric(t)|!all(t >= 0 & t<= 1)) {
@@ -128,6 +141,11 @@ cov_GHBMP<-function(t,H,J=8,plot=FALSE,num.cores=availableCores(omit = 1))
     stop("J must be a positive integer")
   }
 
+  if (!is.numeric(theta)) {
+    stop("theta must be numeric")
+  } else if (!(theta > 0)){
+    stop("theta must be positive")
+  }
 
   if (!is.logical(plot)) {
     stop("Plot must have logical inputs either TRUE or FALSE")
@@ -164,6 +182,13 @@ cov_GHBMP<-function(t,H,J=8,plot=FALSE,num.cores=availableCores(omit = 1))
   cov.mat <- foreach(i = 1:length(t), .combine = rbind) %dopar% {
     sapply(t, function(j) X(t[i], j))}
 
+  if(!is.null(theta))
+  {
+    D <- mean(diff(t))
+    Smooth_data <- image.smooth(cov.mat,theta=theta,dx=D,dy=D)
+    cov.mat <- Smooth_data$z
+  }
+
   if(plot)
   {
     cov.fig <- plot_ly(
@@ -181,4 +206,3 @@ cov_GHBMP<-function(t,H,J=8,plot=FALSE,num.cores=availableCores(omit = 1))
 
   stopCluster(cl)
 }
-

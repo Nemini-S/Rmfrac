@@ -6,7 +6,7 @@
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
-#' @param n Number of points a time interval to be split into. Default set to 10000.
+#' @param N Number of steps the time interval is split into. Default set to 10000.
 #' @param level A vector of character strings which specifies which sojourn
 #' measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -15,167 +15,287 @@
 #' @param plot Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.
 #'
 #' @return Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level and the excursion region are plotted.
-#' @importFrom ggplot2 ggplot geom_line geom_hline geom_point labs aes ggtitle theme element_text
+#' @export sojourn
+#' @importFrom ggplot2 ggplot geom_line geom_hline geom_segment labs aes ggtitle theme element_text
 #' @importFrom stats approx
 #' @importFrom rlang .data
-#'
-#' @export sojourn
-#'
-#' @seealso \code{\link{A.excursion}}
-#'
+#' @seealso \code{\link{exc_Area}}
 #' @examples
 #' t <- seq(0,1,length=1000)
 #' TS <- data.frame("t"=t,"X(t)"=rnorm(1000))
 #' sojourn(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
-#'
-sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
-{
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))) {
+sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
+
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
+  {
     stop("X must be a numeric data frame")
   }
 
-  if (!is.numeric(A)) {
+  if (!is.numeric(A)){
     stop("A must be numeric")
   }
 
-  if (!is.numeric(n)) {
-    stop("n must be numeric")
-  } else if (!(n %% 1 == 0) | !(n > 0)) {
-    stop("n must be a positive integer")
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
+  }
+
+  if (!level %in% c("greater", "lower")) {
+    stop("level should be 'greater' or 'lower'")
   }
 
   if (!is.logical(plot)) {
-    stop("Plot must have logical inputs either TRUE or FALSE")
+    stop("plot should have logical inputs either TRUE or FALSE")
   }
 
   X <- X[order(X[,1]),]
-  colnames(X)<-c("x","y")
+  colnames(X) <- c("x","y")
 
   if (is.null(subI)){
 
-    time_points <- seq(X[1,1], X[nrow(X),1], length.out = n)
-    diff_time_points<-((X[nrow(X),1]-X[1,1])/n)
-    interpolated_X <- approx(X[,1], X[,2], xout = time_points)$y
-    data_plot<-data.frame(t=time_points,x_int=interpolated_X)
+    t <- seq(X[1,1],X[nrow(X),1],length.out=N+1)
+    int_X <- approx(X[,1],X[,2],xout=t)$y
+    diff<-((X[nrow(X),1]-X[1,1])/N)
 
     if(level=='greater'){
-      if(plot){
 
-        data_plot$ymin<-ifelse(interpolated_X > A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X > A,interpolated_X,NA)
-        data_segments <- data_plot[!is.na(data_plot$ymax), ]
+      S <- 0
+      seg <- data.frame(T_start=rep(NA_real_,N), T_end=rep(NA_real_,N))
 
-        p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
-          geom_line() +
-          geom_hline(yintercept = A,color="blue")+
-          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the realisation is over the level %s", A))+
-          theme(plot.title = element_text(size = 10))
+      for(i in 1:(N)){
 
-        print(p)
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
+
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1>=A) && (x2>=A)){
+
+          S = S + diff
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t2
+
+        } else if ((x1>=A) && (x2<A)){
+
+          S = S + (diff * (x1-A)/(x1-x2))
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t1 + (diff * (x1-A)/(x1-x2))
+
+        } else if ((x1<A) && (x2>=A)){
+
+          S = S + (diff * (A-x2)/(x1-x2))
+
+          seg$T_start[i] <- t2 - (diff * (A-x2)/(x1-x2))
+          seg$T_end[i] <- t2
+
+        } else {
+
+          S = S
+
+          seg$T_start[i] <- NA
+          seg$T_end[i] <- NA
+        }
+
+      }
+    }
+
+    if(level=='lower'){
+
+      S <- 0
+      seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
+
+      for(i in 1:(N)){
+
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
+
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1<=A) && (x2<=A)){
+
+          S = S + diff
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t2
+
+        } else if ((x1<=A) && (x2>A)){
+
+          S = S + (diff * (A-x1)/(x2-x1))
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t1 + (diff * (A-x1)/(x2-x1))
+
+        } else if ((x1>A) && (x2<=A)){
+
+          S = S + (diff * (x2-A)/(x2-x1))
+
+          seg$T_start[i] <- t2 - (diff * (x2-A)/(x2-x1))
+          seg$T_end[i] <- t2
+
+        } else {
+
+          S = S
+
+          seg$T_start[i] <- NA
+          seg$T_end[i] <- NA
+        }
+
       }
 
-      return((sum(interpolated_X >= A))*diff_time_points)
     }
 
-    else if(level=='lower'){
-      if(plot){
+    seg <- na.omit(seg)
+    if (plot){
 
-        data_plot$ymin<-ifelse(interpolated_X < A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X < A,interpolated_X,NA)
-        data_segments <- data_plot[!is.na(data_plot$ymax), ]
+      p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
+        geom_line() +
+        geom_hline(yintercept = A,color="blue",linetype = "dashed")+
+        labs(y="X(t)",x="t")+
+        ggtitle(sprintf("Excursion region where the realisation is over the level %s", A))+
+        theme(plot.title = element_text(size = 10))
 
-        p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
-          geom_line() +
-          geom_hline(yintercept = A,color="blue")+
-          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the realisation is under the level %s", A))+
-          theme(plot.title = element_text(size = 10))
+      if (nrow(seg)>0){
 
-
-        print(p)
+        p <- p + geom_segment(data = seg, aes(x = .data$T_start, xend = .data$T_end, y = 0, yend = 0) ,color="red")
       }
 
-      return((sum(interpolated_X <= A))*diff_time_points)
-
+      print(p)
     }
 
-    else
-    {
-      print("Invalid level")
-    }
+    return(S)
 
   }
-
   else{
 
     if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
       stop("subI must be a numeric vector")
     }
+
     Time<-X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
-    time_points <- seq(X.I[1,1], X.I[nrow(X.I),1], length.out = n)
-    diff_time_points<-((X.I[nrow(X.I),1]-X.I[1,1])/n)
-    interpolated_X <- approx(X.I[,1], X.I[,2], xout = time_points)$y
-    data_plot<-data.frame(t=time_points,x_int=interpolated_X)
+    t <- seq(X.I[1,1], X.I[nrow(X.I),1], length.out = N+1)
+    int_X <- approx(X.I[,1], X.I[,2], xout = t)$y
+    diff<-((X[nrow(X),1]-X[1,1])/N)
 
-    if(level=='greater' ){
-      if(plot){
+    if(level=='greater'){
 
-        data_plot$ymin<-ifelse(interpolated_X > A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X > A,interpolated_X,NA)
-        data_segments <- data_plot[!is.na(data_plot$ymax), ]
+      S <- 0
+      seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
 
-        p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
-          geom_line() +
-          geom_hline(yintercept = A,color="blue")+
-          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the realisation is over the level %s", A))+
-          theme(plot.title = element_text(size = 10))
+      for(i in 1:(N)){
 
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
 
-        print(p)
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1>=A) && (x2>=A)){
+
+          S = S + diff
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t2
+
+        } else if ((x1>=A) && (x2<A)){
+
+          S = S + (diff * (x1-A)/(x1-x2))
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t1 + (diff * (x1-A)/(x1-x2))
+
+        } else if ((x1<A) && (x2>=A)){
+
+          S = S + (diff * (A-x2)/(x1-x2))
+
+          seg$T_start[i] <- t2 - (diff * (A-x2)/(x1-x2))
+          seg$T_end[i] <- t2
+
+        } else {
+
+          S = S
+
+          seg$T_start[i] <- NA
+          seg$T_end[i] <- NA
+        }
+
+      }}
+
+    if(level=='lower'){
+
+      S <- 0
+      seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
+
+      for(i in 1:(N)){
+
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
+
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1<=A) && (x2<=A)){
+
+          S = S + diff
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t2
+
+        } else if ((x1<=A) && (x2>A)){
+
+          S = S + (diff * (A-x1)/(x2-x1))
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t1 + (diff * (A-x1)/(x2-x1))
+
+        } else if ((x1>A) && (x2<=A)){
+
+          S = S + (diff * (x2-A)/(x2-x1))
+
+          seg$T_start[i] <- t2 - (diff * (x2-A)/(x2-x1))
+          seg$T_end[i] <- t2
+
+        } else {
+
+          S = S
+
+          seg$T_start[i] <- NA
+          seg$T_end[i] <- NA
+        }
+
       }
 
-      return((sum(interpolated_X >= A))*diff_time_points)
     }
 
-    else if(level=='lower'){
-      if(plot){
+    seg <- na.omit(seg)
+    if (plot){
 
-        data_plot$ymin<-ifelse(interpolated_X < A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X < A,interpolated_X,NA)
-        data_segments <- data_plot[!is.na(data_plot$ymax), ]
+      p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
+        geom_line() +
+        geom_hline(yintercept=A,color="blue",linetype = "dashed")+
+        labs(y="X(t)",x="t")+
+        ggtitle(sprintf("Excursion region where the realisation is over the level %s", A))+
+        theme(plot.title = element_text(size = 10))
 
-        p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
-          geom_line() +
-          geom_hline(yintercept = A,color="blue")+
-          geom_point(data = data_segments, aes(x = t, y = 0) ,color="red",size=0.1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion region where the realisation is under the level %s", A))+
-          theme(plot.title = element_text(size = 10))
+      if (nrow(seg)>0){
 
-
-
-        print(p)
+        p <- p + geom_segment(data = seg, aes(x = .data$T_start, xend = .data$T_end, y = 0, yend = 0) ,color="red")
       }
 
-      return((sum(interpolated_X <= A))*diff_time_points)
-
+      print(p)
     }
 
-    else
-    {
-      print("Invalid level")
-    }
-
+    return(S)
 
   }
 
 }
+
 
 #' Excursion area
 #'
@@ -186,7 +306,7 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
-#' @param n Number of points a time interval to be split into. Default set to 10000.
+#' @param N Number of steps the time interval is split into. Default set to 10000.
 #' @param level A vector of character strings which specifies whether the excursion
 #' area is required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -196,166 +316,365 @@ sojourn<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #'
 #' @return Excursion area. If \code{plot=TRUE}, the time series, the constant level and excursion area
 #' are plotted.
-#' @importFrom ggplot2 ggplot geom_line geom_hline geom_ribbon labs aes ggtitle theme element_text
+#' @importFrom ggplot2 ggplot geom_line geom_hline geom_polygon labs aes ggtitle theme element_text
 #' @importFrom stats approx
 #' @importFrom rlang .data
 #'
-#' @export A.excursion
+#' @export exc_Area
 #'
 #' @seealso \code{\link{sojourn}}
 #'
 #' @examples
 #' t <- seq(0,1,length=1000)
 #' TS <- data.frame("t"=t,"X(t)"=rnorm(1000))
-#' A.excursion(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
+#' exc_Area(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
 #'
-A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
-{
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))) {
+exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
+
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
+  {
     stop("X must be a numeric data frame")
   }
 
-  if (!is.numeric(A)) {
+  if (!is.numeric(A)){
     stop("A must be numeric")
   }
 
-  if (!is.numeric(n)) {
-    stop("n must be numeric")
-  } else if (!(n %% 1 == 0) | !(n > 0)) {
-    stop("n must be a positive integer")
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
+  }
+
+  if (!level %in% c("greater", "lower")) {
+    stop("level should be 'greater' or 'lower'")
   }
 
   if (!is.logical(plot)) {
     stop("plot should have logical inputs either TRUE or FALSE")
   }
 
-  pos<-function(x){
-    if(x>=0){return(x)}
-    else {return(0)}
-  }
 
-  X <- X[order(X[,1]), ]
-
-  colnames(X)<-c("x","y")
+  X <- X[order(X[,1]),]
+  colnames(X) <- c("x","y")
 
   if (is.null(subI)){
 
-    time_points <- seq(X[1,1], X[nrow(X),1], length.out = n)
-    diff_time_points<-((X[nrow(X),1]-X[1,1])/n)
-    interpolated_X <- approx(X[,1], X[,2], xout = time_points)$y
-    data_plot<-data.frame(t=time_points,x_int=interpolated_X)
+    t <- seq(X[1,1],X[nrow(X),1],length.out=N+1)
+    int_X <- approx(X[,1],X[,2],xout=t)$y
+    diff<-((X[nrow(X),1]-X[1,1])/N)
 
     if(level=='greater'){
-      if(plot){
 
-        data_plot$ymin<-ifelse(interpolated_X > A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X > A,interpolated_X,NA)
-        data_plot<-na.omit(data_plot)
+      Area <- 0
+      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      G <- 1
+      polygon <- list()
 
-        p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
-          geom_line(data=X,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color="blue")+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the realisation over the level %s", A))+
-          theme(plot.title = element_text(size = 10))
+      for(i in 1:(N)){
 
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
 
-        print(p)
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1>=A) && (x2>=A)){
+
+          Area = Area + (diff * (((x1-A)+(x2-A))/2))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
+          if (i==N) {
+            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+
+        } else if ((x1>=A) && (x2<A)){
+
+          Area = Area + ((diff * (x1-A)/(x1-x2)) * ((x1-A)/2))
+
+          x_cross <- t1+(diff * (x1-A)/(x1-x2))
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
+                           data.frame(t=x_cross,X_t=A),
+                           data.frame(t=x_cross,X_t=A))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area$G <- G
+          polygon[[G]] <- DF_Area
+          G <- G + 1
+          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+
+        } else if ((x1<A) && (x2>=A)){
+
+          Area = Area + ((diff * (A-x2)/(x1-x2)) * ((x2-A)/2))
+
+          x_cross <- t1+(diff*(A-x2)/(x1-x2))
+          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+
+        } else {
+
+          Area = Area
+
+        }
+
       }
-      return((sum(sapply(interpolated_X-A,pos)))*diff_time_points)
-    }
 
-    else if(level=='lower'){
-      if(plot){
-
-        data_plot$ymin<-ifelse(interpolated_X < A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X < A,interpolated_X,NA)
-        data_plot<-na.omit(data_plot)
-
-        p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
-          geom_line(data=X,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color="blue")+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the realisation under the level %s", A))+
-          theme(plot.title = element_text(size = 10))
-
-
-        print(p)
+      if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
+        DF_Area <- rbind(DF_Area,data.frame(t=X[nrow(X),1],X_t=X[nrow(X),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area$G <- G
+        polygon[[G]] <- DF_Area
       }
-      return((sum(sapply(A-interpolated_X,pos)))*diff_time_points)
+
+      DF_Area <- do.call(rbind, polygon)
     }
 
-    else
-    {
-      print("Invalid level")
+    if(level=='lower'){
+
+      Area <- 0
+      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      G <- 1
+      polygon <- list()
+
+      for(i in 1:(N)){
+
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
+
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1<=A) && (x2<=A)){
+
+          Area = Area + (diff * (((A-x1)+(A-x2))/2))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
+          if (i==N) {
+            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+
+        } else if ((x1<=A) && (x2>A)){
+
+          Area = Area + ((diff * (A-x1)/(x2-x1)) * ((A-x1)/2))
+
+          x_cross <- t1+(diff * (A-x1)/(x2-x1))
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
+                           data.frame(t=x_cross,X_t=A),
+                           data.frame(t=x_cross,X_t=A))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area$G <- G
+          polygon[[G]] <- DF_Area
+          G <- G + 1
+          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+
+        } else if ((x1>A) && (x2<=A)){
+
+          Area = Area + ((diff * (x2-A)/(x2-x1)) * ((A-x2)/2))
+
+          x_cross <- t1+(diff * (x2-A)/(x2-x1))
+          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+
+        } else {
+
+          Area = Area
+        }
+
+      }
+
+      if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
+        DF_Area <- rbind(DF_Area,data.frame(t=X[nrow(X),1],X_t=X[nrow(X),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area$G <- G
+        polygon[[G]] <- DF_Area
+      }
+
+      DF_Area <- do.call(rbind, polygon)
+
     }
+
+    DF_Area <- na.omit(DF_Area)
+
+    if (plot){
+      p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
+        geom_line() +
+        geom_hline(yintercept = A,color="blue",linetype = "dashed")+
+        labs(y="X(t)",x="t")+
+        ggtitle(sprintf("Excursion area of the realisation over the level %s", A))+
+        theme(plot.title = element_text(size = 10))
+
+
+      if (!is.null(DF_Area) && nrow(DF_Area)>0){
+
+        p <- p + geom_polygon(data=DF_Area,aes(x=.data$t,y=.data$X_t,group=.data$G),fill="lightblue")
+      }
+
+      print(p)
+    }
+
+    return(Area)
 
   }
-
   else{
 
     if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
       stop("subI must be a numeric vector")
     }
+
     Time<-X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
-    time_points <- seq(X.I[1,1], X.I[nrow(X.I),1], length.out = n)
-    diff_time_points<-((X.I[nrow(X.I),1]-X.I[1,1])/n)
-    interpolated_X <- approx(X.I[,1], X.I[,2], xout = time_points)$y
-    data_plot<-data.frame(t=time_points,x_int=interpolated_X)
+    t <- seq(X.I[1,1], X.I[nrow(X.I),1], length.out = N+1)
+    int_X <- approx(X.I[,1], X.I[,2], xout = t)$y
+    diff<-((X[nrow(X),1]-X[1,1])/N)
 
     if(level=='greater'){
-      if(plot){
+      Area <- 0
+      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      G <- 1
+      polygon <- list()
 
-        data_plot$ymin<-ifelse(interpolated_X > A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X > A,interpolated_X,NA)
-        data_plot<-na.omit(data_plot)
+      for(i in 1:(N)){
 
-        p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
-          geom_line(data=X.I,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color="blue")+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the realisation over the level %s", A))+
-          theme(plot.title = element_text(size = 10))
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
 
+        t1 <- t[i]
+        t2 <- t[i+1]
 
-        print(p)
+        if((x1>=A) && (x2>=A)){
+
+          Area = Area + (diff * (((x1-A)+(x2-A))/2))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
+          if (i==N) {
+            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+
+        } else if ((x1>=A) && (x2<A)){
+
+          Area = Area + ((diff * (x1-A)/(x1-x2)) * ((x1-A)/2))
+
+          x_cross <- t1+(diff * (x1-A)/(x1-x2))
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
+                           data.frame(t=x_cross,X_t=A),
+                           data.frame(t=x_cross,X_t=A))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area$G <- G
+          polygon[[G]] <- DF_Area
+          G <- G + 1
+          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+
+        } else if ((x1<A) && (x2>=A)){
+
+          Area = Area + ((diff * (A-x2)/(x1-x2)) * ((x2-A)/2))
+
+          x_cross <- t1+(diff*(A-x2)/(x1-x2))
+          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+
+        } else {
+
+          Area = Area
+
+        }
+
       }
-      return((sum(sapply(interpolated_X-A,pos)))*diff_time_points)
-    }
 
-    else if(level=='lower'){
-      if(plot){
-
-        data_plot$ymin<-ifelse(interpolated_X < A,A,NA)
-        data_plot$ymax<-ifelse(interpolated_X < A,interpolated_X,NA)
-        data_plot<-na.omit(data_plot)
-
-        p<- ggplot(data_plot,aes(x =.data$t, y =.data$x_int)) +
-          geom_line(data=X.I,aes(x =.data$x, y =.data$y))+
-          geom_hline(yintercept = A,color="blue")+
-          geom_ribbon(data=data_plot, aes(ymin = .data$ymin, ymax = .data$ymax),fill="lightblue", alpha = 1)+
-          labs(y="X(t)",x="t")+
-          ggtitle(sprintf("Excursion area of the realisation under the level %s", A))+
-          theme(plot.title = element_text(size = 10))
-
-
-
-        print(p)
+      if (!is.null(DF_Area) && (nrow(DF_Area) > 0)) {
+        DF_Area <- rbind(DF_Area,data.frame(t=X.I[nrow(X.I),1],X_t=X.I[nrow(X.I),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area$G <- G
+        polygon[[G]] <- DF_Area
       }
-      return((sum(sapply(A-interpolated_X,pos)))*diff_time_points)
+
+      DF_Area <- do.call(rbind, polygon)
     }
 
-    else
-    {
-      print("Invalid level")
+    if(level=='lower'){
+
+      Area <- 0
+      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      G <- 1
+      polygon <- list()
+
+      for(i in 1:(N)){
+
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
+
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1<=A) && (x2<=A)){
+
+          Area = Area + (diff * (((A-x1)+(A-x2))/2))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
+          if (i==N) {
+            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+
+        } else if ((x1<=A) && (x2>A)){
+
+          Area = Area + ((diff * (A-x1)/(x2-x1)) * ((A-x1)/2))
+
+          x_cross <- t1+(diff * (A-x1)/(x2-x1))
+          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
+                           data.frame(t=x_cross,X_t=A),
+                           data.frame(t=x_cross,X_t=A))
+
+          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area$G <- G
+          polygon[[G]] <- DF_Area
+          G <- G + 1
+          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+
+        } else if ((x1>A) && (x2<=A)){
+
+          Area = Area + ((diff * (x2-A)/(x2-x1)) * ((A-x2)/2))
+
+          x_cross <- t1+(diff * (x2-A)/(x2-x1))
+          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+
+        } else {
+
+          Area = Area
+        }
+
+      }
+
+      if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
+        DF_Area <- rbind(DF_Area,data.frame(t=X.I[nrow(X.I),1],X_t=X.I[nrow(X.I),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area$G <- G
+        polygon[[G]] <- DF_Area
+      }
+
+      DF_Area <- do.call(rbind, polygon)
+
     }
+
+    DF_Area <- na.omit(DF_Area)
+
+    if (plot){
+
+      p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
+        geom_line() +
+        geom_hline(yintercept = A,color="blue",linetype = "dashed")+
+        labs(y="X(t)",x="t")+
+        ggtitle(sprintf("Excursion area of the realisation over the level %s", A))+
+        theme(plot.title = element_text(size = 10))
+
+
+      if (!is.null(DF_Area) && nrow(DF_Area)>0){
+
+        p <- p + geom_polygon(data=DF_Area,aes(x=.data$t,y=.data$X_t,group=.data$G),fill="lightblue")
+      }
+
+      print(p)
+
+    }
+
+    return(Area)
 
   }
 }
+
 
 #' Estimated maximum of a time series
 #'
@@ -373,7 +692,7 @@ A.excursion<-function(X,A,n=10000,level='greater',subI=NULL,plot=FALSE)
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the maximum.
 #'
 #' @return Print the maximum of the time series and
-#' the corresponding \eqn{t} values. If \code{plot=TRUE}, a plot of the time series with
+#' the corresponding \eqn{t} values. If \code{plot=TRUE}, the time series with
 #' with maximum and corresponding \eqn{t} values are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
@@ -503,7 +822,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the minimum.
 #'
 #' @return Print the minimum of the time series and
-#' the corresponding \eqn{t} values. If \code{plot=TRUE}, a plot of the time series with
+#' the corresponding \eqn{t} values. If \code{plot=TRUE}, the time series with
 #' with minimum and corresponding \eqn{t} values are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data

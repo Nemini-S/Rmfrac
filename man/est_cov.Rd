@@ -4,11 +4,13 @@
 \alias{est_cov}
 \title{Empirical covariance function of a process}
 \usage{
-est_cov(X, plot = FALSE)
+est_cov(X, theta = 0.1, plot = FALSE)
 }
 \arguments{
 \item{X}{A data frame where the first column is the time sequence and the remaining
 columns are the values of each realization of the process.}
+
+\item{theta}{Smoothing parameter.}
 
 \item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted.}
 }
@@ -29,7 +31,7 @@ H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 Data <- data.frame(t,t(X))
-cov.mat <- est_cov(Data,plot=TRUE)
+cov.mat <- est_cov(Data,theta=0.2,plot=TRUE)
 cov.mat
 
 }

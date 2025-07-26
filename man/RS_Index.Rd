@@ -4,15 +4,15 @@
 \alias{RS_Index}
 \title{Relative strength index}
 \usage{
-RS_Index(prices, period = 14, plot = FALSE, overbought = 70, oversold = 30)
+RS_Index(X, period = 14, plot = FALSE, overbought = 70, oversold = 30)
 }
 \arguments{
-\item{prices}{Series of prices as a list, vector or \code{xts} object.}
+\item{X}{A list, vector or \code{xts} object.}
 
 \item{period}{Period length used for smoothing. Default is set to 14.}
 
-\item{plot}{Logical: If \code{TRUE}, a plot of the price series and a plot of the
-RSI are displayed in the same window.}
+\item{plot}{Logical: If \code{TRUE}, the time series and the
+RSI are plotted in the same window.}
 
 \item{overbought}{Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.}
 
@@ -20,26 +20,24 @@ RSI are displayed in the same window.}
 }
 \value{
 A list, vector or \code{xts} object of the RSI values. If \code{plot=TRUE},
-a plot of the price series and a plot of the RSI with \code{overbought} and
+the time series and the RSI with \code{overbought} and
 \code{oversold} levels are plotted.
 }
 \description{
-This function computes the Relative Strength Index (RSI) from a series of prices.
+This function computes the Relative Strength Index (RSI) for a time series.
 }
 \details{
-To compute the RSI, \eqn{100 \dfrac{Average_gain}{Average_gain+Average_loss}}
+To compute the RSI,
+\eqn{100 \dfrac{Average\_gain}{Average_gain+Average\_loss}}
 formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
 }
 \examples{
-#prices as a list
-prices <- c(74.44,74.19,74.25,73.65,74.37,74.73,75.15,75.46,75.88,76.78,
+X <- c(74.44,74.19,74.25,73.65,74.37,74.73,75.15,75.46,75.88,76.78,
             75.81,76.53,75.11,76.28,76.68,76.08,76.53,76.11,76.42,75.58,
             75.44,75.46,74.98)
-RS_Index(prices,plot=TRUE)
+RS_Index(X,plot=TRUE)
 
-#time series object
-library(xts)
-Date <- seq(as.Date("2025-07-01"), by = "days", length.out = length(prices))
-price_ts <- xts(prices, order.by = Date)
-RS_Index(price_ts,plot=TRUE)
+}
+\references{
+Wilder, J. W. (1978). New concepts in technical trading systems. Greensboro, NC.
 }

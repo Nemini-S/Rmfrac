@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyses_functions_2.R
 \name{cross_T}
 \alias{cross_T}
-\title{Estimated level crossing times}
+\title{Estimated crossing times}
 \usage{
 cross_T(X, A, subI = NULL, plot = FALSE, vline = FALSE)
 }
@@ -13,19 +13,19 @@ and the second one is the values of the time series \eqn{X(t)}.}
 \item{A}{Constant level as a numeric value.}
 
 \item{subI}{Time sub-interval as a vector, where the lower bound is
-the first element and upper bound is the second. Optional: If provided level crossing
+the first element and the upper bound is the second. Optional: If provided level crossing
 times of the sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted.}
 
-\item{vline}{Logical: If \code{TRUE}, a vertical line is plotted across the crossing point(s).}
+\item{vline}{Logical: If \code{TRUE}, a vertical line is plotted at the crossing point(s).}
 }
 \value{
-The estimated level crossing times. If \code{plot=TRUE}, a plot of the time series with
+The estimated crossing times at a given level. If \code{plot=TRUE}, the time series with
 the constant level crossing and level crossing times are plotted.
 }
 \description{
-Computes the estimated \eqn{t} value(s), where a time series crosses a specific
+Computes the estimated \eqn{t} value(s), in which a time series crosses a specific
 constant level for the provided time interval or its sub-interval.
 }
 \examples{

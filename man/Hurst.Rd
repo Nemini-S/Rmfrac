@@ -28,7 +28,7 @@ Statistical estimation of the Hurst function is done based on the results of Aya
 of the process associated with its increments.
 }
 \examples{
-#Example 1: For a multifractional process simulated using GHBMP function
+#Hurst function of a multifractional process simulated using GHBMP function
 T <- seq(0,1,by=(1/2)^10)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X <- GHBMP(T,H)

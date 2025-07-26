@@ -136,7 +136,7 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
 #' Prints the results of k-means clustering of realisations of processes.
 #'
 #' @param x Object of class \code{"k_hurst"}.
-#' @param ... Unused arguments
+#' @param ... Other arguments
 #'
 #' @seealso \code{\link{kmeans_hurst}}
 #'

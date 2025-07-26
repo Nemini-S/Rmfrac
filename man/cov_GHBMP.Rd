@@ -4,7 +4,14 @@
 \alias{cov_GHBMP}
 \title{Covariance of Gaussian Haar-based multifractional processes}
 \usage{
-cov_GHBMP(t, H, J = 8, plot = FALSE, num.cores = availableCores(omit = 1))
+cov_GHBMP(
+  t,
+  H,
+  J = 8,
+  theta = NULL,
+  plot = FALSE,
+  num.cores = availableCores(omit = 1)
+)
 }
 \arguments{
 \item{t}{Time point or time sequence on the interval \eqn{[0,1]}.}
@@ -12,6 +19,8 @@ cov_GHBMP(t, H, J = 8, plot = FALSE, num.cores = availableCores(omit = 1))
 \item{H}{Hurst function \eqn{H(t)} which depends on \code{t}.}
 
 \item{J}{Positive integer. For large J values could be rather time consuming. Default is set to 8.}
+
+\item{theta}{Optional: Smoothing parameter.}
 
 \item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted.}
 
@@ -28,7 +37,7 @@ Computes the theoretical covariance matrix of a Gaussian Haar-based multifractio
 #Covariance of a GHBMP with H=0.5-0.4* sin(6*3.14*t)
 t <- seq(0,1,by=0.01)
 H <- function(t) {return(0.5-0.4* sin(6*3.14*t))}
-cov_GHBMP(t,H,plot=TRUE)
+cov_GHBMP(t,H,theta=0.1,plot=TRUE)
 }
 }
 \references{

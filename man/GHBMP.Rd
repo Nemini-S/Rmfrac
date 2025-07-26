@@ -35,10 +35,10 @@ where
 with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}} h(s) ds}.
 \eqn{h} is the Haar mother wavelet, \eqn{j} and \eqn{k} are positive integers, \eqn{t} is time, \eqn{H} is the Hurst function and
 \eqn{\varepsilon_{j,k}} is a sequence of independent \eqn{\mathcal{N}(0,1)} Gaussian random variables.
-For simulations, the truncated version of this formula with first summation up to J is considered.
+For simulations, the truncated version of this formula with first summation up to J is used.
 }
 \note{
-See Examples for the usage of Hurst functions, for example, constant, time-varying, piecewise or step functions.
+See Examples for the usage of constant, time-varying, piecewise or step Hurst functions.
 }
 \examples{
 #Constant Hurst function
@@ -71,5 +71,6 @@ On Construction, Properties and Simulation of Haar-Based
 Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 }
 \seealso{
-\code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBM}}, \code{\link{sim_FGN}}
+\code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBm}},
+\code{\link{FGn}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 }

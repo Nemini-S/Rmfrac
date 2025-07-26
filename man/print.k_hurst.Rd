@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{Object of class \code{"k_hurst"}.}
 
-\item{...}{Unused arguments}
+\item{...}{Other arguments}
 }
 \description{
 Prints the results of k-means clustering of realisations of processes.

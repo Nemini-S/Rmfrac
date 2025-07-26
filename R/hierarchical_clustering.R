@@ -181,7 +181,7 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
 #'
 #'
 #' @param x Object of class \code{"hc_hurst"}.
-#' @param ... Unused arguments
+#' @param ... Other arguments
 #'
 #' @seealso \code{\link{hclust_hurst}}
 #'

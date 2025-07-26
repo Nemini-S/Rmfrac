@@ -4,7 +4,7 @@
 \alias{sojourn}
 \title{Estimated sojourn measure}
 \usage{
-sojourn(X, A, n = 10000, level = "greater", subI = NULL, plot = FALSE)
+sojourn(X, A, N = 10000, level = "greater", subI = NULL, plot = FALSE)
 }
 \arguments{
 \item{X}{Data frame where the first column is a time sequence \eqn{t}
@@ -12,7 +12,7 @@ and the second one is the values of the time series \eqn{X(t)}.}
 
 \item{A}{Constant level as a numeric value.}
 
-\item{n}{Number of points a time interval to be split into. Default set to 10000.}
+\item{N}{Number of steps the time interval is split into. Default set to 10000.}
 
 \item{level}{A vector of character strings which specifies which sojourn
 measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.}
@@ -34,8 +34,7 @@ constant level \code{A} for the provided time interval or its sub-interval.
 t <- seq(0,1,length=1000)
 TS <- data.frame("t"=t,"X(t)"=rnorm(1000))
 sojourn(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
-
 }
 \seealso{
-\code{\link{A.excursion}}
+\code{\link{exc_Area}}
 }

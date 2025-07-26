@@ -22,7 +22,7 @@ sub-interval is returned, otherwise the whole time interval is considered.}
 }
 \value{
 Print the minimum of the time series and
-the corresponding \eqn{t} values. If \code{plot=TRUE}, a plot of the time series with
+the corresponding \eqn{t} values. If \code{plot=TRUE}, the time series with
 with minimum and corresponding \eqn{t} values are plotted.
 }
 \description{

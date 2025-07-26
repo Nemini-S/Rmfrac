@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{Object of class \code{"hc_hurst"}.}
 
-\item{...}{Unused arguments}
+\item{...}{Other arguments}
 }
 \description{
 Prints the results of hierarchical clustering of realisations of processes.

@@ -1,19 +1,19 @@
-#' Estimated level crossing times
+#' Estimated crossing times
 #'
 #' @description
-#' Computes the estimated \eqn{t} value(s), where a time series crosses a specific
+#' Computes the estimated \eqn{t} value(s), in which a time series crosses a specific
 #' constant level for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval as a vector, where the lower bound is
-#' the first element and upper bound is the second. Optional: If provided level crossing
+#' the first element and the upper bound is the second. Optional: If provided level crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted.
-#' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the crossing point(s).
+#' @param vline Logical: If \code{TRUE}, a vertical line is plotted at the crossing point(s).
 #'
-#' @return The estimated level crossing times. If \code{plot=TRUE}, a plot of the time series with
+#' @return The estimated crossing times at a given level. If \code{plot=TRUE}, the time series with
 #' the constant level crossing and level crossing times are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
@@ -145,12 +145,12 @@ cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval as a vector, where the lower bound is
-#' the first element and upper bound is the second. Optional: If provided crossing rate
+#' the first element and the upper bound is the second. Optional: If provided crossing rate
 #' for the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and crossing
 #' points are plotted.
 #'
-#' @return The crossing rate. If \code{plot=TRUE}, a plot of the time series with
+#' @return The crossing rate, which gives average number of crossings per time unit. If \code{plot=TRUE}, the time series with
 #' the constant level and crossing points are plotted.
 #' @export cross_rate
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_hline labs aes
@@ -269,18 +269,18 @@ if (is.null(subI)){
 #' Mean time between crossings
 #' @description
 #' Computes the mean duration between crossings of a time series
-#' across a specified constant level for the provided time interval or its sub-interval.
+#' at a specified constant level for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval is a vector, where the lower bound is
-#' the first element and upper bound is the second. Optional: If provided level crossing
-#' times of the sub-interval is returned, otherwise the whole time interval is considered.
+#' the first element and the upper bound is the second. Optional: If provided mean crossing
+#' times for the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and crossing
 #' points are plotted.
 #'
-#' @return The estimated mean time between crossings. If \code{plot=TRUE}, a plot of the time series with
+#' @return The estimated mean time between crossings. If \code{plot=TRUE}, the time series with
 #' the constant level and crossing points are plotted.
 #' @export cross_mean
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_hline labs aes
@@ -426,17 +426,17 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
 
 
 
-#' Longest streak of increasing/decreasing
+#' Longest increasing/decreasing streak
 #' @description
 #' Computes the time span of the longest increasing or decreasing streak
 #' for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
-#' @param direction A vector of character strings which specifies the direction of
+#' @param direction A character string which specifies the direction of
 #' the streak: \code{"increasing"} or \code{"decreasing"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
-#' the first element and upper bound is the second. Optional: If provided level crossing
+#' the first element and the upper bound is the second. Optional: If provided level crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series and the longest streak of
 #' increasing/decreasing is plotted.
@@ -654,17 +654,17 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 }
 
 
-#' Mean time span of increasing increasing/decreasing streaks
+#' Mean time span of increasing/decreasing streaks
 #' @description
 #' Computes the mean time span of the increasing/decreasing streaks
 #' for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
-#' @param direction A vector of character strings which specifies the direction of
+#' @param direction A character string which specifies the direction of
 #' the streak: \code{"increasing"} or \code{"decreasing"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
-#' the first element and upper bound is the second. Optional: If provided level crossing
+#' the first element and the upper bound is the second. Optional: If provided level crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series and the increasing/decreasing
 #' streaks are plotted.
@@ -880,20 +880,22 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
 #' Relative strength index
 #' @description
-#' This function computes the Relative Strength Index (RSI) from a series of prices.
+#' This function computes the Relative Strength Index (RSI) for a time series.
 #'
-#' @param prices Series of prices as a list, vector or \code{xts} object.
+#' @param X A list, vector or \code{xts} object.
 #' @param period Period length used for smoothing. Default is set to 14.
-#' @param plot Logical: If \code{TRUE}, a plot of the price series and a plot of the
-#' RSI are displayed in the same window.
+#' @param plot Logical: If \code{TRUE}, the time series and the
+#' RSI are plotted in the same window.
 #' @param overbought Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.
 #' @param oversold Horizontal line which indicates an oversold level in the RSI plot. Default is set to 30.
 #'
 #' @return A list, vector or \code{xts} object of the RSI values. If \code{plot=TRUE},
-#' a plot of the price series and a plot of the RSI with \code{overbought} and
+#' the time series and the RSI with \code{overbought} and
 #' \code{oversold} levels are plotted.
-#' @details To compute the RSI, \eqn{100 \dfrac{Average_gain}{Average_gain+Average_loss}}
+#' @details To compute the RSI,
+#' \eqn{100 \dfrac{Average\_gain}{Average_gain+Average\_loss}}
 #' formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
+#' @references Wilder, J. W. (1978). New concepts in technical trading systems. Greensboro, NC.
 #' @importFrom xts xts is.xts
 #' @importFrom ggplot2 ggplot geom_line geom_hline labs aes facet_grid vars
 #' @importFrom rlang .data
@@ -902,23 +904,17 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' @export RS_Index
 #'
 #' @examples
-#' #prices as a list
-#' prices <- c(74.44,74.19,74.25,73.65,74.37,74.73,75.15,75.46,75.88,76.78,
+#' X <- c(74.44,74.19,74.25,73.65,74.37,74.73,75.15,75.46,75.88,76.78,
 #'             75.81,76.53,75.11,76.28,76.68,76.08,76.53,76.11,76.42,75.58,
 #'             75.44,75.46,74.98)
-#' RS_Index(prices,plot=TRUE)
+#' RS_Index(X,plot=TRUE)
 #'
-#' #time series object
-#' library(xts)
-#' Date <- seq(as.Date("2025-07-01"), by = "days", length.out = length(prices))
-#' price_ts <- xts(prices, order.by = Date)
-#' RS_Index(price_ts,plot=TRUE)
-RS_Index <- function(prices,period=14,plot=FALSE,overbought=70,oversold=30)
+RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
 {
 
-  if(!is.list(prices) && !is.xts(prices) && !is.vector(prices)){
-    stop("prices must be a list, vector or a time series object")
-  } else if (!(length(prices)>=(period + 1))){
+  if(!is.list(X) && !is.xts(X) && !is.vector(X)){
+    stop("X must be a list, vector or a time series object")
+  } else if (!(length(X)>=(period + 1))){
     stop("Not enough data to compute RSI for the given period")
   }
 
@@ -939,21 +935,21 @@ RS_Index <- function(prices,period=14,plot=FALSE,overbought=70,oversold=30)
     stop("overbought and oversold should range from 0 to 100")
   }
 
-  if(inherits(prices, "xts")){
-    t <- index(prices)
-    prices <- as.numeric(prices)
+  if(inherits(X, "xts")){
+    t <- index(X)
+    X <- as.numeric(X)
   } else{
-    t <- 1:length(prices)
+    t <- 1:length(X)
   }
 
-  N <- length(prices)
-  diff <- diff(prices)
+  N <- length(X)
+  diff <- diff(X)
 
   gain <- ifelse(diff>0,diff,0)
   loss <- ifelse(diff<0,-diff,0)
 
-  gain_mean <- rep(NA,length(prices))
-  loss_mean <- rep(NA,length(prices))
+  gain_mean <- rep(NA,length(X))
+  loss_mean <- rep(NA,length(X))
 
   gain_mean[period + 1] <- mean(gain[1:period],na.rm=TRUE)
   loss_mean[period + 1] <- mean(loss[1:period],na.rm=TRUE)
@@ -965,9 +961,9 @@ RS_Index <- function(prices,period=14,plot=FALSE,overbought=70,oversold=30)
 
   RSI <- 100 * (gain_mean)/(gain_mean+loss_mean)
 
-  RSI_df <- data.frame(t=rep(t,2),value=c(prices, RSI),group=rep(c("Price", "RSI"), each=N))
+  RSI_df <- data.frame(t=rep(t,2),value=c(X, RSI),group=rep(c("X", "RSI"), each=N))
 
-  if (inherits(prices, "xts")) {
+  if (inherits(X, "xts")) {
 
     RSI_output <- xts(RSI,order.by=t)
 
@@ -984,7 +980,7 @@ RS_Index <- function(prices,period=14,plot=FALSE,overbought=70,oversold=30)
       geom_line() +
       geom_hline(data=df1,aes(yintercept=.data$hline),color=c("blue","blue"), linetype="dashed") +
       facet_grid(rows = vars(group), scales="free_y") +
-      labs(title="Price and Relative Strength Index",y="",x="Time")
+      labs(title="X and Relative Strength Index",y="X(t)",x="t")
 
     print(p)
 
