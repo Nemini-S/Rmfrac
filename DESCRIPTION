@@ -9,7 +9,7 @@ Maintainer: Nemini Samarakoon <neminisamarakoon95@gmail.com>
 Description: Simulation of multifractional Processes. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions and several functions to estimate and plot geometric statistics of the processes and time series.
 License: GPL-3
 Encoding: UTF-8
-Imports: parallel, parallelly, ggplot2, zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, xts
+Imports: parallel, parallelly, ggplot2(>= 3.4.0), zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, xts, fields
 LazyData: false
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)

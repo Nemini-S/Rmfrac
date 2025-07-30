@@ -976,10 +976,10 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
   {
     df1 <- data.frame(group="RSI",hline=c(overbought, oversold))
 
-    p <- ggplot(RSI_df,aes(x=.data$t, y=.data$value)) +
+    p <- ggplot(RSI_df,aes(x=.data$t,y=.data$value)) +
       geom_line() +
       geom_hline(data=df1,aes(yintercept=.data$hline),color=c("blue","blue"), linetype="dashed") +
-      facet_grid(rows = vars(group), scales="free_y") +
+      facet_wrap(~group,ncol=1,scales="free_y") +
       labs(title="X and Relative Strength Index",y="X(t)",x="t")
 
     print(p)
@@ -989,5 +989,6 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
   return(RSI_output)
 
 }
+
 
 

@@ -8,7 +8,7 @@
 #'
 #' @return An interactive shiny app with the following user interface controls.
 #'
-#' **Hurst function estimation**
+#' **Hurst function and LFD estimation**
 #' \describe{
 #'   \item{\code{Hurst function}}{Input the Hurst function in terms of \code{t}.
 #'   The default is set to \code{0.5+0*t}.}
@@ -17,19 +17,19 @@
 #'   \item{\code{Number of sub-intervals for estimation}}{Default is set to 100.}
 #'   \item{\code{Q}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
 #'   \item{\code{L}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
-#'   \item{\code{Hurst function to plot}}{Select: \code{Theoretical Hurst function}, \code{Raw estimate of Hurst function}, \code{Smoothed estimate of Hurst function}.}}
+#'   \item{\code{Plot}}{Select: \code{Theoretical Hurst function}, \code{Raw estimate of Hurst function}, \code{Smoothed estimate of Hurst function}, \code{Raw estimate of Local Fractal Dimension}, \code{Smoothed estimate of Local Fractal Dimension}.}}
 #' **Sojourn measure and excursion area**
 #'  \describe{
 #'   \item{\code{Number of time steps}}{Input the number of steps the time interval needs to be split into.}
 #'   \item{\code{Constant level}}{Input the constant level.}
 #'   \item{\code{Level}}{Select: \code{Greater}, \code{Lower}.}
-#'   \item{}{Select: \code{Sojourn measure}, \code{Excursion area}.}}
+#'   \item{Plot}{Select: \code{Sojourn measure}, \code{Excursion area}.}}
 #' **Longest streak**
 #'  \describe{
-#'   \item{}{Select: \code{Increasing}, \code{Decreasing}.}}
+#'   \item{Longest streak to plot}{Select: \code{Increasing}, \code{Decreasing}.}}
 #' **Maximum and minimum**
 #'  \describe{
-#'   \item{}{Select: \code{Maximum}, \code{Minimum}.}}
+#'   \item{Plot}{Select: \code{Maximum}, \code{Minimum}.}}
 #' @importFrom shiny runApp
 #' @importFrom shinycssloaders withSpinner
 #' @export shinyapp_sim

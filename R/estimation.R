@@ -3,13 +3,13 @@
 #' @description
 #' This function computes statistical estimates for the Hurst function of multifractional processes.
 #'
-#' @param X.t Data frame where the first column is a time sequence from 0 to 1 and the second the values of the multifractional process.
+#' @param X Data frame where the first column is a time sequence and the second the values of the multifractional process.
 #' For reliable estimates the data frame should be of at least 500 data points.
 #' @param N Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Fixed integer greater than or equal to 2. Default is set to 2.
 #'
-#' @return A data frame of class \code{"est"} where the first column is a time sequence and second column is estimated values of the Hurst function.
+#' @return A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.
 #'
 #' @details
 #' Statistical estimation of the Hurst function is done based on the results of Ayache, A.,
@@ -26,7 +26,7 @@
 #' the random Hurst function of a multifractional process. Latin American Journal of
 #' Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 #'
-#' @seealso \code{\link{plot.est}}
+#' @seealso \code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD}}
 #'
 #' @examples
 #' #Hurst function of a multifractional process simulated using GHBMP function
@@ -36,10 +36,10 @@
 #' Hurst(X)
 #'
 #'
-Hurst<-function(X.t,N=100,Q=2,L=2)
+Hurst<-function(X,N=100,Q=2,L=2)
 {
-  if (!is.data.frame(X.t) | !ncol(X.t) == 2 | !(all(sapply(X.t, is.numeric))) | !(all(X.t[[1]] >= 0 & X.t[[1]] <= 1))) {
-    stop("X.t must be a numeric data frame with time sequence from 0 to 1 given as the first column")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(N)) {
@@ -60,8 +60,15 @@ Hurst<-function(X.t,N=100,Q=2,L=2)
     stop("L must be a positive integer greater than 1")
   }
 
-  X.t<-X.t[order(X.t[,1]),]
-  tQ<-X.t[,2]
+  X<-X[order(X[,1]),]
+
+  tmin1 <- min(X[,1])
+  tmax1 <- max(X[,1])
+
+  X_scaled <- X
+  X_scaled[,1] <- (X_scaled[,1]-tmin1)/(tmax1-tmin1)
+
+  tQ<-X_scaled[,2]
   t<-tQ[seq(1, length(tQ), by = Q)]
 
   l<-0:L
@@ -81,7 +88,7 @@ Hurst<-function(X.t,N=100,Q=2,L=2)
   #val <- ifelse(L<N, "Continue", "Stop")
   #print(val)
 
-  XNQ<-X.t[,2]
+  XNQ<-X[,2]
   XN <- XNQ[seq(1, length(XNQ), by = Q)]
 
   dNk<-rollapply(XN,width=(L+1),ms)
@@ -109,22 +116,23 @@ Hurst<-function(X.t,N=100,Q=2,L=2)
 
   H_est_v<-Vectorize(H_est)
   p1<-H_est_v(1:N)
-  est_data<-na.omit(as.data.frame(t(p1))) #Estimated data for the Hurst function
-  colnames(est_data)<-c("Time","Hurst_estimate")
+  est_data<-as.data.frame(t(p1)) #Estimated data for the Hurst function
 
-  class(est_data)<-c("est",class(est_data))
+  est_data[,1] <- ((tmax1 - tmin1) / (1 - 0)) * (est_data[,1] - 0) + tmin1
+
+  est_data<-na.omit(est_data)
+  colnames(est_data)<-c("Time","Hurst_estimate")
 
   return(est_data)
 
 }
-
 
 #' Estimation of the local fractal dimension
 #'
 #' @description
 #' This function computes the estimates for the local fractal dimension of multifractional processes.
 #'
-#' @param X.t Data frame where the first column is a time sequence from 0 to 1 and the second is the values of the multifractional process.
+#' @param X Data frame where the first column is a time sequence and the second is the values of the multifractional process.
 #' For reliable estimates the data frame should be of at least 500 data points.
 #' @param N Argument used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
@@ -132,7 +140,7 @@ Hurst<-function(X.t,N=100,Q=2,L=2)
 #'
 #' @return A data frame where the first column is a time sequence and the second column is estimated values of the local fractal dimension.
 #' @export LFD
-#' @seealso \code{\link{Hurst}}, \code{\link{plot.est}}, \code{\link{plot.mp}}
+#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD }}
 #'
 #' @details
 #' The following formula is used to estimate the local fractal dimension.
@@ -142,15 +150,15 @@ Hurst<-function(X.t,N=100,Q=2,L=2)
 #' that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282.
 #' \doi{doi.org/10.1137/S0036144501394387}.
 #' @examples
-#' LFD of a multifractional process simulated using GHBMP function
+#' #LFD of a multifractional process simulated using GHBMP function
 #' T <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 #' X <- GHBMP(T,H)
 #' LFD(X)
-LFD <- function(X.t,N=100,Q=2,L=2)
+LFD <- function(X,N=100,Q=2,L=2)
 {
-  if (!is.data.frame(X.t) | !ncol(X.t) == 2 | !(all(sapply(X.t, is.numeric))) | !(all(X.t[[1]] >= 0 & X.t[[1]] <= 1))) {
-    stop("X.t must be a numeric data frame with time sequence from 0 to 1 given as the first column")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
+    stop("X must be a numeric data frame with time sequence from 0 to 1 given as the first column")
   }
 
   if (!is.numeric(N)) {
@@ -171,7 +179,7 @@ LFD <- function(X.t,N=100,Q=2,L=2)
     stop("L must be a positive integer greater than 1")
   }
 
-  Hurst_est <- Hurst(X.t,N,Q,L)
+  Hurst_est <- Hurst(X,N,Q,L)
 
   D <- data.frame(Time=Hurst_est[,1],LFD_estimate=2-(Hurst_est[,2]))
 

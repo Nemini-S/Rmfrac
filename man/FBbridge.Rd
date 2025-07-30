@@ -33,7 +33,7 @@ for a provided Hurst parameter over the time interval \code{[t_start,t_end]}
 which terminates at \code{x_end} with \code{N} time steps and initial value \code{x_start}.
 }
 \examples{
-Bbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)
+FBbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)
 }
 \references{
 Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling

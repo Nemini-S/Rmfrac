@@ -1,262 +1,266 @@
 ui <- shiny::navbarPage("",
-      shiny::tabPanel("Brownian Motion",
-      shiny::fluidRow(
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Simulation Parameters"),
-       shiny::numericInput("x_BM", "Initial value", value = 0),
-       shiny::numericInput("t_start_BM", "Initial time point", value = 0,min=0),
-       shiny::numericInput("t_end_BM", "Terminal time point", value = 1,min=0),
-       shiny::numericInput("N_BM", "Number of time steps", value = 1000,min=0,step=1),
-       shiny::actionButton("submit_BM", "Simulate")),
+                        shiny::tabPanel("Brownian Motion",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Simulation Parameters"),
+                                                          shiny::numericInput("x_BM", "Initial value", value = 0),
+                                                          shiny::numericInput("t_start_BM", "Initial time point", value = 0,min=0),
+                                                          shiny::numericInput("t_end_BM", "Terminal time point", value = 1,min=0),
+                                                          shiny::numericInput("N_BM", "Number of time steps", value = 1000,min=0,step=1),
+                                                          shiny::actionButton("submit_BM", "Simulate")),
 
-       shiny::wellPanel(
-       shiny::h4("Sojourn measure and excursion area"),
-       shiny::numericInput("N_BMs", "Number of time steps", value = 10000,min=0,step=1),
-       shiny::numericInput("A_BM", "Constant level", value = 0),
-       shiny::selectInput("level_BM",label = "Level",
-                          choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-       shiny::checkboxInput("sm_BM", "Sojourn measure", value = FALSE),
-       shiny::checkboxInput("ea_BM", "Excursion area", value = FALSE))),
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::numericInput("N_BMs", "Number of time steps", value = 10000,min=0,step=1),
+                                                          shiny::numericInput("A_BM", "Constant level", value = 0),
+                                                          shiny::selectInput("level_BM",label = "Level",
+                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                          shiny::checkboxInput("sm_BM", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("ea_BM", "Excursion area", value = FALSE))),
 
-      shiny::column(8,
-       shinycssloaders::withSpinner((shiny::plotOutput("bmPlot",height="500px")), type = 8, color = "grey")),
+                                          shiny::column(8,
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("bmPlot",height="500px")), type = 8, color = "grey")),
 
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Maximum and minimum"),
-       shiny::checkboxInput("max_BM", "Maximum", value = FALSE),
-       shiny::checkboxInput("min_BM", "Minimum", value = FALSE))),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Maximum and minimum"),
+                                                          shiny::checkboxInput("max_BM", "Maximum", value = FALSE),
+                                                          shiny::checkboxInput("min_BM", "Minimum", value = FALSE))),
 
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Longest Streak"),
-       shiny::checkboxInput("increasing_BM", "Increasing (orange)", value = FALSE),
-       shiny::checkboxInput("decreasing_BM", "Decreasing (purple)", value = FALSE))))),
-
-
-
-      shiny::tabPanel("Brownian Bridge",
-      shiny::fluidRow(
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Simulation Parameters"),
-       shiny::numericInput("x1_BB", "Initial value", value = 0),
-       shiny::numericInput("xend_BB", "Terminating value", value = 0),
-       shiny::numericInput("t_start_BB", "Initial time point", value = 0,min=0),
-       shiny::numericInput("t_end_BB", "Terminal time point", value = 1,min=0),
-       shiny::numericInput("N_BB", "Number of time steps", value = 1000,min=0,step=1),
-       shiny::actionButton("submit_BB", "Simulate")),
-
-       shiny::wellPanel(
-       shiny::h4("Sojourn measure and excursion area"),
-       shiny::numericInput("N_BBs", "Number of time steps", value = 10000,min=0,step=1),
-       shiny::numericInput("A_BB", "Constant level", value = 0),
-       shiny::selectInput("level_BB",label = "Level",
-                          choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-       shiny::checkboxInput("sm_BB", "Sojourn measure", value = FALSE),
-       shiny::checkboxInput("ea_BB", "Excursion area", value = FALSE))),
-
-      shiny::column(8,
-      shinycssloaders::withSpinner((shiny::plotOutput("bbPlot",height="503px")), type = 8, color = "grey")),
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Maximum and minimum"),
-       shiny::checkboxInput("max_BB", "Maximum", value = FALSE),
-       shiny::checkboxInput("min_BB", "Minimum", value = FALSE))),
-
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Longest Streak"),
-       shiny::checkboxInput("increasing_BB", "Increasing (orange)", value = FALSE),
-       shiny::checkboxInput("decreasing_BB", "Decreasing (purple)", value = FALSE))))),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Longest Streak"),
+                                                          shiny::checkboxInput("increasing_BM", "Increasing (orange)", value = FALSE),
+                                                          shiny::checkboxInput("decreasing_BM", "Decreasing (purple)", value = FALSE))))),
 
 
-      shiny::tabPanel("Fractional Brownian Motion",
-      shiny::fluidRow(
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Simulation Parameters"),
-       shiny::numericInput("H_FBM", "Hurst Parameter", value = 0.5,min=0,max=1),
-       shiny::numericInput("x_FBM", "Initial value", value = 0),
-       shiny::numericInput("t_start_FBM", "Initial time point", value = 0,min=0),
-       shiny::numericInput("t_end_FBM", "Terminal time point", value = 1,min=0),
-       shiny::numericInput("N_FBM", "Number of time steps", value = 1000,step=1,min=1),
-       shiny::actionButton("submit_FBM", "Simulate")),
 
-       shiny::wellPanel(
-       shiny::h4("Sojourn measure and excursion area"),
-       shiny::numericInput("N_FBMs", "Number of time steps", value = 10000,min=0,step=1),
-       shiny::numericInput("A_FBM", "Constant level", value = 0),
-       shiny::selectInput("level_FBM",label = "Level",
-                         choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-       shiny::checkboxInput("sm_FBM", "Sojourn measure", value = FALSE),
-       shiny::checkboxInput("ea_FBM", "Excursion area", value = FALSE))),
+                        shiny::tabPanel("Brownian Bridge",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Simulation Parameters"),
+                                                          shiny::numericInput("x1_BB", "Initial value", value = 0),
+                                                          shiny::numericInput("xend_BB", "Terminating value", value = 0),
+                                                          shiny::numericInput("t_start_BB", "Initial time point", value = 0,min=0),
+                                                          shiny::numericInput("t_end_BB", "Terminal time point", value = 1,min=0),
+                                                          shiny::numericInput("N_BB", "Number of time steps", value = 1000,min=0,step=1),
+                                                          shiny::actionButton("submit_BB", "Simulate")),
 
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::numericInput("N_BBs", "Number of time steps", value = 10000,min=0,step=1),
+                                                          shiny::numericInput("A_BB", "Constant level", value = 0),
+                                                          shiny::selectInput("level_BB",label = "Level",
+                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                          shiny::checkboxInput("sm_BB", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("ea_BB", "Excursion area", value = FALSE))),
 
-      shiny::column(8,
-      shinycssloaders::withSpinner((shiny::plotOutput("fbmPlot",height="503px")), type = 8, color = "grey")),
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Maximum and minimum"),
-       shiny::checkboxInput("max_FBM", "Maximum", value = FALSE),
-       shiny::checkboxInput("min_FBM", "Minimum", value = FALSE))),
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Longest Streak"),
-       shiny::checkboxInput("increasing_FBM", "Increasing (orange)", value = FALSE),
-       shiny::checkboxInput("decreasing_FBM", "Decreasing (purple)", value = FALSE))))),
+                                          shiny::column(8,
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("bbPlot",height="503px")), type = 8, color = "grey")),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Maximum and minimum"),
+                                                          shiny::checkboxInput("max_BB", "Maximum", value = FALSE),
+                                                          shiny::checkboxInput("min_BB", "Minimum", value = FALSE))),
 
-      shiny::tabPanel("Fractional Brownian Bridge",
-      shiny::fluidRow(
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Simulation Parameters"),
-       shiny::numericInput("H_FBB", "Hurst Parameter", value = 0.5,min=0,max=1),
-       shiny::numericInput("x1_FBB", "Initial value", value = 0),
-       shiny::numericInput("xend_FBB", "Terminating value", value = 0),
-       shiny::numericInput("t_start_FBB", "Initial time point", value = 0,min=0),
-       shiny::numericInput("t_end_FBB", "Terminal time point", value = 1,min=0),
-       shiny::numericInput("N_FBB", "Number of time steps", value = 1000,min=0,step=1),
-       shiny::actionButton("submit_FBB", "Simulate")),
-
-       shiny::wellPanel(
-       shiny::h4("Sojourn measure and excursion area"),
-       shiny::numericInput("N_FBBs", "Number of time steps", value = 10000,min=0,step=1),
-       shiny::numericInput("A_FBB", "Constant level", value = 0),
-       shiny::selectInput("level_FBB",label = "Level",
-                         choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-       shiny::checkboxInput("sm_FBB", "Sojourn measure", value = FALSE),
-       shiny::checkboxInput("ea_FBB", "Excursion area", value = FALSE))),
-      shiny::column(8,
-      shinycssloaders::withSpinner((shiny::plotOutput("fbbPlot",height="576px")), type = 8, color = "grey")),
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Maximum and minimum"),
-       shiny::checkboxInput("max_FBB", "Maximum", value = FALSE),
-       shiny::checkboxInput("min_FBB", "Minimum", value = FALSE))),
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Longest Streak"),
-       shiny::checkboxInput("increasing_FBB", "Increasing (orange)", value = FALSE),
-       shiny::checkboxInput("decreasing_FBB", "Decreasing (purple)", value = FALSE))))),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Longest Streak"),
+                                                          shiny::checkboxInput("increasing_BB", "Increasing (orange)", value = FALSE),
+                                                          shiny::checkboxInput("decreasing_BB", "Decreasing (purple)", value = FALSE))))),
 
 
-      shiny::tabPanel("Fractional Gaussian Noise",
-      shiny::fluidRow(
-      shiny::column(4,
-       shiny::wellPanel(
-       shiny::h4("Simulation Parameters"),
-       shiny::numericInput("H_FGN", "Hurst Parameter", value = 0.5,min=0,max=1),
-       shiny::numericInput("t_start_FGN", "Initial time point", value = 0,min=0),
-       shiny::numericInput("t_end_FGN", "Terminal time point", value = 1,min=0),
-       shiny::numericInput("N_FGN", "Number of time steps", value = 1000,min=0,step=1),
-       shiny::actionButton("submit_FGN", "Simulate")),
+                        shiny::tabPanel("Fractional Brownian Motion",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Simulation Parameters"),
+                                                          shiny::numericInput("H_FBM", "Hurst Parameter", value = 0.5,min=0,max=1),
+                                                          shiny::numericInput("x_FBM", "Initial value", value = 0),
+                                                          shiny::numericInput("t_start_FBM", "Initial time point", value = 0,min=0),
+                                                          shiny::numericInput("t_end_FBM", "Terminal time point", value = 1,min=0),
+                                                          shiny::numericInput("N_FBM", "Number of time steps", value = 1000,step=1,min=1),
+                                                          shiny::actionButton("submit_FBM", "Simulate")),
 
-       shiny::wellPanel(
-       shiny::h4("Sojourn measure and excursion area"),
-       shiny::numericInput("N_FGNs", "Number of time steps", value = 10000,min=0,step=1),
-       shiny::numericInput("A_FGN", "Constant level", value = 0),
-       shiny::selectInput("level_FGN",label = "Level",
-                           choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-       shiny::checkboxInput("sm_FGN", "Sojourn measure", value = FALSE),
-       shiny::checkboxInput("ea_FGN", "Excursion area", value = FALSE))),
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::numericInput("N_FBMs", "Number of time steps", value = 10000,min=0,step=1),
+                                                          shiny::numericInput("A_FBM", "Constant level", value = 0),
+                                                          shiny::selectInput("level_FBM",label = "Level",
+                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                          shiny::checkboxInput("sm_FBM", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("ea_FBM", "Excursion area", value = FALSE))),
 
-       shiny::column(8,
-       shinycssloaders::withSpinner((shiny::plotOutput("fgnPlot",height="500px")), type = 8, color = "grey")),
-       shiny::column(4,
-        shiny::wellPanel(
-        shiny::h4("Maximum and minimum"),
-        shiny::checkboxInput("max_FGN", "Maximum", value = FALSE),
-        shiny::checkboxInput("min_FGN", "Minimum", value = FALSE))),
-       shiny::column(4,
-        shiny::wellPanel(
-        shiny::h4("Longest Streak"),
-        shiny::checkboxInput("increasing_FGN", "Increasing (orange)", value = FALSE),
-        shiny::checkboxInput("decreasing_FGN", "Decreasing (purple)", value = FALSE))))),
 
-       shiny::tabPanel("GHBMP",
-       shiny::fluidRow(
-       shiny::column(4,
-        shiny::wellPanel(
-        shiny::h4("Simulation"),
-        shiny::textInput("func", "Hurst function (in terms of t)", "0.2+0*t"),
-        shiny::textInput("time", "Time sequence", "seq(0,1,by=(1/2)^10)"),
-        shiny::numericInput("num", "J (positive integer for simulation)", value = 15, min = 1, step = 1),
-        shiny::actionButton("submit3", "Simulate")),
-        shiny::wellPanel(
-        shiny::h4("Estimation"),
-        shiny::numericInput("N_int", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
-        shiny::numericInput("Q", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
-        shiny::numericInput("L", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
-        shiny::checkboxGroupInput("checkbox_group","Select Hurst function to plot",
-                                  choices = list("Theoretical Hurst function" = "H","Raw estimate of Hurst function" = "Raw_Est_H",
-                                                 "Smoothed estimate of Hurst function" = "Smooth_Est_H")))),
+                                          shiny::column(8,
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("fbmPlot",height="503px")), type = 8, color = "grey")),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Maximum and minimum"),
+                                                          shiny::checkboxInput("max_FBM", "Maximum", value = FALSE),
+                                                          shiny::checkboxInput("min_FBM", "Minimum", value = FALSE))),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Longest Streak"),
+                                                          shiny::checkboxInput("increasing_FBM", "Increasing (orange)", value = FALSE),
+                                                          shiny::checkboxInput("decreasing_FBM", "Decreasing (purple)", value = FALSE))))),
 
-      shiny::column(8,
-      shinycssloaders::withSpinner((shiny::plotOutput("functionPlot",height="500px")), type = 8, color = "grey"),
-      shiny::fluidRow(
-      shiny::column(6,
-        shiny::wellPanel(
-        shiny::h4("Sojourn measure and excursion area"),
-        shiny::numericInput("N_GHBMP", "Number of time steps", value = 10000,min=0,step=1),
-        shiny::numericInput("A_GHBMP", "Constant level", value = 0),
-        shiny::selectInput("level",label = "Level",
-                           choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-        shiny::checkboxInput("sm", "Sojourn measure", value = FALSE),
-        shiny::checkboxInput("ea", "Excursion area", value = FALSE))),
+                        shiny::tabPanel("Fractional Brownian Bridge",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Simulation Parameters"),
+                                                          shiny::numericInput("H_FBB", "Hurst Parameter", value = 0.5,min=0,max=1),
+                                                          shiny::numericInput("x1_FBB", "Initial value", value = 0),
+                                                          shiny::numericInput("xend_FBB", "Terminating value", value = 0),
+                                                          shiny::numericInput("t_start_FBB", "Initial time point", value = 0,min=0),
+                                                          shiny::numericInput("t_end_FBB", "Terminal time point", value = 1,min=0),
+                                                          shiny::numericInput("N_FBB", "Number of time steps", value = 1000,min=0,step=1),
+                                                          shiny::actionButton("submit_FBB", "Simulate")),
 
-      shiny::column(5,
-        shiny::wellPanel(
-        shiny::h4("Maximum and minimum"),
-        shiny::checkboxInput("max3", "Maximum", value = FALSE),
-        shiny::checkboxInput("min3", "Minimum", value = FALSE))),
-      shiny::column(5,
-       shiny::wellPanel(
-       shiny::h4("Longest Streak"),
-       shiny::checkboxInput("increasing3", "Increasing (orange)", value = FALSE),
-       shiny::checkboxInput("decreasing3", "Decreasing (purple)", value = FALSE))))))),
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::numericInput("N_FBBs", "Number of time steps", value = 10000,min=0,step=1),
+                                                          shiny::numericInput("A_FBB", "Constant level", value = 0),
+                                                          shiny::selectInput("level_FBB",label = "Level",
+                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                          shiny::checkboxInput("sm_FBB", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("ea_FBB", "Excursion area", value = FALSE))),
+                                          shiny::column(8,
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("fbbPlot",height="576px")), type = 8, color = "grey")),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Maximum and minimum"),
+                                                          shiny::checkboxInput("max_FBB", "Maximum", value = FALSE),
+                                                          shiny::checkboxInput("min_FBB", "Minimum", value = FALSE))),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Longest Streak"),
+                                                          shiny::checkboxInput("increasing_FBB", "Increasing (orange)", value = FALSE),
+                                                          shiny::checkboxInput("decreasing_FBB", "Decreasing (purple)", value = FALSE))))),
 
-      shiny::tabPanel("Input Time Series",
-      shiny::fluidRow(
-      shiny::column(4,
 
-       shiny::wellPanel(
-       shiny::h4("Estimation"),
-       shiny::numericInput("N_intTS", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
-       shiny::numericInput("Q_TS", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
-       shiny::numericInput("L_TS", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
-       shiny::checkboxGroupInput("checkbox_group_TS","Select Hurst function to plot",
+                        shiny::tabPanel("Fractional Gaussian Noise",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Simulation Parameters"),
+                                                          shiny::numericInput("H_FGN", "Hurst Parameter", value = 0.5,min=0,max=1),
+                                                          shiny::numericInput("t_start_FGN", "Initial time point", value = 0,min=0),
+                                                          shiny::numericInput("t_end_FGN", "Terminal time point", value = 1,min=0),
+                                                          shiny::numericInput("N_FGN", "Number of time steps", value = 1000,min=0,step=1),
+                                                          shiny::actionButton("submit_FGN", "Simulate")),
+
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::numericInput("N_FGNs", "Number of time steps", value = 10000,min=0,step=1),
+                                                          shiny::numericInput("A_FGN", "Constant level", value = 0),
+                                                          shiny::selectInput("level_FGN",label = "Level",
+                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                          shiny::checkboxInput("sm_FGN", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("ea_FGN", "Excursion area", value = FALSE))),
+
+                                          shiny::column(8,
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("fgnPlot",height="500px")), type = 8, color = "grey")),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Maximum and minimum"),
+                                                          shiny::checkboxInput("max_FGN", "Maximum", value = FALSE),
+                                                          shiny::checkboxInput("min_FGN", "Minimum", value = FALSE))),
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Longest Streak"),
+                                                          shiny::checkboxInput("increasing_FGN", "Increasing (orange)", value = FALSE),
+                                                          shiny::checkboxInput("decreasing_FGN", "Decreasing (purple)", value = FALSE))))),
+
+                        shiny::tabPanel("GHBMP",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Simulation"),
+                                                          shiny::textInput("func", "Hurst function (in terms of t)", "0.2+0*t"),
+                                                          shiny::textInput("time", "Time sequence", "seq(0,1,by=(1/2)^10)"),
+                                                          shiny::numericInput("num", "J (positive integer for simulation)", value = 15, min = 1, step = 1),
+                                                          shiny::actionButton("submit3", "Simulate")),
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Estimation"),
+                                                          shiny::numericInput("N_int", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
+                                                          shiny::numericInput("Q", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
+                                                          shiny::numericInput("L", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
+                                                          shiny::checkboxGroupInput("checkbox_group","Select",
+                                                                                    choices = list("Theoretical Hurst function" = "H","Raw estimate of Hurst function" = "Raw_Est_H",
+                                                                                                   "Smoothed estimate of Hurst function" = "Smooth_Est_H",
+                                                                                                   "Raw estimate of Local Fractal Dimension" = "LFD_Est",
+                                                                                                   "Smoothed estimate of Local Fractal Dimension" = "LFD_Smooth_Est")))),
+
+                                          shiny::column(8,
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("functionPlot",height="500px")), type = 8, color = "grey"),
+                                                        shiny::fluidRow(
+                                                          shiny::column(6,
+                                                                        shiny::wellPanel(
+                                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                                          shiny::numericInput("N_GHBMP", "Number of time steps", value = 10000,min=0,step=1),
+                                                                          shiny::numericInput("A_GHBMP", "Constant level", value = 0),
+                                                                          shiny::selectInput("level",label = "Level",
+                                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                                          shiny::checkboxInput("sm", "Sojourn measure", value = FALSE),
+                                                                          shiny::checkboxInput("ea", "Excursion area", value = FALSE))),
+
+                                                          shiny::column(5,
+                                                                        shiny::wellPanel(
+                                                                          shiny::h4("Maximum and minimum"),
+                                                                          shiny::checkboxInput("max3", "Maximum", value = FALSE),
+                                                                          shiny::checkboxInput("min3", "Minimum", value = FALSE))),
+                                                          shiny::column(5,
+                                                                        shiny::wellPanel(
+                                                                          shiny::h4("Longest Streak"),
+                                                                          shiny::checkboxInput("increasing3", "Increasing (orange)", value = FALSE),
+                                                                          shiny::checkboxInput("decreasing3", "Decreasing (purple)", value = FALSE))))))),
+
+                        shiny::tabPanel("Input Time Series",
+                                        shiny::fluidRow(
+                                          shiny::column(4,
+
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Estimation"),
+                                                          shiny::numericInput("N_intTS", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
+                                                          shiny::numericInput("Q_TS", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
+                                                          shiny::numericInput("L_TS", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
+                                                          shiny::checkboxGroupInput("checkbox_group_TS","Select",
                                                                                     choices = list("Raw estimate of Hurst function" = "Raw_Est_H",
-                                                                                                   "Smoothed estimate of Hurst function" = "Smooth_Est_H"))),
-       shiny::wellPanel(
-       shiny::h4("Sojourn measure and excursion area"),
-       shiny::numericInput("N_TS", "Number of time steps", value = 10000,min=0,step=1),
-       shiny::numericInput("A_TS", "Constant level", value = 0),
-       shiny::selectInput("level_TS",label = "Level",
-                          choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-       shiny::checkboxInput("sm_TS", "Sojourn measure", value = FALSE),
-       shiny::checkboxInput("ea_TS", "Excursion area", value = FALSE))),
+                                                                                                   "Smoothed estimate of Hurst function" = "Smooth_Est_H",
+                                                                                                   "Raw estimate of Local Fractal Dimension" = "LFD_Est",
+                                                                                                   "Smoothed estimate of Local Fractal Dimension" = "LFD_Smooth_Est"))),
+                                                        shiny::wellPanel(
+                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::numericInput("N_TS", "Number of time steps", value = 10000,min=0,step=1),
+                                                          shiny::numericInput("A_TS", "Constant level", value = 0),
+                                                          shiny::selectInput("level_TS",label = "Level",
+                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                          shiny::checkboxInput("sm_TS", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("ea_TS", "Excursion area", value = FALSE))),
 
-      shiny::column(8,
-       shiny::wellPanel(
-       fileInput("file", "Upload CSV File", accept = ".csv"),
-       uiOutput("column_ui")),
+                                          shiny::column(8,
+                                                        shiny::wellPanel(
+                                                          fileInput("file", "Upload CSV File", accept = ".csv"),
+                                                          uiOutput("column_ui")),
 
-      shinycssloaders::withSpinner((shiny::plotOutput("tsplot",height="500px")), type = 8, color = "grey"),
-      shiny::fluidRow(
-      shiny::column(6,
-      shiny::wellPanel(
-      shiny::h4("Maximum and minimum"),
-      shiny::checkboxInput("max_TS", "Maximum", value = FALSE),
-      shiny::checkboxInput("min_TS", "Minimum", value = FALSE))),
-      shiny::column(6,
-      shiny::wellPanel(
-      shiny::h4("Longest Streak"),
-      shiny::checkboxInput("increasing_TS", "Increasing (orange)", value = FALSE),
-      shiny::checkboxInput("decreasing_TS", "Decreasing (purple)", value = FALSE)))
-      )))),
-      )
+                                                        shinycssloaders::withSpinner((shiny::plotOutput("tsplot",height="500px")), type = 8, color = "grey"),
+                                                        shiny::fluidRow(
+                                                          shiny::column(6,
+                                                                        shiny::wellPanel(
+                                                                          shiny::h4("Maximum and minimum"),
+                                                                          shiny::checkboxInput("max_TS", "Maximum", value = FALSE),
+                                                                          shiny::checkboxInput("min_TS", "Minimum", value = FALSE))),
+                                                          shiny::column(6,
+                                                                        shiny::wellPanel(
+                                                                          shiny::h4("Longest Streak"),
+                                                                          shiny::checkboxInput("increasing_TS", "Increasing (orange)", value = FALSE),
+                                                                          shiny::checkboxInput("decreasing_TS", "Decreasing (purple)", value = FALSE)))
+                                                        )))),
+)
 
 
 server <- function(input,output,session) {
@@ -275,6 +279,8 @@ server <- function(input,output,session) {
     InputTS <- InputTS[order(InputTS[,1]), ]
 
     p6 <- ggplot2::ggplot(InputTS, ggplot2::aes(x =InputTS[,1], y =InputTS[,2]))+ggplot2::geom_line() +
+      ggplot2::scale_color_manual(name = "",breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H","Raw Estimate LFD","Smoothed Estimate LFD"),
+                                  values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green","Raw Estimate LFD"="cyan","Smoothed Estimate LFD"="brown"))+
       ggplot2::labs(y="X(t)",x="t")
 
     if (!is.null(input$min_TS) && input$min_TS){
@@ -674,36 +680,32 @@ server <- function(input,output,session) {
     colnames(H_est) <- c("x","y")
     t1<-InputTS[,1]
 
-    if ("Raw_Est_H" %in% input$checkbox_group_TS && "Smooth_Est_H" %in% input$checkbox_group_TS) {
-      p6 <- p6 +
-        ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-        ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
-                             ,method="loess",se=FALSE,span = 0.3) +
-        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
-                                    values=c( "Raw Estimate H"="red", "Smoothed Estimate H"="green"))
+    LFD_est<-LFD(InputTS,N,Q,L)
+    colnames(LFD_est)<-c("x1","y1")
 
+    if("Raw_Est_H" %in% input$checkbox_group_TS){
+      p6 <- p6 + ggplot2::geom_line(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Raw Estimate H"))
 
-    } else if(!("Raw_Est_H" %in% input$checkbox_group_TS) && "Smooth_Est_H" %in% input$checkbox_group_TS){
-      p6 <- p6 +
-        ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
-                             ,method="loess",se=FALSE,span = 0.3) +
-        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Smoothed Estimate H"),
-                                    values=c(  "Smoothed Estimate H"="green"))
-
-
-    } else if("Raw_Est_H" %in% input$checkbox_group_TS && !("Smooth_Est_H" %in% input$checkbox_group_TS)){
-      p6 <- p6 +
-        ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H"),
-                                    values=c( "Raw Estimate H"="red"))
-
-
-    } else if(!("Raw_Est_H" %in% input$checkbox_group_TS) && !("Smooth_Est_H" %in% input$checkbox_group_TS)){
-
-      p6 <- p6
     }
 
+    if("Smooth_Est_H" %in% input$checkbox_group_TS){
+      p6 <- p6 + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
+                                      ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
 
+    }
+
+    if("LFD_Est" %in% input$checkbox_group_TS){
+
+      p6 <- p6 + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Raw Estimate LFD"))
+
+    }
+
+    if("LFD_Smooth_Est" %in% input$checkbox_group_TS){
+
+      p6 <- p6 + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Smoothed Estimate LFD")
+                                      ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
+
+    }
 
     print(p6)
 
@@ -734,6 +736,8 @@ server <- function(input,output,session) {
     simPR <- simPR[order(simPR[,1]), ]
 
     p<-ggplot2::ggplot(simPR, ggplot2::aes(x =t1, y =PP))+ggplot2::geom_line() +
+      ggplot2::scale_color_manual(name = "",breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H","Raw Estimate LFD","Smoothed Estimate LFD"),
+                                  values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green","Raw Estimate LFD"="cyan","Smoothed Estimate LFD"="brown"))+
       ggplot2::labs(y="X(t)",x="t")
 
     N <- input$N_int
@@ -749,80 +753,41 @@ server <- function(input,output,session) {
     colnames(H_est) <- c("x","y")
     t1<-simPR[,1]
 
+    LFD_est<-LFD(simPR,N,Q,L)
+    colnames(LFD_est)<-c("x1","y1")
+
     if("H" %in% input$checkbox_group){
 
       H1<-sapply(t1,func.H)
       data1<-data.frame(t1,H1)
 
-      if("Raw_Est_H" %in% input$checkbox_group && "Smooth_Est_H" %in% input$checkbox_group){
-
-        p <- p +
-          ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
-          ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-          ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
-                               ,method="loess",se=FALSE,span = 0.3) +
-          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H"),
-                                      values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green"))
-
-
-      } else if ("Raw_Est_H" %in% input$checkbox_group && !("Smooth_Est_H" %in% input$checkbox_group)){
-
-        p <- p +
-          ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
-          ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Raw Estimate H"),
-                                      values=c("Theoretical H"="blue", "Raw Estimate H"="red"))
-
-
-      } else if (!("Raw_Est_H" %in% input$checkbox_group) && "Smooth_Est_H" %in% input$checkbox_group) {
-
-        p <- p +
-          ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
-          ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
-                               ,method="loess",se=FALSE,span = 0.3) +
-          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H", "Smoothed Estimate H"),
-                                      values=c("Theoretical H"="blue", "Smoothed Estimate H"="green"))
-
-
-      } else if (!("Raw_Est_H" %in% input$checkbox_group) && !("Smooth_Est_H" %in% input$checkbox_group)) {
-
-        p <- p +
-          ggplot2::geom_line(data =data1, ggplot2::aes(x =t1, y =H1,col="Theoretical H"))+
-          ggplot2::scale_color_manual(name = "Hurst functions", breaks=c("Theoretical H"),
-                                      values=c("Theoretical H"="blue"))
-
-      }
-    } else { if ("Raw_Est_H" %in% input$checkbox_group && "Smooth_Est_H" %in% input$checkbox_group) {
-      p <- p +
-        ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-        ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
-                             ,method="loess",se=FALSE,span = 0.3) +
-        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H", "Smoothed Estimate H"),
-                                    values=c( "Raw Estimate H"="red", "Smoothed Estimate H"="green"))
-
-
-    } else if(!("Raw_Est_H" %in% input$checkbox_group) && "Smooth_Est_H" %in% input$checkbox_group){
-      p <- p +
-        ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =x, y =y,col="Smoothed Estimate H")
-                             ,method="loess",se=FALSE,span = 0.3) +
-        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Smoothed Estimate H"),
-                                    values=c(  "Smoothed Estimate H"="green"))
-
-
-    } else if("Raw_Est_H" %in% input$checkbox_group && !("Smooth_Est_H" %in% input$checkbox_group)){
-      p <- p +
-        ggplot2::geom_line(data = H_est, ggplot2::aes(x =x, y =y,col="Raw Estimate H")) +
-        ggplot2::scale_color_manual(name = "Hurst functions", breaks=c( "Raw Estimate H"),
-                                    values=c( "Raw Estimate H"="red"))
-
-
-    } else if(!("Raw_Est_H" %in% input$checkbox_group) && !("Smooth_Est_H" %in% input$checkbox_group)){
-
-      p <- p
-    }
+      p <- p + geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))
 
     }
 
+    if("Raw_Est_H" %in% input$checkbox_group){
+      p <- p + ggplot2::geom_line(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Raw Estimate H"))
+
+    }
+
+    if("Smooth_Est_H" %in% input$checkbox_group){
+      p <- p + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
+                                    ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
+
+    }
+
+    if("LFD_Est" %in% input$checkbox_group){
+
+      p <- p + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Raw Estimate LFD"))
+
+    }
+
+    if("LFD_Smooth_Est"%in% input$checkbox_group){
+
+      p <- p + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Smoothed Estimate LFD")
+                                    ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
+
+    }
 
     if (!is.null(input$max3) && input$max3){
 

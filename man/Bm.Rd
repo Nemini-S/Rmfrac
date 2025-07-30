@@ -31,5 +31,5 @@ time interval \code{[t_start,t_end]} with \code{N} time steps and initial value 
 Bm(x_start=0,t_start=0,t_end=2,plot=TRUE)
 }
 \seealso{
-\code{\link{GHBMP}}, \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
+\code{\link{GHBMP}}, \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 }

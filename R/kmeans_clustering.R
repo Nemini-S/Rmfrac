@@ -5,7 +5,7 @@
 #' processes based on the estimated Hurst functions.
 #'
 #' @param X.t A list of data frames. In each data frame, the first column is a time sequence
-#' from 0 to 1 and the second gives the values of the multifractional process.
+#' and the second gives the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
 #' @param ... Optional arguments: \code{iter.max}, \code{nstart} and \code{algorithm}.
@@ -156,12 +156,12 @@ print.k_hurst <- function(x, ...)
 #' @importFrom rlang .data
 #' @export
 #'
-autoplot.k_hurst<-function(x,type="estimates")
+autoplot.k_hurst<-function(object,...,type="estimates")
 {
-  smth_h<-x$smoothed_Hurst_estimates
-  raw_h<-x$raw_Hurst_estimates
-  cluster<-x$cluster
-  cent<-x$centers
+  smth_h<-object$smoothed_Hurst_estimates
+  raw_h<-object$raw_Hurst_estimates
+  cluster<-object$cluster
+  cent<-object$centers
 
   DF<-data.frame(
     clus = rep(cluster, each = ncol(smth_h)),
@@ -256,5 +256,5 @@ autoplot.k_hurst<-function(x,type="estimates")
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
 #' plot(KC,type ="ec")
 plot.k_hurst<-function(x,type="estimates",...) {
-  print(autoplot(x,type))
+  print(autoplot(x,type=type))
 }

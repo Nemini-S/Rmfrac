@@ -16,7 +16,7 @@
 \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 }}
 
-\item{...}{Unused arguments}
+\item{...}{Other arguments}
 }
 \value{
 A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.

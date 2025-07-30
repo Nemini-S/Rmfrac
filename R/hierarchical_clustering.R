@@ -5,7 +5,7 @@
 #' processes based on the estimated Hurst functions.
 #'
 #' @param X.t A list of data frames. In each data frame, the first column is a time sequence
-#' from 0 to 1 and the second gives the values of the multifractional process.
+#' and the second gives the values of the multifractional process.
 #' See Examples for usage.
 #' @param k The desired number of clusters.
 #' @param h The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is used.
@@ -200,12 +200,12 @@ print.hc_hurst <- function(x, ...)
 #' @importFrom ggplot2 autoplot ggplot facet_wrap geom_line labs aes
 #' @importFrom rlang .data
 #' @export
-autoplot.hc_hurst<-function(x,type="estimates")
+autoplot.hc_hurst<-function(object,...,type="estimates")
 {
-  smth_h<-x$smoothed_Hurst_estimates
-  raw_h<-x$raw_Hurst_estimates
-  cluster<-x$cluster
-  cent<-x$centers
+  smth_h<-object$smoothed_Hurst_estimates
+  raw_h<-object$raw_Hurst_estimates
+  cluster<-object$cluster
+  cent<-object$centers
 
   DF<-data.frame(
     clus = rep(cluster, each = ncol(smth_h)),
@@ -273,7 +273,7 @@ autoplot.hc_hurst<-function(x,type="estimates")
 #' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster}
 #' \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 #' }
-#' @param ... Unused arguments
+#' @param ... Other arguments
 #'
 #' @return A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.
 #' @exportS3Method Rmfrac::plot
@@ -299,5 +299,5 @@ autoplot.hc_hurst<-function(x,type="estimates")
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
 #' plot(HC,type ="ec")
 plot.hc_hurst<-function(x,type="estimates",...) {
-  print(autoplot(x,type))
+  print(autoplot(x,type=type))
 }

@@ -4,10 +4,10 @@
 \alias{Hurst}
 \title{Statistical estimation of the Hurst function}
 \usage{
-Hurst(X.t, N = 100, Q = 2, L = 2)
+Hurst(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X.t}{Data frame where the first column is a time sequence from 0 to 1 and the second the values of the multifractional process.
+\item{X}{Data frame where the first column is a time sequence and the second the values of the multifractional process.
 For reliable estimates the data frame should be of at least 500 data points.}
 
 \item{N}{Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
@@ -17,7 +17,7 @@ For reliable estimates the data frame should be of at least 500 data points.}
 \item{L}{Fixed integer greater than or equal to 2. Default is set to 2.}
 }
 \value{
-A data frame of class \code{"est"} where the first column is a time sequence and second column is estimated values of the Hurst function.
+A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.
 }
 \description{
 This function computes statistical estimates for the Hurst function of multifractional processes.
@@ -42,5 +42,5 @@ the random Hurst function of a multifractional process. Latin American Journal o
 Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 }
 \seealso{
-\code{\link{plot.est}}
+\code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD}}
 }
