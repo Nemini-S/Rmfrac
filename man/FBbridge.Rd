@@ -30,7 +30,8 @@ column is simulated values of the realisation of fractional Brownian bridge.
 \description{
 This function simulates a realisation of the fractional Brownian bridge
 for a provided Hurst parameter over the time interval \code{[t_start,t_end]}
-which terminates at \code{x_end} with \code{N} time steps and initial value \code{x_start}.
+which has the initial value \code{x_start} and terminates at \code{x_end}
+with \code{N} time steps.
 }
 \examples{
 FBbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)

@@ -42,5 +42,5 @@ the random Hurst function of a multifractional process. Latin American Journal o
 Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 }
 \seealso{
-\code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD}}
+\code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
 }

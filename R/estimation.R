@@ -26,7 +26,7 @@
 #' the random Hurst function of a multifractional process. Latin American Journal of
 #' Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 #'
-#' @seealso \code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD}}
+#' @seealso \code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
 #'
 #' @examples
 #' #Hurst function of a multifractional process simulated using GHBMP function
@@ -60,6 +60,7 @@ Hurst<-function(X,N=100,Q=2,L=2)
     stop("L must be a positive integer greater than 1")
   }
 
+  X<-na.omit(X)
   X<-X[order(X[,1]),]
 
   tmin1 <- min(X[,1])
@@ -118,7 +119,7 @@ Hurst<-function(X,N=100,Q=2,L=2)
   p1<-H_est_v(1:N)
   est_data<-as.data.frame(t(p1)) #Estimated data for the Hurst function
 
-  est_data[,1] <- ((tmax1 - tmin1) / (1 - 0)) * (est_data[,1] - 0) + tmin1
+  est_data[,1] <- ((tmax1-tmin1)*est_data[,1]) + tmin1
 
   est_data<-na.omit(est_data)
   colnames(est_data)<-c("Time","Hurst_estimate")
@@ -134,18 +135,18 @@ Hurst<-function(X,N=100,Q=2,L=2)
 #'
 #' @param X Data frame where the first column is a time sequence and the second is the values of the multifractional process.
 #' For reliable estimates the data frame should be of at least 500 data points.
-#' @param N Argument used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
-#' @param Q Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param L Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param N The same argument that is used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
+#' @param Q The same argument that is used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
+#' @param L The same argument that is used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
 #'
 #' @return A data frame where the first column is a time sequence and the second column is estimated values of the local fractal dimension.
 #' @export LFD
-#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD }}
+#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
 #'
 #' @details
-#' The following formula is used to estimate the local fractal dimension.
-#' \eqn{LFD = 2-H(t),}
-#' where \eqn{H(t)} is the Hurst function.
+#' The formula \eqn{\widehat{LFD} = 2-\widehat{H}(t)} is used to compute the estimated local fractal dimension,
+#' where \eqn{\widehat{H}(t)} is the estimated Hurst function.
+#'
 #' @references Gneiting, T., and Schlather, M. (2004). Stochastic models
 #' that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282.
 #' \doi{doi.org/10.1137/S0036144501394387}.

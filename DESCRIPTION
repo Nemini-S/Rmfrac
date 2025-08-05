@@ -6,10 +6,10 @@ Authors@R:c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role =
         person("Nemini", "Samarakoon", email = "neminisamarakoon95@gmail.com", role = c("aut", "cre")))
 Author: Andriy Olenko, Nemini Samarakoon 
 Maintainer: Nemini Samarakoon <neminisamarakoon95@gmail.com> 
-Description: Simulation of multifractional Processes. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions and several functions to estimate and plot geometric statistics of the processes and time series.
+Description: Simulation of multifractional processes. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions and several functions to estimate and plot geometric statistics of the processes and time series.
 License: GPL-3
 Encoding: UTF-8
-Imports: parallel, parallelly, ggplot2(>= 3.4.0), zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, xts, fields
+Imports: parallel, parallelly, ggplot2(>= 3.5.0), zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, xts, fields
 LazyData: false
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)

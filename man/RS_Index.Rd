@@ -28,7 +28,9 @@ This function computes the Relative Strength Index (RSI) for a time series.
 }
 \details{
 To compute the RSI,
-\eqn{100 \dfrac{Average\_gain}{Average_gain+Average\_loss}}
+
+\eqn{\text{RSI} = 100 \dfrac{\text{Average\_gain}}{\text{Average\_gain}+\text{Average\_loss}}}
+
 formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
 }
 \examples{

@@ -11,12 +11,12 @@ ui <- shiny::navbarPage("",
                                                           shiny::actionButton("submit_BM", "Simulate")),
 
                                                         shiny::wellPanel(
-                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::h4("Excursion set and area"),
                                                           shiny::numericInput("N_BMs", "Number of time steps", value = 10000,min=0,step=1),
                                                           shiny::numericInput("A_BM", "Constant level", value = 0),
-                                                          shiny::selectInput("level_BM",label = "Level",
+                                                          shiny::selectInput("level_BM",label = "Compare to level",
                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_BM", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("sm_BM", "Excursion set", value = FALSE),
                                                           shiny::checkboxInput("ea_BM", "Excursion area", value = FALSE))),
 
                                           shiny::column(8,
@@ -32,7 +32,7 @@ ui <- shiny::navbarPage("",
                                                         shiny::wellPanel(
                                                           shiny::h4("Longest Streak"),
                                                           shiny::checkboxInput("increasing_BM", "Increasing (orange)", value = FALSE),
-                                                          shiny::checkboxInput("decreasing_BM", "Decreasing (purple)", value = FALSE))))),
+                                                          shiny::checkboxInput("decreasing_BM", "Decreasing (brown)", value = FALSE))))),
 
 
 
@@ -49,12 +49,12 @@ ui <- shiny::navbarPage("",
                                                           shiny::actionButton("submit_BB", "Simulate")),
 
                                                         shiny::wellPanel(
-                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::h4("Excursion set and area"),
                                                           shiny::numericInput("N_BBs", "Number of time steps", value = 10000,min=0,step=1),
                                                           shiny::numericInput("A_BB", "Constant level", value = 0),
-                                                          shiny::selectInput("level_BB",label = "Level",
+                                                          shiny::selectInput("level_BB",label = "Compare to level",
                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_BB", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("sm_BB", "Excursion set", value = FALSE),
                                                           shiny::checkboxInput("ea_BB", "Excursion area", value = FALSE))),
 
                                           shiny::column(8,
@@ -69,7 +69,7 @@ ui <- shiny::navbarPage("",
                                                         shiny::wellPanel(
                                                           shiny::h4("Longest Streak"),
                                                           shiny::checkboxInput("increasing_BB", "Increasing (orange)", value = FALSE),
-                                                          shiny::checkboxInput("decreasing_BB", "Decreasing (purple)", value = FALSE))))),
+                                                          shiny::checkboxInput("decreasing_BB", "Decreasing (brown)", value = FALSE))))),
 
 
                         shiny::tabPanel("Fractional Brownian Motion",
@@ -85,12 +85,12 @@ ui <- shiny::navbarPage("",
                                                           shiny::actionButton("submit_FBM", "Simulate")),
 
                                                         shiny::wellPanel(
-                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::h4("Excursion set and area"),
                                                           shiny::numericInput("N_FBMs", "Number of time steps", value = 10000,min=0,step=1),
                                                           shiny::numericInput("A_FBM", "Constant level", value = 0),
-                                                          shiny::selectInput("level_FBM",label = "Level",
+                                                          shiny::selectInput("level_FBM",label = "Compare to level",
                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_FBM", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("sm_FBM", "Excursion set", value = FALSE),
                                                           shiny::checkboxInput("ea_FBM", "Excursion area", value = FALSE))),
 
 
@@ -105,7 +105,7 @@ ui <- shiny::navbarPage("",
                                                         shiny::wellPanel(
                                                           shiny::h4("Longest Streak"),
                                                           shiny::checkboxInput("increasing_FBM", "Increasing (orange)", value = FALSE),
-                                                          shiny::checkboxInput("decreasing_FBM", "Decreasing (purple)", value = FALSE))))),
+                                                          shiny::checkboxInput("decreasing_FBM", "Decreasing (brown)", value = FALSE))))),
 
                         shiny::tabPanel("Fractional Brownian Bridge",
                                         shiny::fluidRow(
@@ -121,12 +121,12 @@ ui <- shiny::navbarPage("",
                                                           shiny::actionButton("submit_FBB", "Simulate")),
 
                                                         shiny::wellPanel(
-                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::h4("Excursion set and area"),
                                                           shiny::numericInput("N_FBBs", "Number of time steps", value = 10000,min=0,step=1),
                                                           shiny::numericInput("A_FBB", "Constant level", value = 0),
-                                                          shiny::selectInput("level_FBB",label = "Level",
+                                                          shiny::selectInput("level_FBB",label = "Compare to level",
                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_FBB", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("sm_FBB", "Excursion set", value = FALSE),
                                                           shiny::checkboxInput("ea_FBB", "Excursion area", value = FALSE))),
                                           shiny::column(8,
                                                         shinycssloaders::withSpinner((shiny::plotOutput("fbbPlot",height="576px")), type = 8, color = "grey")),
@@ -139,7 +139,7 @@ ui <- shiny::navbarPage("",
                                                         shiny::wellPanel(
                                                           shiny::h4("Longest Streak"),
                                                           shiny::checkboxInput("increasing_FBB", "Increasing (orange)", value = FALSE),
-                                                          shiny::checkboxInput("decreasing_FBB", "Decreasing (purple)", value = FALSE))))),
+                                                          shiny::checkboxInput("decreasing_FBB", "Decreasing (brown)", value = FALSE))))),
 
 
                         shiny::tabPanel("Fractional Gaussian Noise",
@@ -154,12 +154,12 @@ ui <- shiny::navbarPage("",
                                                           shiny::actionButton("submit_FGN", "Simulate")),
 
                                                         shiny::wellPanel(
-                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::h4("Excursion set and area"),
                                                           shiny::numericInput("N_FGNs", "Number of time steps", value = 10000,min=0,step=1),
                                                           shiny::numericInput("A_FGN", "Constant level", value = 0),
-                                                          shiny::selectInput("level_FGN",label = "Level",
+                                                          shiny::selectInput("level_FGN",label = "Compare to level",
                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_FGN", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("sm_FGN", "Excursion set", value = FALSE),
                                                           shiny::checkboxInput("ea_FGN", "Excursion area", value = FALSE))),
 
                                           shiny::column(8,
@@ -173,7 +173,7 @@ ui <- shiny::navbarPage("",
                                                         shiny::wellPanel(
                                                           shiny::h4("Longest Streak"),
                                                           shiny::checkboxInput("increasing_FGN", "Increasing (orange)", value = FALSE),
-                                                          shiny::checkboxInput("decreasing_FGN", "Decreasing (purple)", value = FALSE))))),
+                                                          shiny::checkboxInput("decreasing_FGN", "Decreasing (brown)", value = FALSE))))),
 
                         shiny::tabPanel("GHBMP",
                                         shiny::fluidRow(
@@ -200,12 +200,12 @@ ui <- shiny::navbarPage("",
                                                         shiny::fluidRow(
                                                           shiny::column(6,
                                                                         shiny::wellPanel(
-                                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                                          shiny::h4("Excursion set and area"),
                                                                           shiny::numericInput("N_GHBMP", "Number of time steps", value = 10000,min=0,step=1),
                                                                           shiny::numericInput("A_GHBMP", "Constant level", value = 0),
-                                                                          shiny::selectInput("level",label = "Level",
+                                                                          shiny::selectInput("level",label = "Compare to level",
                                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                                          shiny::checkboxInput("sm", "Sojourn measure", value = FALSE),
+                                                                          shiny::checkboxInput("sm", "Excursion set", value = FALSE),
                                                                           shiny::checkboxInput("ea", "Excursion area", value = FALSE))),
 
                                                           shiny::column(5,
@@ -217,7 +217,7 @@ ui <- shiny::navbarPage("",
                                                                         shiny::wellPanel(
                                                                           shiny::h4("Longest Streak"),
                                                                           shiny::checkboxInput("increasing3", "Increasing (orange)", value = FALSE),
-                                                                          shiny::checkboxInput("decreasing3", "Decreasing (purple)", value = FALSE))))))),
+                                                                          shiny::checkboxInput("decreasing3", "Decreasing (brown)", value = FALSE))))))),
 
                         shiny::tabPanel("Input Time Series",
                                         shiny::fluidRow(
@@ -234,12 +234,12 @@ ui <- shiny::navbarPage("",
                                                                                                    "Raw estimate of Local Fractal Dimension" = "LFD_Est",
                                                                                                    "Smoothed estimate of Local Fractal Dimension" = "LFD_Smooth_Est"))),
                                                         shiny::wellPanel(
-                                                          shiny::h4("Sojourn measure and excursion area"),
+                                                          shiny::h4("Excursion set and area"),
                                                           shiny::numericInput("N_TS", "Number of time steps", value = 10000,min=0,step=1),
                                                           shiny::numericInput("A_TS", "Constant level", value = 0),
-                                                          shiny::selectInput("level_TS",label = "Level",
+                                                          shiny::selectInput("level_TS",label = "Compare to level",
                                                                              choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_TS", "Sojourn measure", value = FALSE),
+                                                          shiny::checkboxInput("sm_TS", "Excursion set", value = FALSE),
                                                           shiny::checkboxInput("ea_TS", "Excursion area", value = FALSE))),
 
                                           shiny::column(8,
@@ -258,16 +258,16 @@ ui <- shiny::navbarPage("",
                                                                         shiny::wellPanel(
                                                                           shiny::h4("Longest Streak"),
                                                                           shiny::checkboxInput("increasing_TS", "Increasing (orange)", value = FALSE),
-                                                                          shiny::checkboxInput("decreasing_TS", "Decreasing (purple)", value = FALSE)))
+                                                                          shiny::checkboxInput("decreasing_TS", "Decreasing (brown)", value = FALSE)))
                                                         )))),
 )
 
 
 server <- function(input,output,session) {
 
-  data_input <- reactive({
+  data_input <- shiny::reactive({
     req(input$file)
-    DF_Input<-read.csv(input$file$datapath)
+    DF_Input<-read.csv(input$file$datapath,header=TRUE)
     DF_Input
   })
 
@@ -276,12 +276,58 @@ server <- function(input,output,session) {
 
     InputTS <- data_input()
     shiny::req(InputTS)
+    InputTS <- na.omit(InputTS)
     InputTS <- InputTS[order(InputTS[,1]), ]
 
-    p6 <- ggplot2::ggplot(InputTS, ggplot2::aes(x =InputTS[,1], y =InputTS[,2]))+ggplot2::geom_line() +
-      ggplot2::scale_color_manual(name = "",breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H","Raw Estimate LFD","Smoothed Estimate LFD"),
-                                  values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green","Raw Estimate LFD"="cyan","Smoothed Estimate LFD"="brown"))+
-      ggplot2::labs(y="X(t)",x="t")
+    p6 <- ggplot2::ggplot(InputTS, ggplot2::aes(x =InputTS[,1], y =InputTS[,2]))+ggplot2::geom_line()+
+      ggplot2::labs(y="Time Series",x="Time",color="")
+
+    N <- input$N_intTS
+    Q <- input$Q_TS
+    L <- input$L_TS
+
+    H_est <- Hurst(InputTS,N,Q,L)
+    colnames(H_est) <- c("x","y")
+    IQR_H <- IQR(InputTS[,2])
+    range_H <- range(InputTS[,2])
+    q1_H <-quantile(InputTS[,2],0.25)
+
+    t1<-InputTS[,1]
+
+    LFD_est<-LFD(InputTS,N,Q,L)
+    colnames(LFD_est)<-c("x1","y1")
+    IQR_L <- IQR(InputTS[,2])
+    range_L <- range(InputTS[,2])
+    q1_L <- quantile(InputTS[,2],0.25)
+
+    if("Raw_Est_H" %in% input$checkbox_group_TS){
+      p6 <- p6 + ggplot2::geom_line(data = H_est,ggplot2::aes(x=.data$x,y=((.data$y*(IQR_H))+q1_H),color=factor("Raw Estimate H")),linewidth=1)+
+        scale_y_continuous(name="Time Series",limits=range_H,
+                           sec.axis = sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
+    }
+
+    if("Smooth_Est_H" %in% input$checkbox_group_TS){
+      p6 <- p6 + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x,y=((.data$y*(IQR_H))+q1_H),color=factor("Smoothed Estimate H"))
+                                      ,method="loess",se=FALSE,span = 0.3,linewidth=1)+
+        scale_y_continuous(name="Time Series",limits=range_H,
+                           sec.axis = sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
+    }
+
+    if("LFD_Est" %in% input$checkbox_group_TS){
+      p6 <- p6 + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1,y=((.data$y1*(IQR_L))+q1_L),color = factor("Raw Estimate LFD")),linewidth=1)+
+        scale_y_continuous(name="Time Series",limits=range_L,
+                           sec.axis = sec_axis(transform = function(x){(x-q1_L)/(IQR_L)},name="Estimator"))
+
+    }
+
+    if("LFD_Smooth_Est" %in% input$checkbox_group_TS){
+      p6 <- p6 + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1,y=((.data$y1*(IQR_L))+q1_L),color = factor("Smoothed Estimate LFD"))
+                                      ,method="loess",se=FALSE,span = 0.3,linewidth=1)+
+        scale_y_continuous(name="Time Series",limits=range_L,
+                           sec.axis = sec_axis(transform = function(x){(x-q1_L)/(IQR_L)},name="Estimator"))
+    }
+
+
 
     if (!is.null(input$min_TS) && input$min_TS){
 
@@ -403,7 +449,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p6 <- p6 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p6 <- p6 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 
@@ -415,9 +461,14 @@ server <- function(input,output,session) {
       N <- input$N_TS
       A <- input$A_TS
 
-      t <- seq(InputTS[1,1],InputTS[nrow(InputTS),1],length.out=N+1)
-      int_X <- stats::approx(InputTS[,1],InputTS[,2],xout=t)$y
-      diff<-((InputTS[nrow(InputTS),1]-InputTS[1,1])/N)
+      ag_df <- stats::aggregate(InputTS[,2]~InputTS[,1],FUN=mean)
+      t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+      int_X <- stats::approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+      diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+      #
+      # t <- seq(InputTS[1,1],InputTS[nrow(InputTS),1],length.out=N+1)
+      # int_X <- stats::approx(InputTS[,1],InputTS[,2],xout=t)$y
+      # diff<-((InputTS[nrow(InputTS),1]-InputTS[1,1])/N)
 
       S <- 0
       seg <- data.frame(T_start=rep(NA_real_,N), T_end=rep(NA_real_,N))
@@ -470,9 +521,10 @@ server <- function(input,output,session) {
       N <- input$N_TS
       A <- input$A_TS
 
-      t <- seq(InputTS[1,1],InputTS[nrow(InputTS),1],length.out=N+1)
-      int_X <- stats::approx(InputTS[,1],InputTS[,2],xout=t)$y
-      diff<-((InputTS[nrow(InputTS),1]-InputTS[1,1])/N)
+      ag_df <- stats::aggregate(InputTS[,2]~InputTS[,1],FUN=mean)
+      t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+      int_X <- stats::approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+      diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
 
       S <- 0
       seg <- data.frame(T_start=rep(NA_real_,N), T_end=rep(NA_real_,N))
@@ -535,9 +587,10 @@ server <- function(input,output,session) {
       N <- input$N_TS
       A <- input$A_TS
 
-      t <- seq(InputTS[1,1],InputTS[nrow(InputTS),1],length.out=N+1)
-      int_X <- stats::approx(InputTS[,1],InputTS[,2],xout=t)$y
-      diff<-((InputTS[nrow(InputTS),1]-InputTS[1,1])/N)
+      ag_df <- stats::aggregate(InputTS[,2]~InputTS[,1],FUN=mean)
+      t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+      int_X <- stats::approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+      diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
 
       Area <- 0
       DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
@@ -582,7 +635,7 @@ server <- function(input,output,session) {
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=InputTS[nrow(InputTS),1],X_t=InputTS[nrow(InputTS),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
         DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
@@ -606,10 +659,10 @@ server <- function(input,output,session) {
       N <- input$N_TS
       A <- input$A_TS
 
-      t <- seq(InputTS[1,1],InputTS[nrow(InputTS),1],length.out=N+1)
-      int_X <- stats::approx(InputTS[,1],InputTS[,2],xout=t)$y
-      diff<-((InputTS[nrow(InputTS),1]-InputTS[1,1])/N)
-
+      ag_df <- stats::aggregate(InputTS[,2]~InputTS[,1],FUN=mean)
+      t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+      int_X <- stats::approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+      diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
 
       Area <- 0
       DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
@@ -654,7 +707,7 @@ server <- function(input,output,session) {
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=InputTS[nrow(InputTS),1],X_t=InputTS[nrow(InputTS),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
         DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
@@ -669,42 +722,6 @@ server <- function(input,output,session) {
         p6 <- p6 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
           ggplot2::geom_polygon(data=DF_Area,ggplot2::aes(x=t,y=X_t,group=.data$G),fill="lightblue")
       }
-    }
-
-
-    N <- input$N_intTS
-    Q <- input$Q_TS
-    L <- input$L_TS
-
-    H_est <- Hurst(InputTS,N,Q,L)
-    colnames(H_est) <- c("x","y")
-    t1<-InputTS[,1]
-
-    LFD_est<-LFD(InputTS,N,Q,L)
-    colnames(LFD_est)<-c("x1","y1")
-
-    if("Raw_Est_H" %in% input$checkbox_group_TS){
-      p6 <- p6 + ggplot2::geom_line(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Raw Estimate H"))
-
-    }
-
-    if("Smooth_Est_H" %in% input$checkbox_group_TS){
-      p6 <- p6 + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
-                                      ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
-
-    }
-
-    if("LFD_Est" %in% input$checkbox_group_TS){
-
-      p6 <- p6 + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Raw Estimate LFD"))
-
-    }
-
-    if("LFD_Smooth_Est" %in% input$checkbox_group_TS){
-
-      p6 <- p6 + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Smoothed Estimate LFD")
-                                      ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
-
     }
 
     print(p6)
@@ -733,12 +750,9 @@ server <- function(input,output,session) {
 
     simPR <- PR()
     shiny::req(simPR)
-    simPR <- simPR[order(simPR[,1]), ]
 
-    p<-ggplot2::ggplot(simPR, ggplot2::aes(x =t1, y =PP))+ggplot2::geom_line() +
-      ggplot2::scale_color_manual(name = "",breaks=c("Theoretical H", "Raw Estimate H", "Smoothed Estimate H","Raw Estimate LFD","Smoothed Estimate LFD"),
-                                  values=c("Theoretical H"="blue", "Raw Estimate H"="red", "Smoothed Estimate H"="green","Raw Estimate LFD"="cyan","Smoothed Estimate LFD"="brown"))+
-      ggplot2::labs(y="X(t)",x="t")
+    p<-ggplot2::ggplot(simPR, ggplot2::aes(x =t1, y =PP))+ggplot2::geom_line()+
+      ggplot2::labs(y="X(t)",x="t",color="")
 
     N <- input$N_int
     Q <- input$Q
@@ -761,31 +775,31 @@ server <- function(input,output,session) {
       H1<-sapply(t1,func.H)
       data1<-data.frame(t1,H1)
 
-      p <- p + geom_line(data =data1, aes(x =.data$t1, y =.data$H1,col="Theoretical H"))
+      p <- p + ggplot2::geom_line(data =data1, ggplot2::aes(x =.data$t1, y =.data$H1,color = factor("Theoretical H")),linewidth=1)
 
     }
 
     if("Raw_Est_H" %in% input$checkbox_group){
-      p <- p + ggplot2::geom_line(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Raw Estimate H"))
+      p <- p + ggplot2::geom_line(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,color = factor("Raw Estimate H")),linewidth=1)
 
     }
 
     if("Smooth_Est_H" %in% input$checkbox_group){
-      p <- p + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,col="Smoothed Estimate H")
-                                    ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
+      p <- p + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x, y =.data$y,color = factor("Smoothed Estimate H"))
+                                    ,method="loess",se=FALSE,span = 0.3,linewidth=1)
 
     }
 
     if("LFD_Est" %in% input$checkbox_group){
 
-      p <- p + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Raw Estimate LFD"))
+      p <- p + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,color = factor("Raw Estimate LFD")),linewidth=1)
 
     }
 
     if("LFD_Smooth_Est"%in% input$checkbox_group){
 
-      p <- p + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,col="Smoothed Estimate LFD")
-                                    ,method="loess",se=FALSE,span = 0.3,linewidth=0.5)
+      p <- p + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1, y =.data$y1,color = factor("Smoothed Estimate LFD"))
+                                    ,method="loess",se=FALSE,span = 0.3,linewidth=1)
 
     }
 
@@ -908,7 +922,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p <- p + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p <- p + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 
@@ -1321,7 +1335,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p1 <- p1 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p1 <- p1 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 
@@ -1738,7 +1752,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p2 <- p2 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p2 <- p2 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 
@@ -2157,7 +2171,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p3 <- p3 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p3 <- p3 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 
@@ -2574,7 +2588,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p4 <- p4 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p4 <- p4 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 
@@ -2985,7 +2999,7 @@ server <- function(input,output,session) {
 
 
       if (!is.null(long_streak_df)) {
-        p5 <- p5 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "purple",linewidth = 1)
+        p5 <- p5 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
 
       }
 

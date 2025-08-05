@@ -324,7 +324,7 @@ FBm <- function(H,x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE){
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param n Number of time points the simulation is performed on the interval \code{[t_start,t_end]}.
+#' @param n Number of time points where the simulation is performed on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise
 #' is plotted.
@@ -406,8 +406,8 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 #'
 #' @description
 #' This function simulates a realisation of the Brownian bridge over the
-#' time interval \code{[t_start,t_end]} which terminates at \code{x_end}
-#' with \code{N} time steps and initial value \code{x_start}.
+#' time interval \code{[t_start,t_end]} which has the initial value \code{x_start}
+#' and terminates at \code{x_end} with \code{N} time steps.
 #'
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
@@ -488,7 +488,8 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
 #' @description
 #' This function simulates a realisation of the fractional Brownian bridge
 #' for a provided Hurst parameter over the time interval \code{[t_start,t_end]}
-#' which terminates at \code{x_end} with \code{N} time steps and initial value \code{x_start}.
+#' which has the initial value \code{x_start} and terminates at \code{x_end}
+#' with \code{N} time steps.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param x_end Value of the process at the terminating time point.

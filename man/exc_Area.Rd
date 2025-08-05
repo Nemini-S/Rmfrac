@@ -12,7 +12,7 @@ and the second one is the values of the time series \eqn{X(t)}.}
 
 \item{A}{Constant level as a numeric value.}
 
-\item{N}{Number of steps the time interval is split into. Default set to 10000.}
+\item{N}{Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.}
 
 \item{level}{A vector of character strings which specifies whether the excursion
 area is required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.}

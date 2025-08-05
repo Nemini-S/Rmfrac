@@ -45,6 +45,7 @@ cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
     stop("vline should have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("C1","C2")
 
@@ -175,6 +176,7 @@ cross_rate <- function(X,A,subI=NULL,plot=FALSE){
   stop("plot should have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("C1","C2")
 
@@ -305,6 +307,7 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
     stop("plot should have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("C1","C2")
 
@@ -465,6 +468,7 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
     stop("streak should be 'increasing' or 'decreasing' ")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("C1","C2")
 
@@ -694,6 +698,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
     stop("streak should be 'increasing' or 'decreasing' ")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("C1","C2")
 
@@ -893,7 +898,9 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' the time series and the RSI with \code{overbought} and
 #' \code{oversold} levels are plotted.
 #' @details To compute the RSI,
-#' \eqn{100 \dfrac{Average\_gain}{Average_gain+Average\_loss}}
+#'
+#' \eqn{\text{RSI} = 100 \dfrac{\text{Average\_gain}}{\text{Average\_gain}+\text{Average\_loss}}}
+#'
 #' formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
 #' @references Wilder, J. W. (1978). New concepts in technical trading systems. Greensboro, NC.
 #' @importFrom xts xts is.xts
@@ -934,6 +941,9 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
   } else if ((overbought < 0 | overbought > 100) | (oversold < 0 | oversold > 100)) {
     stop("overbought and oversold should range from 0 to 100")
   }
+
+  options(warn=-1)
+  X<-na.omit(X)
 
   if(inherits(X, "xts")){
     t <- index(X)
@@ -989,6 +999,4 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
   return(RSI_output)
 
 }
-
-
 

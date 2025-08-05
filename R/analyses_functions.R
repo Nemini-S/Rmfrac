@@ -6,7 +6,7 @@
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
-#' @param N Number of steps the time interval is split into. Default set to 10000.
+#' @param N Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.
 #' @param level A vector of character strings which specifies which sojourn
 #' measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -14,10 +14,10 @@
 #' the estimated sojourn measure for the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.
 #'
-#' @return Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level and the excursion region are plotted.
+#' @return Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level (in blue) and the excursion region (in red) are plotted.
 #' @export sojourn
 #' @importFrom ggplot2 ggplot geom_line geom_hline geom_segment labs aes ggtitle theme element_text
-#' @importFrom stats approx
+#' @importFrom stats approx aggregate
 #' @importFrom rlang .data
 #' @seealso \code{\link{exc_Area}}
 #' @examples
@@ -49,14 +49,16 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
     stop("plot should have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]),]
   colnames(X) <- c("x","y")
 
   if (is.null(subI)){
 
-    t <- seq(X[1,1],X[nrow(X),1],length.out=N+1)
-    int_X <- approx(X[,1],X[,2],xout=t)$y
-    diff<-((X[nrow(X),1]-X[1,1])/N)
+    ag_df <- aggregate(X[,2]~X[,1],FUN=mean)
+    t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
 
     if(level=='greater'){
 
@@ -178,9 +180,11 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
     Time<-X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
-    t <- seq(X.I[1,1], X.I[nrow(X.I),1], length.out = N+1)
-    int_X <- approx(X.I[,1], X.I[,2], xout = t)$y
-    diff<-((X[nrow(X),1]-X[1,1])/N)
+
+    ag_df <- aggregate(X.I[,2]~X.I[,1],FUN=mean)
+    t <- seq(ag_df[1,1], ag_df[nrow(X.I),1], length.out = N+1)
+    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
 
     if(level=='greater'){
 
@@ -306,7 +310,7 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
-#' @param N Number of steps the time interval is split into. Default set to 10000.
+#' @param N Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.
 #' @param level A vector of character strings which specifies whether the excursion
 #' area is required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -317,7 +321,7 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' @return Excursion area. If \code{plot=TRUE}, the time series, the constant level and excursion area
 #' are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_hline geom_polygon labs aes ggtitle theme element_text
-#' @importFrom stats approx
+#' @importFrom stats approx aggregate
 #' @importFrom rlang .data
 #'
 #' @export exc_Area
@@ -354,15 +358,17 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
     stop("plot should have logical inputs either TRUE or FALSE")
   }
 
-
+  X <- na.omit(X)
   X <- X[order(X[,1]),]
   colnames(X) <- c("x","y")
 
   if (is.null(subI)){
 
-    t <- seq(X[1,1],X[nrow(X),1],length.out=N+1)
-    int_X <- approx(X[,1],X[,2],xout=t)$y
-    diff<-((X[nrow(X),1]-X[1,1])/N)
+    ag_df <- aggregate(X[,2]~X[,1],FUN=mean)
+    t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+
 
     if(level=='greater'){
 
@@ -418,7 +424,7 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=X[nrow(X),1],X_t=X[nrow(X),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
         DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
@@ -480,7 +486,7 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=X[nrow(X),1],X_t=X[nrow(X),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
         DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
@@ -520,9 +526,11 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
     Time<-X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
-    t <- seq(X.I[1,1], X.I[nrow(X.I),1], length.out = N+1)
-    int_X <- approx(X.I[,1], X.I[,2], xout = t)$y
-    diff<-((X[nrow(X),1]-X[1,1])/N)
+
+    ag_df <- aggregate(X.I[,2]~X.I[,1],FUN=mean)
+    t <- seq(ag_df[1,1], ag_df[nrow(X.I),1], length.out = N+1)
+    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
 
     if(level=='greater'){
       Area <- 0
@@ -577,7 +585,7 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && (nrow(DF_Area) > 0)) {
-        DF_Area <- rbind(DF_Area,data.frame(t=X.I[nrow(X.I),1],X_t=X.I[nrow(X.I),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
         DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
@@ -639,7 +647,7 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=X.I[nrow(X.I),1],X_t=X.I[nrow(X.I),2]))
+        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
         DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
@@ -726,6 +734,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
     stop("hline should have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("x","y")
 
@@ -857,6 +866,7 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
     stop("hline should have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[,1]), ]
   colnames(X)<-c("x","y")
 

@@ -12,7 +12,7 @@ and the second one is the values of the time series \eqn{X(t)}.}
 
 \item{A}{Constant level as a numeric value.}
 
-\item{N}{Number of steps the time interval is split into. Default set to 10000.}
+\item{N}{Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.}
 
 \item{level}{A vector of character strings which specifies which sojourn
 measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.}
@@ -24,7 +24,7 @@ the estimated sojourn measure for the sub-interval is returned, otherwise the wh
 \item{plot}{Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.}
 }
 \value{
-Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level and the excursion region are plotted.
+Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level (in blue) and the excursion region (in red) are plotted.
 }
 \description{
 Computes the estimated sojourn measure for \eqn{X(t)} greater or lower than the

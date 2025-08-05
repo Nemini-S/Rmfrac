@@ -13,7 +13,7 @@ FGn(H, t_start = 0, t_end = 1, n = 1000, plot = FALSE)
 
 \item{t_end}{Terminal time point.}
 
-\item{n}{Number of time points the simulation is performed on the interval \code{[t_start,t_end]}.
+\item{n}{Number of time points where the simulation is performed on the interval \code{[t_start,t_end]}.
 Default set to 1000.}
 
 \item{plot}{Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise

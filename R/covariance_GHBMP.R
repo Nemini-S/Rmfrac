@@ -13,6 +13,10 @@
 #' Each element represents the estimated value of covariance function for the
 #' corresponding time points. Time points are arranged in ascending order.
 #'
+#' @details
+#' The smoothing parameter \code{theta} can help to better visualise changes between
+#' neighbour estimated values.
+#'
 #' @importFrom plotly plot_ly
 #' @importFrom fields image.smooth
 #' @export est_cov
@@ -103,6 +107,10 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
 #'
 #' @return An \eqn{m \times m} matrix, where \eqn{m} is the length of \code{t}.
 #'
+#' @details
+#' To make it comparable with the empirical covariance function the same smoothing parameter
+#' \code{theta} can be used if needed.
+#'
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom parallelly availableCores
 #' @importFrom doParallel registerDoParallel
@@ -117,12 +125,15 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
 #' @seealso \code{\link{GHBMP}}
 #'
 #' @examples
-#' \dontrun{
-#' #Covariance of a GHBMP with H=0.5-0.4* sin(6*3.14*t)
 #' t <- seq(0,1,by=0.01)
 #' H <- function(t) {return(0.5-0.4* sin(6*3.14*t))}
+#'
+#' #Smoothed covariance function
 #' cov_GHBMP(t,H,theta=0.1,plot=TRUE)
-#' }
+#'
+#' #Non-smoothed covariance function
+#' cov_GHBMP(t,H,plot=TRUE)
+#'
 cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit = 1))
 {
 
@@ -139,12 +150,6 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
     stop("J must be numeric")
   } else if (!(J > 0) | !(J %% 1 == 0)){
     stop("J must be a positive integer")
-  }
-
-  if (!is.numeric(theta)) {
-    stop("theta must be numeric")
-  } else if (!(theta > 0)){
-    stop("theta must be positive")
   }
 
   if (!is.logical(plot)) {
@@ -184,6 +189,12 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
 
   if(!is.null(theta))
   {
+    if (!is.numeric(theta)) {
+      stop("theta must be numeric")
+    } else if (!(theta > 0)){
+      stop("theta must be positive")
+    }
+
     D <- mean(diff(t))
     Smooth_data <- image.smooth(cov.mat,theta=theta,dx=D,dy=D)
     cov.mat <- Smooth_data$z

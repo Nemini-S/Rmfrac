@@ -19,24 +19,30 @@ The default is set to \code{0.5+0*t}.}
 \item{\code{Q}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
 \item{\code{L}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
 \item{\code{Plot}}{Select: \code{Theoretical Hurst function}, \code{Raw estimate of Hurst function}, \code{Smoothed estimate of Hurst function}, \code{Raw estimate of Local Fractal Dimension}, \code{Smoothed estimate of Local Fractal Dimension}.}}
-\strong{Sojourn measure and excursion area}
+\strong{Excursion set and area}
 \describe{
 \item{\code{Number of time steps}}{Input the number of steps the time interval needs to be split into.}
 \item{\code{Constant level}}{Input the constant level.}
-\item{\code{Level}}{Select: \code{Greater}, \code{Lower}.}
-\item{Plot}{Select: \code{Sojourn measure}, \code{Excursion area}.}}
+\item{\code{Compare to level}}{\code{Greater}, \code{Lower}.}
+\item{\code{Plot}}{Select: \code{Excursion set}, \code{Excursion area}.}}
 \strong{Longest streak}
 \describe{
-\item{Longest streak to plot}{Select: \code{Increasing}, \code{Decreasing}.}}
+\item{\code{Longest streak to plot}}{Select: \code{Increasing}, \code{Decreasing}.}}
 \strong{Maximum and minimum}
 \describe{
-\item{Plot}{Select: \code{Maximum}, \code{Minimum}.}}
+\item{\code{Plot}}{Select: \code{Maximum}, \code{Minimum}.}}
 }
 \description{
 Launches a shiny app to visualise and analyse realisations of Brownian motion (see \code{\link{Bm}}),
 Brownian bridge (see \code{\link{Bbridge}}), fractional Brownian motion (see \code{\link{FBm}}),
 fractional Brownian bridge (see \code{\link{FBbridge}}), fractional Gaussian noise(see \code{\link{FGn}}),
 Gaussian Haar-based multifractional processes (see \code{\link{GHBMP}}) and user-provided time series data.
+}
+\details{
+For \code{Input time series}, provide a \code{.csv} file that include headers
+with two columns: the first column should contain the time sequence \eqn{t},
+and the second the corresponding time series values \eqn{X(t)}. Make sure there
+are no extra header rows or footnotes.
 }
 \examples{
 \dontrun{

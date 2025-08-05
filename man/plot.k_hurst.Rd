@@ -19,7 +19,7 @@
 \item{...}{Other arguments}
 }
 \value{
-A ggplot object which plots the relevant \code{type} of plot : \code{"estimates"}, \code{"centers"} or \code{"ec"}.
+A ggplot object which is used to plot the relevant \code{type} of plot: \code{"estimates"}, \code{"centers"} or \code{"ec"}.
 }
 \description{
 Creates a plot of the smoothed Hurst functions of realisations of multifractional processes separately in each cluster with cluster centers using the return from

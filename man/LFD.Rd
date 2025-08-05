@@ -10,11 +10,11 @@ LFD(X, N = 100, Q = 2, L = 2)
 \item{X}{Data frame where the first column is a time sequence and the second is the values of the multifractional process.
 For reliable estimates the data frame should be of at least 500 data points.}
 
-\item{N}{Argument used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
+\item{N}{The same argument that is used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
-\item{Q}{Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.}
+\item{Q}{The same argument that is used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.}
 
-\item{L}{Argument used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.}
+\item{L}{The same argument that is used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.}
 }
 \value{
 A data frame where the first column is a time sequence and the second column is estimated values of the local fractal dimension.
@@ -23,9 +23,8 @@ A data frame where the first column is a time sequence and the second column is 
 This function computes the estimates for the local fractal dimension of multifractional processes.
 }
 \details{
-The following formula is used to estimate the local fractal dimension.
-\eqn{LFD = 2-H(t),}
-where \eqn{H(t)} is the Hurst function.
+The formula \eqn{\widehat{LFD} = 2-\widehat{H}(t)} is used to compute the estimated local fractal dimension,
+where \eqn{\widehat{H}(t)} is the estimated Hurst function.
 }
 \examples{
 #LFD of a multifractional process simulated using GHBMP function
@@ -40,5 +39,5 @@ that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282
 \doi{doi.org/10.1137/S0036144501394387}.
 }
 \seealso{
-\code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_ts_est}}, \code{\link{plot.H_LFD }}
+\code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
 }

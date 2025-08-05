@@ -23,6 +23,10 @@ corresponding time points. Time points are arranged in ascending order.
 Computes the empirical covariance function of a process, for each pair of time points in the
 time sequence using M realizations of the process.
 }
+\details{
+The smoothing parameter \code{theta} can help to better visualise changes between
+neighbour estimated values.
+}
 \examples{
 #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 t <- seq(0,1,by=(1/2)^8)
