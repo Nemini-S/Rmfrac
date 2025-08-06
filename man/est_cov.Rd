@@ -2,13 +2,13 @@
 % Please edit documentation in R/covariance_GHBMP.R
 \name{est_cov}
 \alias{est_cov}
-\title{Empirical covariance function of a process}
+\title{Empirical covariance function}
 \usage{
 est_cov(X, theta = 0.1, plot = FALSE)
 }
 \arguments{
 \item{X}{A data frame where the first column is the time sequence and the remaining
-columns are the values of each realization of the process.}
+columns are the values of each realisation of the process.}
 
 \item{theta}{Smoothing parameter.}
 
@@ -21,7 +21,7 @@ corresponding time points. Time points are arranged in ascending order.
 }
 \description{
 Computes the empirical covariance function of a process, for each pair of time points in the
-time sequence using M realizations of the process.
+time sequence using M realisations of the process.
 }
 \details{
 The smoothing parameter \code{theta} can help to better visualise changes between
@@ -31,7 +31,7 @@ neighbour estimated values.
 #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 t <- seq(0,1,by=(1/2)^8)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#Only 5 realizations of GHBMP are used in this example to reduce the computational time.
+#Only 5 realisations of GHBMP are used in this example to reduce the computational time.
 X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 Data <- data.frame(t,t(X))

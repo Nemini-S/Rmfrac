@@ -28,7 +28,7 @@ Excursion area. If \code{plot=TRUE}, the time series, the constant level and exc
 are plotted.
 }
 \description{
-Computes the excursion area where \eqn{X(t)} is greater or lower than the
+Computes the excursion area where a time series \eqn{X(t)} is greater or lower than the
 constant level \code{A} for the provided time interval or its sub-interval.
 }
 \examples{

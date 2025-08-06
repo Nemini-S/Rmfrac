@@ -27,7 +27,7 @@ the estimated sojourn measure for the sub-interval is returned, otherwise the wh
 Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level (in blue) and the excursion region (in red) are plotted.
 }
 \description{
-Computes the estimated sojourn measure for \eqn{X(t)} greater or lower than the
+Computes the estimated sojourn measure for a time series \eqn{X(t)} greater or lower than the
 constant level \code{A} for the provided time interval or its sub-interval.
 }
 \examples{

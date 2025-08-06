@@ -1,4 +1,4 @@
-#' Hierarchical clustering of multifractional processes
+#' Hierarchical clustering
 #'
 #' @description
 #' This function performs hierarchical clustering of realisations of multifractional

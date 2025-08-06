@@ -7,7 +7,7 @@
 shinyapp_sim()
 }
 \value{
-An interactive shiny app with the following user interface controls.
+An interactive Shiny app with the following user interface controls.
 
 \strong{Hurst function and LFD estimation}
 \describe{
@@ -33,7 +33,7 @@ The default is set to \code{0.5+0*t}.}
 \item{\code{Plot}}{Select: \code{Maximum}, \code{Minimum}.}}
 }
 \description{
-Launches a shiny app to visualise and analyse realisations of Brownian motion (see \code{\link{Bm}}),
+Launches a Shiny app to visualise and analyse realisations of Brownian motion (see \code{\link{Bm}}),
 Brownian bridge (see \code{\link{Bbridge}}), fractional Brownian motion (see \code{\link{FBm}}),
 fractional Brownian bridge (see \code{\link{FBbridge}}), fractional Gaussian noise(see \code{\link{FGn}}),
 Gaussian Haar-based multifractional processes (see \code{\link{GHBMP}}) and user-provided time series data.
@@ -46,7 +46,7 @@ are no extra header rows or footnotes.
 }
 \examples{
 \dontrun{
-#To run the shiny app
+#To run the Shiny app
 shinyapp_sim()
 }
 

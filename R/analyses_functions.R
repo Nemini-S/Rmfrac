@@ -1,6 +1,6 @@
 #' Estimated sojourn measure
 #'
-#' @description Computes the estimated sojourn measure for \eqn{X(t)} greater or lower than the
+#' @description Computes the estimated sojourn measure for a time series \eqn{X(t)} greater or lower than the
 #' constant level \code{A} for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
@@ -304,7 +304,7 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' Excursion area
 #'
 #' @description
-#' Computes the excursion area where \eqn{X(t)} is greater or lower than the
+#' Computes the excursion area where a time series \eqn{X(t)} is greater or lower than the
 #' constant level \code{A} for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}

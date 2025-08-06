@@ -2,7 +2,7 @@
 % Please edit documentation in R/hierarchical_clustering.R
 \name{hclust_hurst}
 \alias{hclust_hurst}
-\title{Hierarchical clustering of multifractional processes}
+\title{Hierarchical clustering}
 \usage{
 hclust_hurst(
   X.t,

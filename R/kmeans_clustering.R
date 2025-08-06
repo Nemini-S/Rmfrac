@@ -1,4 +1,4 @@
-#' K-means clustering of multifractional processes
+#' K-means clustering
 #'
 #' @description
 #' This function performs k-means clustering of realisations of multifractional

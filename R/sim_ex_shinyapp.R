@@ -1,12 +1,12 @@
 #' Shiny app to visualise and analyse processes
 #'
 #' @description
-#' Launches a shiny app to visualise and analyse realisations of Brownian motion (see \code{\link{Bm}}),
+#' Launches a Shiny app to visualise and analyse realisations of Brownian motion (see \code{\link{Bm}}),
 #' Brownian bridge (see \code{\link{Bbridge}}), fractional Brownian motion (see \code{\link{FBm}}),
 #' fractional Brownian bridge (see \code{\link{FBbridge}}), fractional Gaussian noise(see \code{\link{FGn}}),
 #' Gaussian Haar-based multifractional processes (see \code{\link{GHBMP}}) and user-provided time series data.
 #'
-#' @return An interactive shiny app with the following user interface controls.
+#' @return An interactive Shiny app with the following user interface controls.
 #'
 #' **Hurst function and LFD estimation**
 #' \describe{
@@ -45,7 +45,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' #To run the shiny app
+#' #To run the Shiny app
 #' shinyapp_sim()
 #' }
 #'

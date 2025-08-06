@@ -25,7 +25,7 @@ Time span \eqn{t} and the corresponding \eqn{X(t)} of the longest increasing/dec
 }
 \description{
 Computes the time span of the longest increasing or decreasing streak
-for the provided time interval or its sub-interval.
+of a time series for the provided time interval or its sub-interval.
 }
 \examples{
 t <- seq(0,1,length=100)

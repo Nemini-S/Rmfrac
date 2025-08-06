@@ -2,7 +2,7 @@
 % Please edit documentation in R/kmeans_clustering.R
 \name{kmeans_hurst}
 \alias{kmeans_hurst}
-\title{K-means clustering of multifractional processes}
+\title{K-means clustering}
 \usage{
 kmeans_hurst(X.t, k, ..., N = 100, Q = 2, L = 2)
 }

@@ -1,7 +1,7 @@
 #' Simulation of Gaussian Haar-based multifractional processes
 #'
 #' @description
-#' This function simulates a Gaussian Haar-based multifractional process at any
+#' This function simulates a realisation of a Gaussian Haar-based multifractional process at any
 #' time point or time sequence on the interval \eqn{[0,1]}.
 #'
 #' @param t Time point or time sequence on the interval \eqn{[0,1]}.
@@ -149,7 +149,7 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 #' @param x_start Value of the process at the initial time point (additive constant mean).
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian
 #' motion is plotted.
@@ -225,7 +225,7 @@ Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 #' @param x_start Value of the process at the initial time point (additive constant mean).
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian
 #' motion is plotted.
@@ -413,7 +413,7 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 #' @param t_end Terminal time point.
 #' @param x_start Value of the process at the initial time point.
 #' @param t_start Initial time point.
-#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian bridge
 #' is plotted.
@@ -496,7 +496,7 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
 #' @param t_end Terminal time point.
 #' @param x_start Value of the process at the initial time point.
 #' @param t_start Initial time point.
-#' @param N Number of time steps the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
 #' is plotted.

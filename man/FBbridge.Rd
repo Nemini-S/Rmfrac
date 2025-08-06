@@ -17,7 +17,7 @@ FBbridge(H, x_end, t_end, x_start = 0, t_start = 0, N = 1000, plot = FALSE)
 
 \item{t_start}{Initial time point.}
 
-\item{N}{Number of time steps the interval \code{[t_start,t_end]} is split into.
+\item{N}{Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
 Default set to 1000.}
 
 \item{plot}{Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge

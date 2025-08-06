@@ -432,7 +432,7 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
 #' Longest increasing/decreasing streak
 #' @description
 #' Computes the time span of the longest increasing or decreasing streak
-#' for the provided time interval or its sub-interval.
+#' of a time series for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.

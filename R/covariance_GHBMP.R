@@ -1,11 +1,11 @@
-#' Empirical covariance function of a process
+#' Empirical covariance function
 #'
 #' @description
 #' Computes the empirical covariance function of a process, for each pair of time points in the
-#' time sequence using M realizations of the process.
+#' time sequence using M realisations of the process.
 #' @param theta Smoothing parameter.
 #' @param X A data frame where the first column is the time sequence and the remaining
-#' columns are the values of each realization of the process.
+#' columns are the values of each realisation of the process.
 #' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
 #'
 #' @return
@@ -25,7 +25,7 @@
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 #' t <- seq(0,1,by=(1/2)^8)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' #Only 5 realizations of GHBMP are used in this example to reduce the computational time.
+#' #Only 5 realisations of GHBMP are used in this example to reduce the computational time.
 #' X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
 #' X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 #' Data <- data.frame(t,t(X))

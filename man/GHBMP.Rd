@@ -20,7 +20,7 @@ be rather time consuming. Default is set to 15.}
 A data frame of class \code{"mp"} where the first column is time moments \code{t} and second column is simulated values of \eqn{X(t)}.
 }
 \description{
-This function simulates a Gaussian Haar-based multifractional process at any
+This function simulates a realisation of a Gaussian Haar-based multifractional process at any
 time point or time sequence on the interval \eqn{[0,1]}.
 }
 \details{
