@@ -19,7 +19,7 @@ theoretical and estimated Hurst functions and local fractal dimension}
 )
 }
 \arguments{
-\item{x}{Return from \code{\link{GHBMP}}. For accurate estimated Hurst functions, \code{x} should be of at least 500 data points.}
+\item{x}{Return from \code{\link{GHBMP}}. For reliable estimates \code{x} should be of at least 500 data points.}
 
 \item{H}{Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.}
 

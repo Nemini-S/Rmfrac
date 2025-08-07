@@ -887,7 +887,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' @description
 #' This function computes the Relative Strength Index (RSI) for a time series.
 #'
-#' @param X A list, vector or \code{xts} object.
+#' @param X A vector.
 #' @param period Period length used for smoothing. Default is set to 14.
 #' @param plot Logical: If \code{TRUE}, the time series and the
 #' RSI are plotted in the same window.
@@ -919,8 +919,8 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
 {
 
-  if(!is.list(X) && !is.xts(X) && !is.vector(X)){
-    stop("X must be a list, vector or a time series object")
+  if(!is.vector(X)){
+    stop("X must be a vector")
   } else if (!(length(X)>=(period + 1))){
     stop("Not enough data to compute RSI for the given period")
   }
@@ -943,14 +943,9 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
   }
 
   options(warn=-1)
-  X<-na.omit(X)
 
-  if(inherits(X, "xts")){
-    t <- index(X)
-    X <- as.numeric(X)
-  } else{
-    t <- 1:length(X)
-  }
+  X<-na.omit(X)
+  t <- 1:length(X)
 
   N <- length(X)
   diff <- diff(X)
@@ -973,15 +968,6 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
 
   RSI_df <- data.frame(t=rep(t,2),value=c(X, RSI),group=rep(c("X", "RSI"), each=N))
 
-  if (inherits(X, "xts")) {
-
-    RSI_output <- xts(RSI,order.by=t)
-
-  } else {
-
-    RSI_output <- RSI
-  }
-
   if (plot)
   {
     df1 <- data.frame(group="RSI",hline=c(overbought, oversold))
@@ -996,7 +982,7 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
 
   }
 
-  return(RSI_output)
+  return(RSI)
 
 }
 

@@ -7,7 +7,7 @@
 RS_Index(X, period = 14, plot = FALSE, overbought = 70, oversold = 30)
 }
 \arguments{
-\item{X}{A list, vector or \code{xts} object.}
+\item{X}{A vector.}
 
 \item{period}{Period length used for smoothing. Default is set to 14.}
 

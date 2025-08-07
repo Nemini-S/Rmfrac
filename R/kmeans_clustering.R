@@ -5,8 +5,8 @@
 #' processes based on the estimated Hurst functions.
 #'
 #' @param X.t A list of data frames. In each data frame, the first column is a time sequence
-#' and the second gives the values of the multifractional process.
-#' See Examples for usage.
+#' and the second gives the values of the multifractional process. Each data frame should be
+#' of at least 500 data points. See Examples for usage.
 #' @param k The desired number of clusters.
 #' @param ... Optional arguments: \code{iter.max}, \code{nstart} and \code{algorithm}.
 #' Refer \code{\link[stats]{kmeans}}.
@@ -170,17 +170,14 @@ autoplot.k_hurst<-function(object,...,type="estimates")
     smth_est = as.vector(t(smth_h))
   )
 
-  DF1<-data.frame(t = rep(raw_h[[1]]$Time, times = nrow(cent)),
-                  values = as.vector(t(cent)),
-                  clus = rep(1:nrow(cent), each = ncol(cent))
-  )
+  DF1<-aggregate(smth_est~clus+t,data=DF,FUN=mean)
 
   DF1["item"] <- DF1["clus"]
 
   if (type == "estimates")
   {
     p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
-      facet_wrap(~clus, ncol = 2, scales = "fixed") +
+      facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "black") +
       labs(title = "Smoothed Hurst estimates in each cluster",
            x = "Time", y = "Smoothed Hurst estimates")
@@ -189,8 +186,8 @@ autoplot.k_hurst<-function(object,...,type="estimates")
   }
   else if (type == "centers")
   {
-    p<-ggplot(DF1,aes(.data$t,.data$values)) +
-      facet_wrap(~clus, ncol = 2, scales = "fixed") +
+    p<-ggplot(DF1,aes(.data$t,.data$smth_est)) +
+      facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "red") +
       labs(title = "Cluster centers",
            x = "Time", y = "Smoothed Hurst estimates")
@@ -201,8 +198,8 @@ autoplot.k_hurst<-function(object,...,type="estimates")
   {
     p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
       geom_line(color = "black") +
-      geom_line(data = DF1, aes(.data$t, .data$values), color = "red") +
-      facet_wrap(~clus, ncol = 2, scales = "fixed") +
+      geom_line(data = DF1, aes(.data$t, .data$smth_est), color = "red") +
+      facet_wrap(~clus, ncol = 2, scales = "free_x") +
       labs(title = "Smoothed Hurst estimates in each cluster and cluster center",
            x = "Time", y = "Smoothed Hurst estimates")
 

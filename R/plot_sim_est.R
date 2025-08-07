@@ -72,7 +72,7 @@ autoplot.mp<-function(object,...,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est
 #' Hurst function and local fractal dimension estimated using \code{\link{LFD}}
 #' and smoothed estimates of local fractal dimension.
 #'
-#' @param x Return from \code{\link{GHBMP}}. For accurate estimated Hurst functions, \code{x} should be of at least 500 data points.
+#' @param x Return from \code{\link{GHBMP}}. For reliable estimates \code{x} should be of at least 500 data points.
 #' @param H Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.
 #' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
 #' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
@@ -115,7 +115,7 @@ plot.mp <- function(x,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_S
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
-#' For accurate estimated Hurst functions, \code{X} should be of at least 500 data points.
+#' For reliable estimates the data frame should be of at least 500 data points.
 #' @param N Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
@@ -145,6 +145,8 @@ H_LFD <- function(X,N=100,Q=2,L=2){
   H_est <- Hurst(X,N,Q,L)
 
   smoothed_H_est <- data.frame(time=H_est[,1],smoothed_Hurst=(loess(H_est[,2]~H_est[,1],data=H_est,span=0.3))$fitted)
+
+  smoothed_H_est[,2] <- pmax(pmin(smoothed_H_est[,2], 1), 0)
 
   LFD_est <- LFD(X,N,Q,L)
 
@@ -184,7 +186,7 @@ autoplot.H_LFD<-function(object,...,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRU
   q1_L <- quantile(X[,2],0.25)
 
   p <- ggplot(X, aes(x =.data$t1, y =.data$PP))+geom_line()+
-    labs(y="Time series",x="Time")
+    labs(y="Time series",x="Time",color="")
 
 
   if(Raw_Est_H){
@@ -272,7 +274,7 @@ plot.H_LFD <- function(x,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smoot
 #'
 #' @param X Data frame where the first column is a time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
-#' For accurate estimated Hurst functions, \code{X} should be of at least 500 data points.
+#' For reliable estimates the data frame should be of at least 500 data points.
 #' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
 #' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 #' The estimated Hurst function is smoothed using the loess method.
@@ -326,7 +328,7 @@ plot_tsest<-function(X,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_
   q1_L <- quantile(X[,2],0.25)
 
   p <- ggplot(X, aes(x =.data$t1, y =.data$PP))+geom_line()+
-    labs(y="Time series",x="Time")
+    labs(y="Time series",x="Time",color="")
 
 
   if(Raw_Est_H){

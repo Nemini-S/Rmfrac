@@ -9,7 +9,7 @@ H_LFD(X, N = 100, Q = 2, L = 2)
 \arguments{
 \item{X}{Data frame where the first column is a time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.
-For accurate estimated Hurst functions, \code{X} should be of at least 500 data points.}
+For reliable estimates the data frame should be of at least 500 data points.}
 
 \item{N}{Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 

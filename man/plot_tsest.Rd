@@ -19,7 +19,7 @@ plot_tsest(
 \arguments{
 \item{X}{Data frame where the first column is a time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.
-For accurate estimated Hurst functions, \code{X} should be of at least 500 data points.}
+For reliable estimates the data frame should be of at least 500 data points.}
 
 \item{Raw_Est_H}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 

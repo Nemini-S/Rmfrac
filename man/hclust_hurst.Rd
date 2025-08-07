@@ -18,7 +18,8 @@ hclust_hurst(
 }
 \arguments{
 \item{X.t}{A list of data frames. In each data frame, the first column is a time sequence
-and the second gives the values of the multifractional process.
+and the second gives the values of the multifractional process. Each data frame should be
+of at least 500 data points.
 See Examples for usage.}
 
 \item{k}{The desired number of clusters.}

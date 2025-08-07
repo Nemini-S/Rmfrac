@@ -35,8 +35,9 @@
 #' @details
 #' For \code{Input time series}, provide a \code{.csv} file that include headers
 #' with two columns: the first column should contain the time sequence \eqn{t},
-#' and the second the corresponding time series values \eqn{X(t)}. Make sure there
-#' are no extra header rows or footnotes.
+#' and the second the corresponding time series values \eqn{X(t)}. For reliable
+#' estimates of Hurst and LFD, the time series should be of at least 500 data points.
+#' Make sure there are no extra header rows or footnotes.
 #'
 #' @export shinyapp_sim
 #'
