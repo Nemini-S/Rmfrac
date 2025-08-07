@@ -1,27 +1,16 @@
 citHeader("")
 
 bibentry(
-  bibtype  = "Article",
-  title    = "On Construction, Properties and Simulation of Haar-Based Multifractional Processes",
-  author   =  list(person("Antoine", "Ayache", email = "antoine.ayache@univ-lille.fr",comment = c(ORCID = "")),
-            person("Andriy", "Olenko", email = "A.Olenko@latrobe.edu.au",comment = c(ORCID = "0000-0002-0917-7000")),
-            person("Nemini", "Samarakoon", email = "n.wijesinghesamarakoon@latrobe.edu.au",comment = c(ORCID = "0009-0000-2107-1973"))),
-  journal  = "Submitted",
-  year     = 2025,
-  url      = "https://arxiv.org/abs/2503.07286",
-  doi      = "10.48550/arXiv.2503.07286"
+  bibtype       = "Manual",
+  title         = "On Construction, Properties and Simulation of Haar-Based Multifractional Processes",
+  author        =  c(person("Antoine", "Ayache"),
+            person("Andriy", "Olenko"),
+            person("Nemini", "Samarakoon")),
+  year          = 2025,
+  archivePrefix = "arXiv",
+  primaryClass  = "math.PR",
+  url           = "https://arxiv.org/abs/2503.07286",
+  doi           = "10.48550/arXiv.2503.07286",
+  note          = "submitted"
 )
 
-
-citFooter("A BibTeX entry for LaTeX users is")
-
-citFooter('@article{ayache2025,
-      title={On Construction, Properties and Simulation of Haar-Based Multifractional Processes},
-      author={Antoine Ayache and Andriy Olenko and Nemini Samarakoon},
-      year={2025},
-      archivePrefix={arXiv},
-      primaryClass={math.PR},
-      url={https://arxiv.org/abs/2503.07286},
-      doi={10.48550/arXiv.2503.07286},
-      note={submitted}
-}')
