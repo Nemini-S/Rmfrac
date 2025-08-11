@@ -29,28 +29,32 @@ library(Rmfrac)
 To simulate a Gaussian Haar-based multifractional process for a constant Hurst function
 ```{r}
 t <- seq(0,1,by=(1/2)^10)
-H <- function(t) {return(0.4 +0*t)}
-GHBMP(t,H)
+H1 <- function(t) {return(0.5 +0*t)}
+X1 <- GHBMP(t,H1,J=12)
 ```
-Linear Hurst function
-```{r}
-H <- function(t) {return(0.4 +0*t)}
-GHBMP(t,H)
-```
-
 Oscillating Hurst function
 ```{r}
-H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-GHBMP(t,H)
+H2 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+X2 <- GHBMP(t,H2,J=12)
 ```
 Piecewise Hurst function
 ```{r}
-H <- function(x) {
+H3 <- function(x) {
 ifelse(x >= 0 & x <= 0.8, 0.375 * x + 0.2,
       ifelse(x > 0.8 & x <= 1,-1.5 * x + 1.7, NA))
 }
-GHBMP(t,H)
+X3 <- GHBMP(t,H3,J=12)
 ```
+To estimate the Hurst function and Local Fractal Dimension with visualizations
+```{r}
+Hurst_estimates <- Hurst(X2,N=100)
+LFD_estimates <- LFD(X2,N=100)
+
+plot(X2,Raw_EST_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+```
+<img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/c7df246f-368f-41b2-b108-1b0f1dc002fa" />
+
+
 ## Citation
 Ayache A, Olenko A, Samarakoon N (2025). “On Construction, Properties and Simulation
 of Haar-Based Multifractional Processes.” doi:10.48550/arXiv.2503.07286. Submitted,
