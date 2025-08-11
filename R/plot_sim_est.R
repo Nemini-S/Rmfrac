@@ -97,10 +97,10 @@ autoplot.mp<-function(object,...,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRU
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 #' X <- GHBMP(T,H)
 #'
-#' #Plot of process, theoretical, estimated and smoothed Hurst functions and LFD estimate
+#' #Plot of process, theoretical Hurst function, estimated and smoothed Hurst and LFD estimates
 #' plot(X,H=H)
 #'
-#' #Plot of process, estimated and smoothed Hurst functions and LFD estimate
+#' #Plot of process, estimated and smoothed Hurst and LFD estimates
 #' plot(X)
 plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2,...) {
 
@@ -133,7 +133,8 @@ plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smoot
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
 #' Object <- H_LFD(TS,N=100,Q=2,L=2)
-#' plot(Object,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+#' #Plot of time series, estimated and smoothed Hurst and LFD estimates
+#' plot(Object)
 #'
 H_LFD <- function(X,N=100,Q=2,L=2){
 
@@ -255,7 +256,8 @@ autoplot.H_LFD<-function(object,...,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LF
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
 #' Object <- H_LFD(TS,N=100,Q=2,L=2)
-#' plot(Object,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+#' #Plot of time series, estimated and smoothed Hurst and LFD estimates
+#' plot(Object)
 #'
 plot.H_LFD <- function(x,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,...) {
 
@@ -298,7 +300,8 @@ plot.H_LFD <- function(x,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Es
 #'
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-#' plot_tsest(TS,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+#' #Plot of time series, estimated and smoothed Hurst and LFD estimates
+#' plot_tsest(TS)
 #'
 plot_tsest<-function(X,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2){
 

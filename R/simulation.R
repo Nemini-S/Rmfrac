@@ -164,7 +164,7 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 #' @seealso \code{\link{GHBMP}}, \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #'
 #' @examples
-#' Bm(x_start=0,t_start=0,t_end=2,plot=TRUE)
+#' Bm(t_end=2,plot=TRUE)
 Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 {
 
