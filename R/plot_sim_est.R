@@ -1,11 +1,11 @@
 #' @importFrom ggplot2 autoplot ggplot geom_line geom_smooth scale_color_manual labs aes
 #' @importFrom rlang .data
 #' @export
-autoplot.mp<-function(object,...,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2)
+autoplot.mp<-function(object,...,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2)
 {
 
-  if (!is.logical(Raw_Est_H) | !is.logical(Smooth_Est_H) | !is.logical(LFD_Est)) {
-    stop("Raw_Est_H, Smooth_Est_H and LFD_EST should have logical inputs either TRUE or FALSE")
+  if (!is.logical(H_Est) | !is.logical(H_Smooth_Est) | !is.logical(LFD_Est) | !is.logical(LFD_Smooth_Est)) {
+    stop("H_Est, H_Smooth_Est, LFD_Est and LFD_Smooth_Est should have logical inputs either TRUE or FALSE")
   }
 
   object<-object[order(object[,1]),]
@@ -20,12 +20,12 @@ autoplot.mp<-function(object,...,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est
   p <- ggplot(object, aes(x =.data$t1, y =.data$PP))+geom_line()+
     labs(y="X(t)",x="t",color="")
 
-  if(Raw_Est_H){
+  if(H_Est){
     p <- p + geom_line(data = H_est, aes(x =.data$x, y =.data$y,color=factor("Raw Estimate H")),linewidth=1)
 
   }
 
-  if(Smooth_Est_H){
+  if(H_Smooth_Est){
     p <- p + geom_smooth(data = H_est, aes(x =.data$x, y =.data$y,color=factor("Smoothed Estimate H"))
                          ,method="loess",se=FALSE,span = 0.3,linewidth=1)
 
@@ -72,10 +72,11 @@ autoplot.mp<-function(object,...,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est
 #' Hurst function and local fractal dimension estimated using \code{\link{LFD}}
 #' and smoothed estimates of local fractal dimension.
 #'
-#' @param x Return from \code{\link{GHBMP}}. For reliable estimates \code{x} should be of at least 500 data points.
+#' @param x Return from \code{\link{GHBMP}}. To get reliable results for simulated trajectories, it is recommended
+#' to use at least 500 time points.
 #' @param H Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.
-#' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
-#' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+#' @param H_Est Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
+#' @param H_Smooth_Est Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 #' The estimated Hurst function is smoothed using the loess method.
 #' @param LFD_Est Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.
 #' @param LFD_Smooth_Est Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
@@ -101,9 +102,9 @@ autoplot.mp<-function(object,...,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est
 #'
 #' #Plot of process, estimated and smoothed Hurst functions and LFD estimate
 #' plot(X)
-plot.mp <- function(x,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2,...) {
+plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2,...) {
 
-  print(autoplot(x,H=H,Raw_Est_H=Raw_Est_H,Smooth_Est_H=Smooth_Est_H,LFD_Est=LFD_Est,LFD_Smooth_Est=LFD_Smooth_Est,N=N,Q=Q,L=L))
+  print(autoplot(x,H=H,H_Est=H_Est,H_Smooth_Est=H_Smooth_Est,LFD_Est=LFD_Est,LFD_Smooth_Est=LFD_Smooth_Est,N=N,Q=Q,L=L))
 
 }
 
@@ -113,9 +114,9 @@ plot.mp <- function(x,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_S
 #' Hurst function estimated using \code{\link{Hurst}},local fractal dimension
 #' estimated using \code{\link{LFD}} and smoothed estimated Hurst function and LFD added.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
-#' For reliable estimates the data frame should be of at least 500 data points.
+#' To get reliable results, it is recommended to use at least 500 time points.
 #' @param N Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
@@ -124,15 +125,15 @@ plot.mp <- function(x,H=NULL,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_S
 #' \describe{
 #' \item{Raw_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
 #' \item{Smoothed_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
-#' \item{LFD_estimates}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-#' \item{LFD_Smoothed_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
+#' \item{Raw_LFD_estimates}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
+#' \item{Smoothed_LFD_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
 #' \item{Data}{User provided time series.}}
 #' @export H_LFD
 #' @seealso \code{plot.H_LFD} \code{\link{Hurst}}, \code{\link{LFD}}
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
 #' Object <- H_LFD(TS,N=100,Q=2,L=2)
-#' plot(Object,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_EST=TRUE,LFD_Smooth_Est=TRUE)
+#' plot(Object,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
 #'
 H_LFD <- function(X,N=100,Q=2,L=2){
 
@@ -152,17 +153,17 @@ H_LFD <- function(X,N=100,Q=2,L=2){
 
   LFD_smoothed_est <- data.frame(time=LFD_est[,1],smoothed_LFD=(loess(LFD_est[,2]~LFD_est[,1],data=LFD_est,span=0.3))$fitted)
 
-  structure(list(Raw_Hurst_estimates=H_est,Smoothed_Hurst_estimates=smoothed_H_est,LFD_estimates=LFD_est,LFD_Smoothed_estimates=LFD_smoothed_est,Data=X),class="H_LFD")
+  structure(list(Raw_Hurst_estimates=H_est,Smoothed_Hurst_estimates=smoothed_H_est,Raw_LFD_estimates=LFD_est,Smoothed_LFD_estimates=LFD_smoothed_est,Data=X),class="H_LFD")
 
 }
 
 #' @importFrom ggplot2 autoplot ggplot geom_line geom_smooth scale_color_manual labs aes
 #' @importFrom rlang .data
 #' @export
-autoplot.H_LFD<-function(object,...,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE){
+autoplot.H_LFD<-function(object,...,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE){
 
-  if (!is.logical(Raw_Est_H) | !is.logical(Smooth_Est_H) | !is.logical(LFD_Est)) {
-    stop("Raw_Est_H, Smooth_Est_H and LFD_EST should have logical inputs either TRUE or FALSE")
+  if (!is.logical(H_Est) | !is.logical(H_Smooth_Est) | !is.logical(LFD_Est) | !is.logical(LFD_Smooth_Est)) {
+    stop("H_Est, H_Smooth_Est, LFD_Est and LFD_Smooth_Est should have logical inputs either TRUE or FALSE")
   }
 
   X <- object$Data
@@ -189,7 +190,7 @@ autoplot.H_LFD<-function(object,...,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRU
     labs(y="Time series",x="Time",color="")
 
 
-  if(Raw_Est_H){
+  if(H_Est){
     p <- p + geom_line(data = H_est, aes(x =.data$x,y=((.data$y*(IQR_H))+q1_H),color = factor("Raw Estimate H")),linewidth=1)+
              scale_y_continuous(name="Time Series",limits=range_H,
                        sec.axis = sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
@@ -197,7 +198,7 @@ autoplot.H_LFD<-function(object,...,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRU
 
   }
 
-  if(Smooth_Est_H){
+  if(H_Smooth_Est){
     p <- p + geom_smooth(data = H_est, aes(x =.data$x,y=((.data$y*(IQR_H))+q1_H),color = factor("Smoothed Estimate H"))
                          ,method="loess",se=FALSE,span = 0.3,linewidth=1)+
              scale_y_continuous(name="Time Series",limits=range_H,
@@ -237,8 +238,8 @@ autoplot.H_LFD<-function(object,...,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRU
 #' for objects of class \code{"H_LFD"}.
 #'
 #' @param x Return from \code{\link{H_LFD}}.
-#' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
-#' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+#' @param H_Est Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
+#' @param H_Smooth_Est Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 #' The estimated Hurst function is smoothed using the loess method.
 #' @param LFD_Est Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.
 #' @param LFD_Smooth_Est Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
@@ -254,11 +255,11 @@ autoplot.H_LFD<-function(object,...,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRU
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
 #' Object <- H_LFD(TS,N=100,Q=2,L=2)
-#' plot(Object,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_EST=TRUE,LFD_Smooth_Est=TRUE)
+#' plot(Object,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
 #'
-plot.H_LFD <- function(x,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,...) {
+plot.H_LFD <- function(x,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,...) {
 
-  print(autoplot(x,Raw_Est_H=Raw_Est_H,Smooth_Est_H=Smooth_Est_H,LFD_Est=LFD_Est,LFD_Smooth_Est=LFD_Smooth_Est))
+  print(autoplot(x,H_Est=H_Est,H_Smooth_Est=H_Smooth_Est,LFD_Est=LFD_Est,LFD_Smooth_Est=LFD_Smooth_Est))
 
 }
 
@@ -272,11 +273,11 @@ plot.H_LFD <- function(x,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smoot
 #' Hurst function and local fractal dimension estimated using \code{\link{LFD}}
 #' and smoothed estimates of local fractal dimension.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
-#' For reliable estimates the data frame should be of at least 500 data points.
-#' @param Raw_Est_H Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
-#' @param Smooth_Est_H Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+#' To get reliable results for time series, it is recommended to use at least 500 time points.
+#' @param H_Est Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
+#' @param H_Smooth_Est Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 #' The estimated Hurst function is smoothed using the loess method.
 #' @param LFD_Est Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.
 #' @param LFD_Smooth_Est Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
@@ -297,12 +298,12 @@ plot.H_LFD <- function(x,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smoot
 #'
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-#' plot_tsest(TS,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+#' plot_tsest(TS,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
 #'
-plot_tsest<-function(X,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2){
+plot_tsest<-function(X,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2){
 
-  if (!is.logical(Raw_Est_H) | !is.logical(Smooth_Est_H) | !is.logical(LFD_Est)) {
-    stop("Raw_Est_H, Smooth_Est_H and LFD_EST should have logical inputs either TRUE or FALSE")
+  if (!is.logical(H_Est) | !is.logical(H_Smooth_Est) | !is.logical(LFD_Est) | !is.logical(LFD_Smooth_Est)) {
+    stop("H_Est, H_Smooth_Est, LFD_Est and LFD_Smooth_Est should have logical inputs either TRUE or FALSE")
   }
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
@@ -331,14 +332,14 @@ plot_tsest<-function(X,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_
     labs(y="Time series",x="Time",color="")
 
 
-  if(Raw_Est_H){
+  if(H_Est){
     p <- p + geom_line(data = H_est, aes(x =.data$x,y=((.data$y*(IQR_H))+q1_H),color = factor("Raw Estimate H")),linewidth=1)+
              scale_y_continuous(name="Time Series",limits=range_H,
                          sec.axis = sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
 
   }
 
-  if(Smooth_Est_H){
+  if(H_Smooth_Est){
     p <- p + geom_smooth(data = H_est, aes(x =.data$x,y=((.data$y*(IQR_H))+q1_H),color = factor("Smoothed Estimate H"))
                          ,method="loess",se=FALSE,span = 0.3,linewidth=1)+
              scale_y_continuous(name="Time Series",limits=range_H,

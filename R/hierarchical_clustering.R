@@ -1,13 +1,13 @@
 #' Hierarchical clustering
 #'
 #' @description
-#' This function performs hierarchical clustering of realisations of multifractional
-#' processes based on the estimated Hurst functions.
+#' This function performs hierarchical clustering of realisations
+#' based on the estimated Hurst functions.
 #'
-#' @param X.t A list of data frames. In each data frame, the first column is a time sequence
-#' and the second gives the values of the multifractional process. Each data frame should be
-#' of at least 500 data points.
-#' See Examples for usage.
+#' @param X.t A list of data frames. In each data frame, the first column is a numeric time sequence
+#' and the second gives the values of the multifractional process. To get reliable results, it is
+#' recommended to use at least 500 time points. See Examples for usage.
+#'
 #' @param k The desired number of clusters.
 #' @param h The height where the dendrogram should be cut into. Either \code{k} or \code{h} must be specified. If both are provided k is used.
 #' @param dist.method A string which specifies a registered distance from [`proxy::dist()`][proxy::dist]. The default

@@ -1,12 +1,13 @@
 #' K-means clustering
 #'
 #' @description
-#' This function performs k-means clustering of realisations of multifractional
-#' processes based on the estimated Hurst functions.
+#' This function performs k-means clustering of realisations
+#' based on the estimated Hurst functions.
 #'
-#' @param X.t A list of data frames. In each data frame, the first column is a time sequence
-#' and the second gives the values of the multifractional process. Each data frame should be
-#' of at least 500 data points. See Examples for usage.
+#' @param X.t A list of data frames. In each data frame, the first column is a numeric time sequence
+#' and the second gives the values of the multifractional process. To get reliable results, it is
+#' recommended to use at least 500 time points. See Examples for usage.
+#'
 #' @param k The desired number of clusters.
 #' @param ... Optional arguments: \code{iter.max}, \code{nstart} and \code{algorithm}.
 #' Refer \code{\link[stats]{kmeans}}.

@@ -4,7 +4,7 @@
 #' Computes the empirical covariance function of a process, for each pair of time points in the
 #' time sequence using M realisations of the process.
 #' @param theta Smoothing parameter.
-#' @param X A data frame where the first column is the time sequence and the remaining
+#' @param X A data frame where the first column is the numeric time sequence and the remaining
 #' columns are the values of each realisation of the process.
 #' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
 #'

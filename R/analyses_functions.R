@@ -3,7 +3,7 @@
 #' @description Computes the estimated sojourn measure for a time series \eqn{X(t)} greater or lower than the
 #' constant level \code{A} for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param N Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.
@@ -307,7 +307,7 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' Computes the excursion area where a time series \eqn{X(t)} is greater or lower than the
 #' constant level \code{A} for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param N Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.
@@ -690,7 +690,7 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' This function computes the maximum of a time series for the provided
 #' time interval or its sub-interval.
 #'
-#' @param X  Data frame where the first column is a time sequence \eqn{(t)}
+#' @param X  Data frame where the first column is a numeric time sequence \eqn{(t)}
 #' and the second the values of the time series \eqn{(X(t))}.
 #' @param subI Time sub-interval is a vector where the lower bound is
 #' the first element and upper bound is the second. Optional: If provided maximum of the
@@ -821,7 +821,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
 #' This function computes the minimum of a time series for the provided
 #' time interval or its sub-interval.
 #'
-#' @param X  Data frame where the first column is a time sequence \eqn{t}
+#' @param X  Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second the values of the time series \eqn{X(t)}.
 #' @param subI Time sub-interval is a vector where the lower bound is
 #' the first element and upper bound is the second. Optional: If provided minimum of the

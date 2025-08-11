@@ -4,7 +4,7 @@
 #' Computes the estimated \eqn{t} value(s), in which a time series crosses a specific
 #' constant level for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval as a vector, where the lower bound is
@@ -142,7 +142,7 @@ cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
 #' Computes the rate at which a time series crosses a specific
 #' constant level for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval as a vector, where the lower bound is
@@ -273,7 +273,7 @@ if (is.null(subI)){
 #' Computes the mean duration between crossings of a time series
 #' at a specified constant level for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -434,7 +434,7 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
 #' Computes the time span of the longest increasing or decreasing streak
 #' of a time series for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param direction A character string which specifies the direction of
 #' the streak: \code{"increasing"} or \code{"decreasing"}.
@@ -663,7 +663,7 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' Computes the mean time span of the increasing/decreasing streaks
 #' for the provided time interval or its sub-interval.
 #'
-#' @param X Data frame where the first column is a time sequence \eqn{t}
+#' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param direction A character string which specifies the direction of
 #' the streak: \code{"increasing"} or \code{"decreasing"}.
