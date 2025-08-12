@@ -7,25 +7,23 @@
 H_LFD(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence \eqn{t}
+\item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.
-For reliable estimates the data frame should be of at least 500 data points.}
+To get reliable results, it is recommended to use at least 500 time points.}
 
 \item{N}{Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
 \item{Q}{Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.}
 
 \item{L}{Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.}
-
-\item{...}{Other arguments.}
 }
 \value{
 The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 \describe{
 \item{Raw_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
 \item{Smoothed_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
-\item{LFD_estimates}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-\item{LFD_Smoothed_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
+\item{Raw_LFD_estimates}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
+\item{Smoothed_LFD_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
 \item{Data}{User provided time series.}}
 }
 \description{
@@ -35,8 +33,9 @@ estimated using \code{\link{LFD}} and smoothed estimated Hurst function and LFD 
 }
 \examples{
 TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-Object <- H_LFD(TS,N=100,Q=2,L=2)
-plot(Object,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_EST=TRUE,LFD_Smooth_Est=TRUE)
+Object <- H_LFD(TS)
+#Plot of time series, estimated and smoothed Hurst and LFD estimates
+plot(Object)
 
 }
 \seealso{

@@ -30,14 +30,15 @@
 #' @seealso \code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
 #'
 #' @examples
+#' \dontrun{
 #' #Hurst function of a multifractional process simulated using GHBMP function
 #' T <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 #' X <- GHBMP(T,H)
 #' Hurst(X)
-#'
+#' }
 #' #Hurst function of a fractional Browian motion simulated using FBm
-#' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=5000)
+#' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
 #' Hurst(X)
 #'
 Hurst<-function(X,N=100,Q=2,L=2)
@@ -153,13 +154,19 @@ Hurst<-function(X,N=100,Q=2,L=2)
 #'
 #' @references Gneiting, T., and Schlather, M. (2004). Stochastic models
 #' that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282.
-#' \doi{doi.org/10.1137/S0036144501394387}.
+#' \doi{doi:10.1137/S0036144501394387}.
 #' @examples
+#' \dontrun{
 #' #LFD of a multifractional process simulated using GHBMP function
 #' T <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 #' X <- GHBMP(T,H)
 #' LFD(X)
+#' }
+#' #LFD of a fractional Browian motion simulated using FBm
+#' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
+#' LFD(X)
+#'
 LFD <- function(X,N=100,Q=2,L=2)
 {
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {

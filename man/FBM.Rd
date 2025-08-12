@@ -35,7 +35,7 @@ FBm(H=0.5,plot=TRUE)
 }
 \references{
 Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian motion:
-Approximations and Projections. John Wiley & Sons. \doi{doi/10.1002/9781119476771.app3}.
+Approximations and Projections. John Wiley & Sons. \doi{doi:10.1002/9781119476771.app3}.
 }
 \seealso{
 \code{\link{FGn}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}

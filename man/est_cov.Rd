@@ -7,7 +7,7 @@
 est_cov(X, theta = 0.1, plot = FALSE)
 }
 \arguments{
-\item{X}{A data frame where the first column is the time sequence and the remaining
+\item{X}{A data frame where the first column is the numeric time sequence and the remaining
 columns are the values of each realisation of the process.}
 
 \item{theta}{Smoothing parameter.}
@@ -28,6 +28,7 @@ The smoothing parameter \code{theta} can help to better visualise changes betwee
 neighbour estimated values.
 }
 \examples{
+\dontrun{
 #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 t <- seq(0,1,by=(1/2)^8)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
@@ -37,5 +38,5 @@ X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
 Data <- data.frame(t,t(X))
 cov.mat <- est_cov(Data,theta=0.2,plot=TRUE)
 cov.mat
-
+}
 }

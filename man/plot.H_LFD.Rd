@@ -7,8 +7,8 @@ for objects of class \code{H_LFD}}
 \usage{
 \method{plot}{H_LFD}(
   x,
-  Raw_Est_H = TRUE,
-  Smooth_Est_H = TRUE,
+  H_Est = TRUE,
+  H_Smooth_Est = TRUE,
   LFD_Est = TRUE,
   LFD_Smooth_Est = TRUE,
   ...
@@ -17,9 +17,9 @@ for objects of class \code{H_LFD}}
 \arguments{
 \item{x}{Return from \code{\link{H_LFD}}.}
 
-\item{Raw_Est_H}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
+\item{H_Est}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
-\item{Smooth_Est_H}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+\item{H_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 The estimated Hurst function is smoothed using the loess method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
@@ -44,8 +44,9 @@ object, not a time series.
 }
 \examples{
 TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-Object <- H_LFD(TS,N=100,Q=2,L=2)
-plot(Object,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_EST=TRUE,LFD_Smooth_Est=TRUE)
+Object <- H_LFD(TS)
+#Plot of time series, estimated and smoothed Hurst and LFD estimates
+plot(Object)
 
 }
 \seealso{

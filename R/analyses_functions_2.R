@@ -903,7 +903,6 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #'
 #' formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
 #' @references Wilder, J. W. (1978). New concepts in technical trading systems. Greensboro, NC.
-#' @importFrom xts xts is.xts
 #' @importFrom ggplot2 ggplot geom_line geom_hline labs aes facet_grid vars
 #' @importFrom rlang .data
 #' @importFrom zoo index
@@ -942,8 +941,6 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
     stop("overbought and oversold should range from 0 to 100")
   }
 
-  options(warn=-1)
-
   X<-na.omit(X)
   t <- 1:length(X)
 
@@ -978,7 +975,9 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
       facet_wrap(~group,ncol=1,scales="free_y") +
       labs(title="X and Relative Strength Index",y="X(t)",x="t")
 
+    options(warn = -1)
     print(p)
+    options(warn = 0)
 
   }
 

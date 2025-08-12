@@ -22,6 +22,7 @@
 #' @export est_cov
 #'
 #' @examples
+#' \dontrun{
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 #' t <- seq(0,1,by=(1/2)^8)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
@@ -31,7 +32,7 @@
 #' Data <- data.frame(t,t(X))
 #' cov.mat <- est_cov(Data,theta=0.2,plot=TRUE)
 #' cov.mat
-#'
+#' }
 est_cov<-function(X,theta=0.1,plot=FALSE)
 {
 
@@ -125,6 +126,7 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
 #' @seealso \code{\link{GHBMP}}
 #'
 #' @examples
+#' \dontrun{
 #' t <- seq(0,1,by=0.01)
 #' H <- function(t) {return(0.5-0.4* sin(6*3.14*t))}
 #'
@@ -133,7 +135,7 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
 #'
 #' #Non-smoothed covariance function
 #' cov_GHBMP(t,H,plot=TRUE)
-#'
+#' }
 cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit = 1))
 {
 
@@ -142,7 +144,7 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
   }
 
   H.t<-sapply(t, H)
-  if (!is.numeric(H.t) | !all(H.t >= 0 & H.t<= 1)) {
+  if (!is.numeric(H.t) | !all(H.t > 0 & H.t< 1)) {
     stop("H must be a function which returns a numeric list between 0 and 1")
   }
 
@@ -187,6 +189,8 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
   cov.mat <- foreach(i = 1:length(t), .combine = rbind) %dopar% {
     sapply(t, function(j) X(t[i], j))}
 
+  stopCluster(cl)
+
   if(!is.null(theta))
   {
     if (!is.numeric(theta)) {
@@ -215,5 +219,4 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
 
   return(cov.mat)
 
-  stopCluster(cl)
 }

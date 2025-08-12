@@ -8,8 +8,8 @@ theoretical and estimated Hurst functions and local fractal dimension}
 \method{plot}{mp}(
   x,
   H = NULL,
-  Raw_Est_H = TRUE,
-  Smooth_Est_H = TRUE,
+  H_Est = TRUE,
+  H_Smooth_Est = TRUE,
   LFD_Est = TRUE,
   LFD_Smooth_Est = TRUE,
   N = 100,
@@ -19,13 +19,14 @@ theoretical and estimated Hurst functions and local fractal dimension}
 )
 }
 \arguments{
-\item{x}{Return from \code{\link{GHBMP}}. For reliable estimates \code{x} should be of at least 500 data points.}
+\item{x}{Return from \code{\link{GHBMP}}. To get reliable results for simulated trajectories, it is recommended
+to use at least 500 time points.}
 
 \item{H}{Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.}
 
-\item{Raw_Est_H}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
+\item{H_Est}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
-\item{Smooth_Est_H}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+\item{H_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 The estimated Hurst function is smoothed using the loess method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
@@ -52,16 +53,18 @@ Hurst function and local fractal dimension estimated using \code{\link{LFD}}
 and smoothed estimates of local fractal dimension.
 }
 \examples{
+\dontrun{
 #Simulation of the multifractional process and estimation of the Hurst function
 T <- seq(0,1,by=(1/2)^10)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X <- GHBMP(T,H)
 
-#Plot of process, theoretical, estimated and smoothed Hurst functions and LFD estimate
+#Plot of process, theoretical Hurst function, estimated and smoothed Hurst and LFD estimates
 plot(X,H=H)
 
-#Plot of process, estimated and smoothed Hurst functions and LFD estimate
+#Plot of process, estimated and smoothed Hurst and LFD estimates
 plot(X)
+}
 }
 \seealso{
 \code{\link{GHBMP}}, \code{\link{Hurst}}, \code{\link{LFD}}

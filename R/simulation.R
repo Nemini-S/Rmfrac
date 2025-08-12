@@ -42,6 +42,7 @@
 #' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBm}},
 #' \code{\link{FGn}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #' @examples
+#' \dontrun{
 #' #Constant Hurst function
 #' t <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.4 +0*t)}
@@ -64,7 +65,7 @@
 #'       ifelse(x > 0.8 & x <= 1,-1.5 * x + 1.7, NA))
 #' }
 #' GHBMP(t,H)
-#'
+#' }
 GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 {
   if (!is.numeric(t)|!all(t >= 0 & t<= 1)) {
@@ -72,7 +73,7 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
   }
 
   H.t<-sapply(t, H)
-  if (!is.numeric(H.t) | !all(H.t >= 0 & H.t<= 1)) {
+  if (!is.numeric(H.t) | !all(H.t > 0 & H.t< 1)) {
     stop("H must be a function which returns a numeric list between 0 and 1")
   }
 
@@ -239,7 +240,7 @@ Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 #'
 #' @export FBm
 #' @references Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian motion:
-#' Approximations and Projections. John Wiley & Sons. \doi{doi/10.1002/9781119476771.app3}.
+#' Approximations and Projections. John Wiley & Sons. \doi{doi:10.1002/9781119476771.app3}.
 #' @seealso \code{\link{FGn}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #'
 #' @examples
@@ -337,7 +338,7 @@ FBm <- function(H,x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE){
 #'
 #' @export FGn
 #' @references Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian motion:
-#' Approximations and Projections. John Wiley & Sons. \doi{doi/10.1002/9781119476771.app3}.
+#' Approximations and Projections. John Wiley & Sons. \doi{doi:10.1002/9781119476771.app3}.
 #' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #' @examples
 #' FGn(H=0.5,plot=TRUE)
@@ -425,7 +426,7 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 #' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
 #' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
 #' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
-#' MAF 2022. Springer, Cham. \doi{doi.org/10.1007/978-3-030-99638-3_16}.
+#' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' Bbridge(x_end=2,t_end=1,plot=TRUE)
 Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
@@ -508,7 +509,7 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
 #' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
 #' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
 #' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
-#' MAF 2022. Springer, Cham. \doi{doi.org/10.1007/978-3-030-99638-3_16}.
+#' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' FBbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)
 FBbridge <- function(H,x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){

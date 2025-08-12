@@ -7,7 +7,7 @@
 X_min(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence \eqn{t}
+\item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
 and the second the values of the time series \eqn{X(t)}.}
 
 \item{subI}{Time sub-interval is a vector where the lower bound is

@@ -7,7 +7,7 @@
 cross_T(X, A, subI = NULL, plot = FALSE, vline = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence \eqn{t}
+\item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.}
 
 \item{A}{Constant level as a numeric value.}

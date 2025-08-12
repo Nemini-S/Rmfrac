@@ -288,43 +288,43 @@ server <- function(input,output,session) {
 
     H_est <- Hurst(InputTS,N,Q,L)
     colnames(H_est) <- c("x","y")
-    IQR_H <- IQR(InputTS[,2])
+    IQR_H <- stats:IQR(InputTS[,2])
     range_H <- range(InputTS[,2])
-    q1_H <-quantile(InputTS[,2],0.25)
+    q1_H <-stats:quantile(InputTS[,2],0.25)
 
     t1<-InputTS[,1]
 
     LFD_est<-LFD(InputTS,N,Q,L)
     colnames(LFD_est)<-c("x1","y1")
-    IQR_L <- IQR(InputTS[,2])
+    IQR_L <- stats:IQR(InputTS[,2])
     range_L <- range(InputTS[,2])
-    q1_L <- quantile(InputTS[,2],0.25)
+    q1_L <- stats:quantile(InputTS[,2],0.25)
 
     if("Raw_Est_H" %in% input$checkbox_group_TS){
       p6 <- p6 + ggplot2::geom_line(data = H_est,ggplot2::aes(x=.data$x,y=((.data$y*(IQR_H))+q1_H),color=factor("Raw Estimate H")),linewidth=1)+
-        scale_y_continuous(name="Time Series",limits=range_H,
-                           sec.axis = sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
+        ggplot2::scale_y_continuous(name="Time Series",limits=range_H,
+                                    sec.axis = ggplot2::sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
     }
 
     if("Smooth_Est_H" %in% input$checkbox_group_TS){
       p6 <- p6 + ggplot2::geom_smooth(data = H_est, ggplot2::aes(x =.data$x,y=((.data$y*(IQR_H))+q1_H),color=factor("Smoothed Estimate H"))
                                       ,method="loess",se=FALSE,span = 0.3,linewidth=1)+
-        scale_y_continuous(name="Time Series",limits=range_H,
-                           sec.axis = sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
+        ggplot2::scale_y_continuous(name="Time Series",limits=range_H,
+                                    sec.axis = ggplot2::sec_axis(transform = function(x){(x-q1_H)/(IQR_H)},name="Estimator"))
     }
 
     if("LFD_Est" %in% input$checkbox_group_TS){
       p6 <- p6 + ggplot2::geom_line(data = LFD_est, ggplot2::aes(x =.data$x1,y=((.data$y1*(IQR_L))+q1_L),color = factor("Raw Estimate LFD")),linewidth=1)+
-        scale_y_continuous(name="Time Series",limits=range_L,
-                           sec.axis = sec_axis(transform = function(x){(x-q1_L)/(IQR_L)},name="Estimator"))
+        ggplot2::scale_y_continuous(name="Time Series",limits=range_L,
+                                    sec.axis = ggplot2::sec_axis(transform = function(x){(x-q1_L)/(IQR_L)},name="Estimator"))
 
     }
 
     if("LFD_Smooth_Est" %in% input$checkbox_group_TS){
       p6 <- p6 + ggplot2::geom_smooth(data = LFD_est, ggplot2::aes(x =.data$x1,y=((.data$y1*(IQR_L))+q1_L),color = factor("Smoothed Estimate LFD"))
                                       ,method="loess",se=FALSE,span = 0.3,linewidth=1)+
-        scale_y_continuous(name="Time Series",limits=range_L,
-                           sec.axis = sec_axis(transform = function(x){(x-q1_L)/(IQR_L)},name="Estimator"))
+        ggplot2::scale_y_continuous(name="Time Series",limits=range_L,
+                                    sec.axis = ggplot2::sec_axis(transform = function(x){(x-q1_L)/(IQR_L)},name="Estimator"))
     }
 
 

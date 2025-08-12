@@ -37,6 +37,7 @@ To make it comparable with the empirical covariance function the same smoothing 
 \code{theta} can be used if needed.
 }
 \examples{
+\dontrun{
 t <- seq(0,1,by=0.01)
 H <- function(t) {return(0.5-0.4* sin(6*3.14*t))}
 
@@ -45,7 +46,7 @@ cov_GHBMP(t,H,theta=0.1,plot=TRUE)
 
 #Non-smoothed covariance function
 cov_GHBMP(t,H,plot=TRUE)
-
+}
 }
 \references{
 Ayache, A., Olenko, A. and Samarakoon, N. (2025).

@@ -41,6 +41,7 @@ For simulations, the truncated version of this formula with first summation up t
 See Examples for the usage of constant, time-varying, piecewise or step Hurst functions.
 }
 \examples{
+\dontrun{
 #Constant Hurst function
 t <- seq(0,1,by=(1/2)^10)
 H <- function(t) {return(0.4 +0*t)}
@@ -63,7 +64,7 @@ ifelse(x >= 0 & x <= 0.8, 0.375 * x + 0.2,
       ifelse(x > 0.8 & x <= 1,-1.5 * x + 1.7, NA))
 }
 GHBMP(t,H)
-
+}
 }
 \references{
 Ayache, A., Olenko, A. and Samarakoon, N. (2025).

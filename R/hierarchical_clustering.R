@@ -48,6 +48,7 @@
 #' @seealso \code{\link{print.hc_hurst}}, \code{\link{plot.hc_hurst}}, \code{\link{kmeans_hurst}}
 #'
 #' @examples
+#' \dontrun{
 #' #Simulation of multifractional processes
 #' t <- seq(0,1,by=(1/2)^10)
 #' H1 <- function(t) {return(0.1+0*t)}
@@ -64,6 +65,7 @@
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
 #' plot(HC,type ="ec")
+#' }
 hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complete",dendrogram=FALSE,N=100,Q=2,L=2)
 {
   if (!is.list(X.t)) {
@@ -280,6 +282,7 @@ autoplot.hc_hurst<-function(object,...,type="estimates")
 #' @seealso \code{\link{hclust_hurst}}
 #'
 #' @examples
+#' \dontrun{
 #' #Simulation of multifractional processes
 #' t <- seq(0,1,by=(1/2)^10)
 #' H1 <- function(t) {return(0.1+0*t)}
@@ -296,6 +299,7 @@ autoplot.hc_hurst<-function(object,...,type="estimates")
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
 #' plot(HC,type ="ec")
+#' }
 plot.hc_hurst<-function(x,type="estimates",...) {
   print(autoplot(x,type=type))
 }

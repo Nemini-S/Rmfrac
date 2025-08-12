@@ -7,8 +7,7 @@
 Hurst(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence and the second the values of the multifractional process.
-For reliable estimates the data frame should be of at least 500 data points.}
+\item{X}{Data frame where the first column is a numeric time sequence and the second the values of the multifractional process.}
 
 \item{N}{Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -20,22 +19,26 @@ For reliable estimates the data frame should be of at least 500 data points.}
 A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.
 }
 \description{
-This function computes statistical estimates for the Hurst function of multifractional processes.
+This function computes statistical estimates for the Hurst function.
 }
 \details{
 Statistical estimation of the Hurst function is done based on the results of Ayache, A.,
 & Bouly, F. (2023). The estimator is built through generalized quadratic variations
 of the process associated with its increments.
 }
+\note{
+Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
+}
 \examples{
+\dontrun{
 #Hurst function of a multifractional process simulated using GHBMP function
 T <- seq(0,1,by=(1/2)^10)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X <- GHBMP(T,H)
 Hurst(X)
-
+}
 #Hurst function of a fractional Browian motion simulated using FBm
-X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=5000)
+X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
 Hurst(X)
 
 }

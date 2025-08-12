@@ -92,6 +92,7 @@ autoplot.mp<-function(object,...,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRU
 #' @seealso \code{\link{GHBMP}}, \code{\link{Hurst}}, \code{\link{LFD}}
 #'
 #' @examples
+#' \dontrun{
 #' #Simulation of the multifractional process and estimation of the Hurst function
 #' T <- seq(0,1,by=(1/2)^10)
 #' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
@@ -102,6 +103,7 @@ autoplot.mp<-function(object,...,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRU
 #'
 #' #Plot of process, estimated and smoothed Hurst and LFD estimates
 #' plot(X)
+#' }
 plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2,...) {
 
   print(autoplot(x,H=H,H_Est=H_Est,H_Smooth_Est=H_Smooth_Est,LFD_Est=LFD_Est,LFD_Smooth_Est=LFD_Smooth_Est,N=N,Q=Q,L=L))
@@ -120,7 +122,6 @@ plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smoot
 #' @param N Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
-#' @param ... Other arguments.
 #' @return The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 #' \describe{
 #' \item{Raw_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
@@ -132,7 +133,7 @@ plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smoot
 #' @seealso \code{plot.H_LFD} \code{\link{Hurst}}, \code{\link{LFD}}
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-#' Object <- H_LFD(TS,N=100,Q=2,L=2)
+#' Object <- H_LFD(TS)
 #' #Plot of time series, estimated and smoothed Hurst and LFD estimates
 #' plot(Object)
 #'
@@ -158,8 +159,9 @@ H_LFD <- function(X,N=100,Q=2,L=2){
 
 }
 
-#' @importFrom ggplot2 autoplot ggplot geom_line geom_smooth scale_color_manual labs aes
+#' @importFrom ggplot2 autoplot ggplot geom_line geom_smooth scale_color_manual labs aes sec_axis scale_y_continuous
 #' @importFrom rlang .data
+#' @importFrom stats IQR quantile
 #' @export
 autoplot.H_LFD<-function(object,...,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE){
 
@@ -176,7 +178,7 @@ autoplot.H_LFD<-function(object,...,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LF
   colnames(X) <- c("t1","PP")
   t1<-X[,1]
 
-  LFD_EST <- object$LFD_estimates
+  LFD_EST <- object$Raw_LFD_estimates
   colnames(LFD_EST) <- c("x1","y1")
 
   IQR_H <- IQR(X[,2])
@@ -255,7 +257,7 @@ autoplot.H_LFD<-function(object,...,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LF
 #'
 #' @examples
 #' TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-#' Object <- H_LFD(TS,N=100,Q=2,L=2)
+#' Object <- H_LFD(TS)
 #' #Plot of time series, estimated and smoothed Hurst and LFD estimates
 #' plot(Object)
 #'
@@ -293,8 +295,9 @@ plot.H_LFD <- function(x,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Es
 #' Compared to \code{\link{plot.H_LFD}} the function's first argument is a time series,
 #' not \code{H_LFD} object.
 #'
-#' @importFrom ggplot2 ggplot geom_line geom_smooth scale_color_manual labs aes
+#' @importFrom ggplot2 ggplot geom_line geom_smooth scale_color_manual labs aes sec_axis scale_y_continuous
 #' @importFrom rlang .data
+#' @importFrom stats IQR quantile
 #' @seealso \code{\link{Hurst}}, \code{\link{LFD}}, \code{\link{plot.H_LFD}}
 #' @export plot_tsest
 #'

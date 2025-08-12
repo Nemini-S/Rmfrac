@@ -37,7 +37,7 @@ Bbridge(x_end=2,t_end=1,plot=TRUE)
 Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
 H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
 Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
-MAF 2022. Springer, Cham. \doi{doi.org/10.1007/978-3-030-99638-3_16}.
+MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 }
 \seealso{
 \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{FBbridge }}

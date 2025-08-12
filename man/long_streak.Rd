@@ -7,7 +7,7 @@
 long_streak(X, direction = "increasing", subI = NULL, plot = FALSE)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence \eqn{t}
+\item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.}
 
 \item{direction}{A character string which specifies the direction of

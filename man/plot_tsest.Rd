@@ -7,8 +7,8 @@ for a user provided time series}
 \usage{
 plot_tsest(
   X,
-  Raw_Est_H = TRUE,
-  Smooth_Est_H = TRUE,
+  H_Est = TRUE,
+  H_Smooth_Est = TRUE,
   LFD_Est = TRUE,
   LFD_Smooth_Est = TRUE,
   N = 100,
@@ -17,13 +17,13 @@ plot_tsest(
 )
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence \eqn{t}
+\item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
 and the second one is the values of the time series \eqn{X(t)}.
-For reliable estimates the data frame should be of at least 500 data points.}
+To get reliable results for time series, it is recommended to use at least 500 time points.}
 
-\item{Raw_Est_H}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
+\item{H_Est}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
-\item{Smooth_Est_H}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
+\item{H_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
 The estimated Hurst function is smoothed using the loess method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
@@ -52,7 +52,8 @@ not \code{H_LFD} object.
 }
 \examples{
 TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
-plot_tsest(TS,Raw_Est_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+#Plot of time series, estimated and smoothed Hurst and LFD estimates
+plot_tsest(TS)
 
 }
 \seealso{

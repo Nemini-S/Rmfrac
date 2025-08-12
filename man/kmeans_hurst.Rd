@@ -7,9 +7,9 @@
 kmeans_hurst(X.t, k, ..., N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X.t}{A list of data frames. In each data frame, the first column is a time sequence
-and the second gives the values of the multifractional process. Each data frame should be
-of at least 500 data points. See Examples for usage.}
+\item{X.t}{A list of data frames. In each data frame, the first column is a numeric time sequence
+and the second gives the values of the multifractional process. To get reliable results, it is
+recommended to use at least 500 time points. See Examples for usage.}
 
 \item{k}{The desired number of clusters.}
 
@@ -38,8 +38,8 @@ Rows denote estimates for each realisation.}
 }
 }
 \description{
-This function performs k-means clustering of realisations of multifractional
-processes based on the estimated Hurst functions.
+This function performs k-means clustering of realisations
+based on the estimated Hurst functions.
 }
 \details{
 The Hurst function of each realisation is estimated using \code{\link{Hurst}}. The smoothed Hurst estimates are
@@ -47,6 +47,7 @@ used for k-means clustering in \code{\link[stats]{kmeans}}. The Hartigan and Won
 default k-means clustering algorithm.
 }
 \examples{
+\dontrun{
 #Simulation of multifractional processes
 t <- seq(0,1,by=(1/2)^10)
 H1 <- function(t) {return(0.1+0*t)}
@@ -63,6 +64,7 @@ print(KC)
 
 #Plot of smoothed Hurst functions in each cluster with cluster centers
 plot(KC,type ="ec")
+}
 }
 \seealso{
 \code{\link{print.k_hurst}}, \code{\link{plot.k_hurst}}, \code{\link{hclust_hurst}}

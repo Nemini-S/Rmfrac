@@ -1,11 +1,7 @@
 Package: Rmfrac
 Type: Package
-Title: Simulation and statistical analyses of multifractional processes
+Title: Simulation and Statistical Analyses of Multifractional Processes
 Version: 0.1.0
-Authors@R:c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role = "aut"),
-        person("Nemini", "Samarakoon", email = "neminisamarakoon95@gmail.com", role = c("aut", "cre")))
-Author: Andriy Olenko, Nemini Samarakoon 
-Maintainer: Nemini Samarakoon <neminisamarakoon95@gmail.com> 
 Description: Simulation of multifractional processes. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions and several functions to estimate and plot geometric statistics of the processes and time series.
 License: GPL-3
 Encoding: UTF-8
@@ -15,3 +11,6 @@ RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/Nemini-S/Rmfrac
 BugReports: https://github.com/Nemini-S/Rmfrac/issues
+Authors@R:c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role = "aut"),
+        person("Nemini", "Samarakoon", email = "neminisamarakoon95@gmail.com", role = c("aut", "cre")))
+Maintainer: Nemini Samarakoon <neminisamarakoon95@gmail.com> 

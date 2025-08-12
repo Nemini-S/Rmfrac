@@ -7,8 +7,7 @@
 LFD(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X}{Data frame where the first column is a time sequence and the second is the values of the multifractional process.
-For reliable estimates the data frame should be of at least 500 data points.}
+\item{X}{Data frame where the first column is a numeric time sequence and the second is the values of the multifractional process.}
 
 \item{N}{The same argument that is used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -20,23 +19,32 @@ For reliable estimates the data frame should be of at least 500 data points.}
 A data frame where the first column is a time sequence and the second column is estimated values of the local fractal dimension.
 }
 \description{
-This function computes the estimates for the local fractal dimension of multifractional processes.
+This function computes the estimates for the local fractal dimension.
 }
 \details{
 The formula \eqn{\widehat{LFD} = 2-\widehat{H}(t)} is used to compute the estimated local fractal dimension,
 where \eqn{\widehat{H}(t)} is the estimated Hurst function.
 }
+\note{
+Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
+}
 \examples{
+\dontrun{
 #LFD of a multifractional process simulated using GHBMP function
 T <- seq(0,1,by=(1/2)^10)
 H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X <- GHBMP(T,H)
 LFD(X)
 }
+#LFD of a fractional Browian motion simulated using FBm
+X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
+LFD(X)
+
+}
 \references{
 Gneiting, T., and Schlather, M. (2004). Stochastic models
 that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282.
-\doi{doi.org/10.1137/S0036144501394387}.
+\doi{doi:10.1137/S0036144501394387}.
 }
 \seealso{
 \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
