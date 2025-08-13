@@ -50,6 +50,7 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
+  X <- na.omit(X)
   X <- X[order(X[[1]]),]
 
   X.data <- t(X[,-1])
