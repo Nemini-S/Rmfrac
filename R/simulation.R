@@ -407,14 +407,11 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 #'
 #' @description
 #' This function simulates a realisation of the Brownian bridge over the
-#' time interval \code{[t_start,t_end]} which has the initial value \code{x_start}
-#' and terminates at \code{x_end} with \code{N} time steps.
+#' time interval \code{[0,t_end]} which terminates at \code{x_end} with \code{N} time steps.
 #'
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
-#' @param x_start Value of the process at the initial time point.
-#' @param t_start Initial time point.
-#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of sub-intervals the interval \code{[0,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian bridge
 #' is plotted.
@@ -429,20 +426,10 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' Bbridge(x_end=2,t_end=1,plot=TRUE)
-Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
-
-  if (!is.numeric(x_start)) {
-    stop("x_start must be numeric")
-  }
+Bbridge <- function(x_end,t_end,N=1000,plot=FALSE){
 
   if (!is.numeric(x_end)) {
     stop("x_end must be numeric")
-  }
-
-  if (!is.numeric(t_start)) {
-    stop("t_start must be numeric")
-  } else if ( !(t_start >=0)) {
-    stop("Incorrect input for t_start")
   }
 
   if (!is.numeric(t_end)) {
@@ -451,7 +438,7 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
     stop("Incorrect input for t_end")
   }
 
-  if (!(t_start<t_end)) {
+  if (!(0<t_end)) {
     stop("Incorrect inputs for t_start and t_end")
   }
 
@@ -465,7 +452,7 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  Bm_sim <- Bm(x_start=x_start,t_start=t_start,t_end=t_end,N=N)
+  Bm_sim <- Bm(x_start=0,t_start=0,t_end=t_end,N=N)
   X <- Bm_sim[,2]-((Bm_sim[,1]/t_end)*(Bm_sim[N+1,2]-x_end))
   sim_data <- data.frame(t=Bm_sim[,1],X=X)
 
@@ -488,16 +475,13 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
 #'
 #' @description
 #' This function simulates a realisation of the fractional Brownian bridge
-#' for a provided Hurst parameter over the time interval \code{[t_start,t_end]}
-#' which has the initial value \code{x_start} and terminates at \code{x_end}
-#' with \code{N} time steps.
+#' for a provided Hurst parameter over the time interval \code{[0,t_end]}
+#' which  terminates at \code{x_end} with \code{N} time steps.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
-#' @param x_start Value of the process at the initial time point.
-#' @param t_start Initial time point.
-#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of sub-intervals the interval \code{[0,t_end]} is split into.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
 #' is plotted.
@@ -512,24 +496,14 @@ Bbridge <- function(x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' FBbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)
-FBbridge <- function(H,x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
+FBbridge <- function(H,x_end,t_end,N=1000,plot=FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
   }
 
-  if (!is.numeric(x_start)) {
-    stop("x_start must be numeric")
-  }
-
   if (!is.numeric(x_end)) {
     stop("x_end must be numeric")
-  }
-
-  if (!is.numeric(t_start)) {
-    stop("t_start must be numeric")
-  } else if ( !(t_start >=0)) {
-    stop("Incorrect input for t_start")
   }
 
   if (!is.numeric(t_end)) {
@@ -538,7 +512,7 @@ FBbridge <- function(H,x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
     stop("Incorrect input for t_end")
   }
 
-  if (!(t_start<t_end)) {
+  if (!(0<t_end)) {
     stop("Incorrect inputs for t_start and t_end")
   }
 
@@ -552,7 +526,7 @@ FBbridge <- function(H,x_end,t_end,x_start=0,t_start=0,N=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  FBm_sim <- FBm(H=H,x_start=x_start,t_start=t_start,t_end=t_end,N=N)
+  FBm_sim <- FBm(H=H,x_start=0,t_start=0,t_end=t_end,N=N)
   X <- FBm_sim[,2]-(0.5*(FBm_sim[N+1,2]-x_end)*(1+(FBm_sim[,1]/t_end)^(2*H)-(1-(FBm_sim[,1]/t_end))^(2*H)))
   sim_data <- data.frame(t=FBm_sim[,1],X=X)
 

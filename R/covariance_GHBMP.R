@@ -192,6 +192,8 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
 
   stopCluster(cl)
 
+  rownames(cov.mat) <- NULL
+
   if(!is.null(theta))
   {
     if (!is.numeric(theta)) {

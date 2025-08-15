@@ -36,6 +36,7 @@ H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
 X <- GHBMP(T,H)
 LFD(X)
 }
+
 #LFD of a fractional Browian motion simulated using FBm
 X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
 LFD(X)

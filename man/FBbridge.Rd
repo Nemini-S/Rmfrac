@@ -4,7 +4,7 @@
 \alias{FBbridge}
 \title{Simulation of fractional Brownian bridge}
 \usage{
-FBbridge(H, x_end, t_end, x_start = 0, t_start = 0, N = 1000, plot = FALSE)
+FBbridge(H, x_end, t_end, N = 1000, plot = FALSE)
 }
 \arguments{
 \item{H}{Hurst parameter which lies between 0 and 1.}
@@ -13,11 +13,7 @@ FBbridge(H, x_end, t_end, x_start = 0, t_start = 0, N = 1000, plot = FALSE)
 
 \item{t_end}{Terminal time point.}
 
-\item{x_start}{Value of the process at the initial time point.}
-
-\item{t_start}{Initial time point.}
-
-\item{N}{Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
+\item{N}{Number of sub-intervals the interval \code{[0,t_end]} is split into.
 Default set to 1000.}
 
 \item{plot}{Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
@@ -29,9 +25,8 @@ column is simulated values of the realisation of fractional Brownian bridge.
 }
 \description{
 This function simulates a realisation of the fractional Brownian bridge
-for a provided Hurst parameter over the time interval \code{[t_start,t_end]}
-which has the initial value \code{x_start} and terminates at \code{x_end}
-with \code{N} time steps.
+for a provided Hurst parameter over the time interval \code{[0,t_end]}
+which  terminates at \code{x_end} with \code{N} time steps.
 }
 \examples{
 FBbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)

@@ -139,6 +139,8 @@ plot.mp <- function(x,H=NULL,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smoot
 #'
 H_LFD <- function(X,N=100,Q=2,L=2){
 
+  X<-na.omit(X)
+
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
     stop("X must be a numeric data frame with time sequence from 0 to 1 given as the first column")
   }
@@ -308,6 +310,8 @@ plot.H_LFD <- function(x,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Es
 #'
 plot_tsest<-function(X,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE,N=100,Q=2,L=2){
 
+  X<-na.omit(X)
+
   if (!is.logical(H_Est) | !is.logical(H_Smooth_Est) | !is.logical(LFD_Est) | !is.logical(LFD_Smooth_Est)) {
     stop("H_Est, H_Smooth_Est, LFD_Est and LFD_Smooth_Est should have logical inputs either TRUE or FALSE")
   }
@@ -316,7 +320,6 @@ plot_tsest<-function(X,H_Est=TRUE,H_Smooth_Est=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=
     stop("X must be a numeric data frame with time sequence from 0 to 1 given as the first column")
   }
 
-  X<-na.omit(X)
   X<-X[order(X[,1]),]
   H_est<-Hurst(X,N,Q,L)
   colnames(H_est)<-c("x","y")

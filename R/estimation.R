@@ -37,12 +37,15 @@
 #' X <- GHBMP(T,H)
 #' Hurst(X)
 #' }
+#'
 #' #Hurst function of a fractional Browian motion simulated using FBm
 #' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
 #' Hurst(X)
 #'
 Hurst<-function(X,N=100,Q=2,L=2)
 {
+  X<-na.omit(X)
+
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) ) {
     stop("X must be a numeric data frame with time sequence given as the first column")
   }
@@ -65,7 +68,6 @@ Hurst<-function(X,N=100,Q=2,L=2)
     stop("L must be a positive integer greater than 1")
   }
 
-  X<-na.omit(X)
   X<-X[order(X[,1]),]
 
   tmin1 <- min(X[,1])
@@ -163,6 +165,7 @@ Hurst<-function(X,N=100,Q=2,L=2)
 #' X <- GHBMP(T,H)
 #' LFD(X)
 #' }
+#'
 #' #LFD of a fractional Browian motion simulated using FBm
 #' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
 #' LFD(X)

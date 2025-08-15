@@ -4,18 +4,14 @@
 \alias{Bbridge}
 \title{Simulation of Brownian bridge}
 \usage{
-Bbridge(x_end, t_end, x_start = 0, t_start = 0, N = 1000, plot = FALSE)
+Bbridge(x_end, t_end, N = 1000, plot = FALSE)
 }
 \arguments{
 \item{x_end}{Value of the process at the terminating time point.}
 
 \item{t_end}{Terminal time point.}
 
-\item{x_start}{Value of the process at the initial time point.}
-
-\item{t_start}{Initial time point.}
-
-\item{N}{Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
+\item{N}{Number of sub-intervals the interval \code{[0,t_end]} is split into.
 Default set to 1000.}
 
 \item{plot}{Logical: If \code{TRUE}, the realisation of the Brownian bridge
@@ -27,8 +23,7 @@ column is simulated values of the realisation of Brownian bridge.
 }
 \description{
 This function simulates a realisation of the Brownian bridge over the
-time interval \code{[t_start,t_end]} which has the initial value \code{x_start}
-and terminates at \code{x_end} with \code{N} time steps.
+time interval \code{[0,t_end]} which terminates at \code{x_end} with \code{N} time steps.
 }
 \examples{
 Bbridge(x_end=2,t_end=1,plot=TRUE)
