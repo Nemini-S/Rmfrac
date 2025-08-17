@@ -44,6 +44,9 @@
 #'
 Hurst<-function(X,N=100,Q=2,L=2)
 {
+  tmin1 <- min(X[,1])
+  tmax1 <- max(X[,1])
+
   X<-na.omit(X)
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) ) {
@@ -69,9 +72,6 @@ Hurst<-function(X,N=100,Q=2,L=2)
   }
 
   X<-X[order(X[,1]),]
-
-  tmin1 <- min(X[,1])
-  tmax1 <- max(X[,1])
 
   X_scaled <- X
   X_scaled[,1] <- (X_scaled[,1]-tmin1)/(tmax1-tmin1)
