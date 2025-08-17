@@ -771,8 +771,10 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
           geom_line() +
           geom_line(data = streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)+
           labs(x = "t",y = "X(t)")
+
+        print(p)
       }
-      print(p)
+
       return(mean_streak)
 
     }
@@ -781,8 +783,10 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           labs(x = "t",y = "X(t)")
+
+        print(p)
       }
-      print(p)
+
       message(sprintf("No %s streaks",direction))
     }
 
@@ -863,8 +867,10 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
           geom_line() +
           geom_line(data = streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)+
           labs(x = "t",y = "X(t)")
+
+        print(p)
       }
-      print(p)
+
       return(mean_streak)
 
     }
@@ -873,8 +879,10 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           labs(x = "t",y = "X(t)")
+
+        print(p)
       }
-      print(p)
+
       message(sprintf("No %s streaks",direction))
     }
 
