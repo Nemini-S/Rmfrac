@@ -768,7 +768,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
       print(p)
     }
 
-    max_return <- c(t.X.maximum,t.X.maximum)
+    max_return <- c(t.X.maximum,X.maximum)
   }
 
   else{
@@ -806,7 +806,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
       print(p)
     }
 
-    max_return <- c(t.X.maximum,t.X.maximum)
+    max_return <- c(t.X.maximum,X.maximum)
 
   }
 
@@ -899,7 +899,7 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
       print(p)
     }
 
-    min_return <- c(t.X.minimum,t.X.minimum)
+    min_return <- c(t.X.minimum,X.minimum)
   }
 
   else{
@@ -937,7 +937,7 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
       print(p)
     }
 
-    min_return <- c(t.X.minimum,t.X.minimum)
+    min_return <- c(t.X.minimum,X.minimum)
 
   }
 
