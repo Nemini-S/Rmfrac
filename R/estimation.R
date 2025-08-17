@@ -44,12 +44,12 @@
 #'
 Hurst<-function(X,N=100,Q=2,L=2)
 {
-  tmin1 <- min(X[,1])
-  tmax1 <- max(X[,1])
+  tmin1 <- min(na.omit(X[,1]))
+  tmax1 <- max(na.omit(X[,1]))
 
   X<-na.omit(X)
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) ) {
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0)) ) {
     stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
@@ -172,6 +172,8 @@ Hurst<-function(X,N=100,Q=2,L=2)
 #'
 LFD <- function(X,N=100,Q=2,L=2)
 {
+  X<-na.omit(X)
+
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
     stop("X must be a numeric data frame with time sequence from 0 to 1 given as the first column")
   }
