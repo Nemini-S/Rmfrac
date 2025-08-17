@@ -699,8 +699,8 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' @param hline Logical: If \code{TRUE}, a horizontal line is plotted across the maximum.
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the maximum.
 #'
-#' @return Print the maximum of the time series and
-#' the corresponding \eqn{t} values. If \code{plot=TRUE}, the time series with
+#' @return A list of numeric vector(s). The first element in the vector is the corresponding \eqn{t} value and second the
+#' maximum of the time series. If \code{plot=TRUE}, the time series
 #' with maximum and corresponding \eqn{t} values are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
@@ -743,6 +743,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
     X.maximum<-max(X[,2])
     t.X.maximum<-((X[,1])[which(X[,2] == X.maximum)])
     max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
+    max_return <- apply(max_points_df,1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
@@ -768,7 +769,6 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
       print(p)
     }
 
-    max_return <- c(t.X.maximum,X.maximum)
   }
 
   else{
@@ -781,6 +781,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
     X.maximum<-max(X.I[,2])
     t.X.maximum<-((X.I[,1])[which(X.I[,2] == X.maximum)])
     max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
+    max_return <- apply(max_points_df,1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
@@ -806,8 +807,6 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
       print(p)
     }
 
-    max_return <- c(t.X.maximum,X.maximum)
-
   }
 
   return(max_return)
@@ -829,9 +828,9 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
 #' @param hline Logical: If \code{TRUE}, a horizontal line is plotted across the minimum.
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the minimum.
 #'
-#' @return Print the minimum of the time series and
-#' the corresponding \eqn{t} values. If \code{plot=TRUE}, the time series with
-#' with minimum and corresponding \eqn{t} values are plotted.
+#' @return A list of numeric vector(s). The first element in the vector is the corresponding \eqn{t} value and second the
+#' minimum of the time series. If \code{plot=TRUE}, the time series with
+#' minimum and corresponding \eqn{t} values are plotted.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
 #'
@@ -874,6 +873,7 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
     X.minimum<-min(X[,2])
     t.X.minimum<-((X[,1])[which(X[,2] == X.minimum)])
     min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
+    min_return <- apply(min_points_df,1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
@@ -899,7 +899,6 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
       print(p)
     }
 
-    min_return <- c(t.X.minimum,X.minimum)
   }
 
   else{
@@ -911,13 +910,14 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
     X.minimum<-min(X.I[,2])
     t.X.minimum<-((X.I[,1])[which(X.I[,2] == X.minimum)])
-    max_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
+    min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
+    min_return <- apply(min_points_df,1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
       p <- ggplot(X.I, aes(x=.data$x, y=.data$y)) +
         geom_line() +
-        geom_point(data = max_points_df, aes(x=.data$t, y=.data$x), color = "red", size = 1.5) +
+        geom_point(data = min_points_df, aes(x=.data$t, y=.data$x), color = "red", size = 1.5) +
         labs(x = "t",y = "X(t)")
 
       if(vline){
@@ -936,8 +936,6 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
 
       print(p)
     }
-
-    min_return <- c(t.X.minimum,X.minimum)
 
   }
 
