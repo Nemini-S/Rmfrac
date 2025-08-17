@@ -288,17 +288,17 @@ server <- function(input,output,session) {
 
     H_est <- Hurst(InputTS,N,Q,L)
     colnames(H_est) <- c("x","y")
-    IQR_H <- stats:IQR(InputTS[,2])
+    IQR_H <- stats::IQR(InputTS[,2])
     range_H <- range(InputTS[,2])
-    q1_H <-stats:quantile(InputTS[,2],0.25)
+    q1_H <-stats::quantile(InputTS[,2],0.25)
 
     t1<-InputTS[,1]
 
     LFD_est<-LFD(InputTS,N,Q,L)
     colnames(LFD_est)<-c("x1","y1")
-    IQR_L <- stats:IQR(InputTS[,2])
+    IQR_L <- stats::IQR(InputTS[,2])
     range_L <- range(InputTS[,2])
-    q1_L <- stats:quantile(InputTS[,2],0.25)
+    q1_L <- stats::quantile(InputTS[,2],0.25)
 
     if("Raw_Est_H" %in% input$checkbox_group_TS){
       p6 <- p6 + ggplot2::geom_line(data = H_est,ggplot2::aes(x=.data$x,y=((.data$y*(IQR_H))+q1_H),color=factor("Raw Estimate H")),linewidth=1)+
@@ -465,10 +465,6 @@ server <- function(input,output,session) {
       t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
       int_X <- stats::approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
       diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
-      #
-      # t <- seq(InputTS[1,1],InputTS[nrow(InputTS),1],length.out=N+1)
-      # int_X <- stats::approx(InputTS[,1],InputTS[,2],xout=t)$y
-      # diff<-((InputTS[nrow(InputTS),1]-InputTS[1,1])/N)
 
       S <- 0
       seg <- data.frame(T_start=rep(NA_real_,N), T_end=rep(NA_real_,N))
