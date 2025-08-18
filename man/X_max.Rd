@@ -21,8 +21,8 @@ sub-interval is returned, otherwise the whole time sequence is considered.}
 \item{hline}{Logical: If \code{TRUE}, a horizontal line is plotted across the maximum.}
 }
 \value{
-Print the maximum of the time series and
-the corresponding \eqn{t} values. If \code{plot=TRUE}, the time series with
+A list of numeric vector(s). The first element in the vector is the corresponding \eqn{t} value and second the
+maximum of the time series. If \code{plot=TRUE}, the time series
 with maximum and corresponding \eqn{t} values are plotted.
 }
 \description{

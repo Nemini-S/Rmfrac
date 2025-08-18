@@ -17,8 +17,8 @@
 #' The smoothing parameter \code{theta} can help to better visualise changes between
 #' neighbour estimated values.
 #'
-#' @importFrom plotly plot_ly
 #' @importFrom fields image.smooth
+#' @importFrom plotly plot_ly layout
 #' @export est_cov
 #'
 #' @examples
@@ -87,6 +87,12 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
     cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"),
                                              yaxis = list(title = "s"),
                                              zaxis = list(title = "Covariance")))
+
+    # cov.fig <- persp(t, t, C,
+    #       theta = 30, phi = 35,col = "lightblue", border = "black",
+    #       xlab = "h1", ylab = "h2", zlab = "Covariance",
+    #       main = "3D Covariance Function")
+
     print(cov.fig)
   }
 
@@ -209,6 +215,11 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
 
   if(plot)
   {
+    # cov.fig <- persp(t, t, C,
+    #       theta = 30, phi = 35,col = "lightblue", border = "black",
+    #       xlab = "h1", ylab = "h2", zlab = "Covariance",
+    #       main = "3D Covariance Function")
+
     cov.fig <- plot_ly(
       x = ~t, y = ~t, z = ~cov.mat,
       type = 'surface',

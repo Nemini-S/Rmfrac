@@ -41,9 +41,7 @@ ui <- shiny::navbarPage("",
                                           shiny::column(4,
                                                         shiny::wellPanel(
                                                           shiny::h4("Simulation Parameters"),
-                                                          shiny::numericInput("x1_BB", "Initial value", value = 0),
                                                           shiny::numericInput("xend_BB", "Terminating value", value = 0),
-                                                          shiny::numericInput("t_start_BB", "Initial time point", value = 0,min=0),
                                                           shiny::numericInput("t_end_BB", "Terminal time point", value = 1,min=0),
                                                           shiny::numericInput("N_BB", "Number of time steps", value = 1000,min=0,step=1),
                                                           shiny::actionButton("submit_BB", "Simulate")),
@@ -113,9 +111,7 @@ ui <- shiny::navbarPage("",
                                                         shiny::wellPanel(
                                                           shiny::h4("Simulation Parameters"),
                                                           shiny::numericInput("H_FBB", "Hurst Parameter", value = 0.5,min=0,max=1),
-                                                          shiny::numericInput("x1_FBB", "Initial value", value = 0),
                                                           shiny::numericInput("xend_FBB", "Terminating value", value = 0),
-                                                          shiny::numericInput("t_start_FBB", "Initial time point", value = 0,min=0),
                                                           shiny::numericInput("t_end_FBB", "Terminal time point", value = 1,min=0),
                                                           shiny::numericInput("N_FBB", "Number of time steps", value = 1000,min=0,step=1),
                                                           shiny::actionButton("submit_FBB", "Simulate")),
@@ -221,45 +217,65 @@ ui <- shiny::navbarPage("",
 
                         shiny::tabPanel("Input Time Series",
                                         shiny::fluidRow(
-                                          shiny::column(4,
+                                          shiny::column(2,
+                                                 shiny::selectInput("panel_select","",choices = c("Estimations", "Excursion set and area"),
+                                                             selected = "Estimations")), column(10)),
 
-                                                        shiny::wellPanel(
-                                                          shiny::h4("Estimation"),
-                                                          shiny::numericInput("N_intTS", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
-                                                          shiny::numericInput("Q_TS", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
-                                                          shiny::numericInput("L_TS", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
-                                                          shiny::checkboxGroupInput("checkbox_group_TS","Select",
-                                                                                    choices = list("Raw estimate of Hurst function" = "Raw_Est_H",
-                                                                                                   "Smoothed estimate of Hurst function" = "Smooth_Est_H",
-                                                                                                   "Raw estimate of Local Fractal Dimension" = "LFD_Est",
-                                                                                                   "Smoothed estimate of Local Fractal Dimension" = "LFD_Smooth_Est"))),
-                                                        shiny::wellPanel(
-                                                          shiny::h4("Excursion set and area"),
-                                                          shiny::numericInput("N_TS", "Number of time steps", value = 10000,min=0,step=1),
-                                                          shiny::numericInput("A_TS", "Constant level", value = 0),
-                                                          shiny::selectInput("level_TS",label = "Compare to level",
-                                                                             choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
-                                                          shiny::checkboxInput("sm_TS", "Excursion set", value = FALSE),
-                                                          shiny::checkboxInput("ea_TS", "Excursion area", value = FALSE))),
+                                        shiny::fluidRow(
+                                          shiny::column(3,
+                                                 shiny::conditionalPanel(
+                                                   condition = "input.panel_select=='Estimations'",
+                                                   shiny::wellPanel(
+                                                     shiny::h4("Estimation"),
+                                                     shiny::numericInput("N_intTS", "Number of sub-intervals for estimation", value = 100, min = 1, step = 1),
+                                                     shiny::numericInput("Q_TS", "Q (integer for estimation (>=2))", value = 2, min = 2, step = 1),
+                                                     shiny::numericInput("L_TS", "L (integer for estimation (>=2))", value = 2, min = 2, step = 1),
+                                                     shiny::checkboxGroupInput("checkbox_group_TS","Select",
+                                                                               choices = list("Raw estimate of Hurst function" = "Raw_Est_H",
+                                                                                              "Smoothed estimate of Hurst function" = "Smooth_Est_H",
+                                                                                              "Raw estimate of Local Fractal Dimension" = "LFD_Est",
+                                                                                              "Smoothed estimate of Local Fractal Dimension" = "LFD_Smooth_Est")))
+                                                 ),
 
-                                          shiny::column(8,
+                                                 shiny::conditionalPanel(
+                                                   condition = "input.panel_select=='Excursion set and area'",
+                                                   shiny::wellPanel(
+                                                     shiny::h4("Excursion set and area"),
+                                                     shiny::numericInput("N_TS", "Number of time steps", value = 10000,min=0,step=1),
+                                                     shiny::numericInput("A_TS", "Constant level", value = 0),
+                                                     shiny::selectInput("level_TS",label = "Compare to level",
+                                                                        choices = list("Greater" = "greater", "Lower" = "lower"),selected = "greater"),
+                                                     shiny::checkboxInput("sm_TS", "Excursion set", value = FALSE),
+                                                     shiny::checkboxInput("ea_TS", "Excursion area", value = FALSE))
+                                                 ),
+
+
+                                                 shiny::wellPanel(
+                                                   shiny::h4("Maximum and minimum"),
+                                                   shiny::checkboxInput("max_TS", "Maximum", value = FALSE),
+                                                   shiny::checkboxInput("min_TS", "Minimum", value = FALSE)),
+
+                                                 shiny::wellPanel(
+                                                   shiny::h4("Longest Streak"),
+                                                   shiny::checkboxInput("increasing_TS", "Increasing (orange)", value = FALSE),
+                                                   shiny::checkboxInput("decreasing_TS", "Decreasing (brown)", value = FALSE))
+                                          ),
+                                          shiny::column(9,
                                                         shiny::wellPanel(
                                                           fileInput("file", "Upload CSV File", accept = ".csv"),
                                                           uiOutput("column_ui")),
 
-                                                        shinycssloaders::withSpinner((shiny::plotOutput("tsplot",height="500px")), type = 8, color = "grey"),
-                                                        shiny::fluidRow(
-                                                          shiny::column(6,
-                                                                        shiny::wellPanel(
-                                                                          shiny::h4("Maximum and minimum"),
-                                                                          shiny::checkboxInput("max_TS", "Maximum", value = FALSE),
-                                                                          shiny::checkboxInput("min_TS", "Minimum", value = FALSE))),
-                                                          shiny::column(6,
-                                                                        shiny::wellPanel(
-                                                                          shiny::h4("Longest Streak"),
-                                                                          shiny::checkboxInput("increasing_TS", "Increasing (orange)", value = FALSE),
-                                                                          shiny::checkboxInput("decreasing_TS", "Decreasing (brown)", value = FALSE)))
-                                                        )))),
+                                                        shiny::conditionalPanel(
+                                                          condition = "input.panel_select=='Estimations'",
+                                                          shinycssloaders::withSpinner((shiny::plotOutput("tsplot1",height="500px")), type = 8, color = "grey")
+                                                        ),
+                                                        shiny::conditionalPanel(
+                                                          condition = "input.panel_select=='Excursion set and area'",
+                                                          shinycssloaders::withSpinner((shiny::plotOutput("tsplot2",height="500px")), type = 8, color = "grey")
+                                                        )
+
+
+                                          ))),
 )
 
 
@@ -271,8 +287,7 @@ server <- function(input,output,session) {
     DF_Input
   })
 
-
-  output$tsplot <- shiny::renderPlot({
+  output$tsplot1 <- shiny::renderPlot({
 
     InputTS <- data_input()
     shiny::req(InputTS)
@@ -509,6 +524,201 @@ server <- function(input,output,session) {
       }
     }
 
+    print(p6)
+
+  })
+
+  output$tsplot2 <- shiny::renderPlot({
+
+    InputTS <- data_input()
+    shiny::req(InputTS)
+    InputTS <- na.omit(InputTS)
+    InputTS <- InputTS[order(InputTS[,1]), ]
+
+    p7 <- ggplot2::ggplot(InputTS, ggplot2::aes(x =InputTS[,1], y =InputTS[,2]))+ggplot2::geom_line()+
+      ggplot2::labs(y="Time Series",x="Time",color="")
+
+
+    if (!is.null(input$min_TS) && input$min_TS){
+
+      X.minimum<-min(InputTS[,2])
+      t.X.minimum<-((InputTS[,1])[which(InputTS[,2] == X.minimum)])
+      min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
+
+      p7 <- p7+ggplot2::geom_point(data=min_points_df, ggplot2::aes(x=t, y=x), color="red", size = 1.5)+
+        ggplot2::geom_text(data = min_points_df,
+                           ggplot2::aes(x=t, y=x, label = paste0("Min=(",round(t,2),",",round(x,2),")")),vjust=1.5,color="red")
+    }
+
+    if (!is.null(input$max_TS) && input$max_TS){
+
+      X.maximum<-max(InputTS[,2])
+      t.X.maximum<-((InputTS[,1])[which(InputTS[,2] == X.maximum)])
+      max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
+
+      p7 <- p7 + ggplot2::geom_point(data=max_points_df, ggplot2::aes(x=t, y=x), color = "red", size = 1.5)+
+        ggplot2::geom_text(data = max_points_df,
+                           ggplot2::aes(x=t, y=x, label = paste0("Max=(",round(t,2),",",round(x,2),")")),vjust = -0.5,color = "red")
+    }
+
+
+    if(!is.null(input$increasing_TS) && input$increasing_TS){
+      t <- InputTS[,1]
+      x <- InputTS[,2]
+
+      streak <- list()
+      start <- 1
+
+      for (i in 2:length(x)) {
+        if (x[i] > x[i-1]) {
+          next
+        } else {
+          if (i - 1 > start) {
+            streak[[length(streak) + 1]] <- c(start, i - 1)
+          }
+          start <- i
+        }
+      }
+
+      if (length(x) > 1 && x[length(x)] > x[length(x) - 1]) {
+        streak[[length(streak) + 1]] <- c(start, length(x))
+      }
+
+      if (length(streak) > 0) {
+
+        time_int <- sapply(streak, function(n) t[n[2]] - t[n[1]])
+
+        max_int <- max(time_int)
+
+        longest_streak <- streak[time_int == max_int]
+
+        long_streak_df <- data.frame(t = numeric(0), x = numeric(0), group = integer(0))
+
+        for (i in 1:length(longest_streak)) {
+          id <- longest_streak[[i]][1]:longest_streak[[i]][2]
+          df1 <- data.frame(t = t[id], x = x[id], group = i)
+          long_streak_df <- rbind(long_streak_df, df1)
+        } }
+
+      else{
+        long_streak_df <- NULL
+      }
+
+
+      if (!is.null(long_streak_df)) {
+        p7 <- p7 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "orange",linewidth = 1)
+
+      }
+
+
+
+    }
+
+    if (!is.null(input$decreasing_TS) && input$decreasing_TS){
+      t <- InputTS[,1]
+      x <- InputTS[,2]
+
+      streak <- list()
+      start <- 1
+
+      for (i in 2:length(x)) {
+        if (x[i] < x[i - 1]) {
+          next
+        } else {
+          if (i - 1 > start) {
+            streak[[length(streak) + 1]] <- c(start, i - 1)
+          }
+          start <- i
+        }
+      }
+
+      if (length(x) > 1 && x[length(x)] < x[length(x) - 1]) {
+        streak[[length(streak) + 1]] <- c(start, length(x))
+      }
+
+
+      if (length(streak) > 0) {
+
+        time_int <- sapply(streak, function(n) t[n[2]] - t[n[1]])
+
+        max_int <- max(time_int)
+
+        longest_streak <- streak[time_int == max_int]
+
+        long_streak_df <- data.frame(t = numeric(0), x = numeric(0), group = integer(0))
+
+        for (i in 1:length(longest_streak)) {
+          id <- longest_streak[[i]][1]:longest_streak[[i]][2]
+          df1 <- data.frame(t = t[id], x = x[id], group = i)
+          long_streak_df <- rbind(long_streak_df, df1)
+        } }
+
+      else{
+        long_streak_df <- NULL
+      }
+
+
+      if (!is.null(long_streak_df)) {
+        p7 <- p7 + ggplot2::geom_line(data = long_streak_df, ggplot2::aes(x = t, y = x, group = group), color = "brown",linewidth = 1)
+
+      }
+
+    }
+
+    if (!is.null(input$sm_TS) && (input$sm_TS) && ("greater" %in% input$level_TS)){
+
+      colnames(InputTS) <- c("x","y")
+      N <- input$N_TS
+      A <- input$A_TS
+
+      ag_df <- stats::aggregate(InputTS[,2]~InputTS[,1],FUN=mean)
+      t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
+      int_X <- stats::approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
+      diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+
+      S <- 0
+      seg <- data.frame(T_start=rep(NA_real_,N), T_end=rep(NA_real_,N))
+
+      for(i in 1:(N)){
+
+        x1 <- int_X[i]
+        x2 <- int_X[i+1]
+
+        t1 <- t[i]
+        t2 <- t[i+1]
+
+        if((x1>=A) && (x2>=A)){
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t2
+
+        } else if ((x1>=A) && (x2<A)){
+
+          seg$T_start[i] <- t1
+          seg$T_end[i] <- t1 + (diff * (x1-A)/(x1-x2))
+
+        } else if ((x1<A) && (x2>=A)){
+
+          seg$T_start[i] <- t2 - (diff * (A-x2)/(x1-x2))
+          seg$T_end[i] <- t2
+
+        } else {
+
+          seg$T_start[i] <- NA
+          seg$T_end[i] <- NA
+        }
+
+      }
+
+      seg <- na.omit(seg)
+
+      if (nrow(seg)>0){
+
+        p7 <- p7 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
+          ggplot2::geom_segment(data = seg, ggplot2::aes(x = T_start, xend = T_end, y = 0, yend = 0) ,color="red")
+      }
+    }
+
 
     if (!is.null(input$sm_TS) && (input$sm_TS) && ("lower" %in% input$level_TS)){
 
@@ -569,7 +779,7 @@ server <- function(input,output,session) {
 
       if (nrow(seg)>0){
 
-        p6 <- p6 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
+        p7 <- p7 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
           ggplot2::geom_segment(data = seg, ggplot2::aes(x = T_start, xend = T_end, y = 0, yend = 0) ,color="red")
       }
 
@@ -642,7 +852,7 @@ server <- function(input,output,session) {
 
       if (!is.null(DF_Area) && nrow(DF_Area)>0){
 
-        p6 <- p6 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
+        p7 <- p7 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
           ggplot2::geom_polygon(data=DF_Area,ggplot2::aes(x=t,y=X_t,group=.data$G),fill="lightblue")
       }
 
@@ -715,12 +925,12 @@ server <- function(input,output,session) {
 
       if (!is.null(DF_Area) && nrow(DF_Area)>0){
 
-        p6 <- p6 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
+        p7 <- p7 + ggplot2::geom_hline(yintercept=A,color="blue",linetype="dashed") +
           ggplot2::geom_polygon(data=DF_Area,ggplot2::aes(x=t,y=X_t,group=.data$G),fill="lightblue")
       }
     }
 
-    print(p6)
+    print(p7)
 
   })
 
@@ -1611,12 +1821,10 @@ server <- function(input,output,session) {
 
   simBB <- shiny::eventReactive(input$submit_BB, {
 
-    x1 <- input$x1_BB
     x_end <- input$xend_BB
-    t_start <- input$t_start_BB
     t_end <- input$t_end_BB
     N <- input$N_BB
-    Bbridge(x_end=x_end,t_end=t_end,x_start=x1,t_start=t_start,N=N)
+    Bbridge(x_end=x_end,t_end=t_end,N=N)
   })
 
   output$bbPlot <- shiny::renderPlot({
@@ -2440,16 +2648,15 @@ server <- function(input,output,session) {
     print(p3)
   })
 
+  #Fractional Brownian bridge
 
   simFBB <- shiny::eventReactive(input$submit_FBB, {
 
     H <- input$H_FBB
-    x_start <- input$x1_FBB
     x_end <- input$xend_FBB
-    t_start <- input$t_start_FBB
     t_end <- input$t_end_FBB
     N <- input$N_FBB
-    FBbridge(H=H,x_end=x_end,t_end=t_end,x_start=x_start,t_start=t_start,N=N)
+    FBbridge(H=H,x_end=x_end,t_end=t_end,N=N)
   })
 
   output$fbbPlot <- shiny::renderPlot({
