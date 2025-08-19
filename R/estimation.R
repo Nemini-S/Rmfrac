@@ -32,17 +32,17 @@
 #' @examples
 #' \dontrun{
 #' #Hurst function of a multifractional process simulated using GHBMP function
-#' T <- seq(0,1,by=(1/2)^10)
-#' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' X <- GHBMP(T,H)
+#' T <- seq(0, 1, by = (1/2)^10)
+#' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
+#' X <- GHBMP(T, H)
 #' Hurst(X)
 #' }
 #'
 #' #Hurst function of a fractional Browian motion simulated using FBm
-#' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
+#' X <- FBm(H = 0.5, x_start = 0, t_start = 0, t_end = 2, N = 1000)
 #' Hurst(X)
 #'
-Hurst<-function(X,N=100,Q=2,L=2)
+Hurst <- function(X, N = 100, Q = 2, L = 2)
 {
   tmin1 <- min(na.omit(X[,1]))
   tmax1 <- max(na.omit(X[,1]))
@@ -71,38 +71,38 @@ Hurst<-function(X,N=100,Q=2,L=2)
     stop("L must be a positive integer greater than 1")
   }
 
-  X<-X[order(X[,1]),]
+  X <- X[order(X[,1]),]
 
   X_scaled <- X
-  X_scaled[,1] <- (X_scaled[,1]-tmin1)/(tmax1-tmin1)
+  X_scaled[,1] <- (X_scaled[,1] - tmin1) / (tmax1 - tmin1)
 
-  tQ<-X_scaled[,1]
-  t<-tQ[seq(1, length(tQ), by = Q)]
+  tQ <- X_scaled[,1]
+  t <- tQ[seq(1, length(tQ), by = Q)]
 
-  l<-0:L
+  l <- 0:L
 
-  al<-(-1)^(L-l)*((factorial(L))/((factorial(l))*(factorial(L-l))))
+  al <- (-1)^(L - l) * ((factorial(L)) / ((factorial(l)) * (factorial(L - l))))
 
   ms <- function(b)
   {
-    sum(al*b)
+    sum(al * b)
   }
 
-  log_Q<-function(x,y,q)
+  log_Q <- function(x, y, q)
   {
-    (log(x/y))/log(q^2)
+    (log(x / y)) / log(q^2)
   }
 
   #val <- ifelse(L<N, "Continue", "Stop")
   #print(val)
 
-  XNQ<-X[,2]
+  XNQ <- X[,2]
   XN <- XNQ[seq(1, length(XNQ), by = Q)]
 
-  dNk<-rollapply(XN,width=(L+1),ms)
-  dNk2<-dNk^2
-  dNQk<-rollapply(XNQ,width=(L+1),ms)
-  dNQk2<-dNQk^2
+  dNk <- rollapply(XN, width = (L + 1), ms)
+  dNk2 <- dNk^2
+  dNQk <- rollapply(XNQ, width = (L + 1), ms)
+  dNQk2 <- dNQk^2
 
   sub_intervals <- seq(0, 1, 1/N)
   start_points <- sub_intervals[-length(sub_intervals)]
@@ -110,26 +110,26 @@ Hurst<-function(X,N=100,Q=2,L=2)
 
   H_est<-function(np)
   {
-    I_L<-start_points[np]
-    I_U<-end_points[np]
-    cx<-floor(I_U*(length(t)-1))-ceiling(I_L*(length(t)-1))+1
-    cy<-floor(I_U*((length(tQ)-1)))-ceiling(I_L*((length(tQ)-1)))+1
-    v1<-((I_L*(length(t)-1))+1) : (I_U*(length(t)-1)+1)
-    vx<-(1/cx)*sum2(dNk2,v1)
-    v2<-((I_L*((length(tQ)-1)))+1) :(I_U*((length(tQ)-1))+1)
-    vy<-(1/cy)*sum2(dNQk2,v2)
-    a<-min(1,max(log_Q(vx,vy,Q),0))
-    matrix(c(I_L,a))
+    I_L <- start_points[np]
+    I_U <- end_points[np]
+    cx <- floor(I_U * (length(t) - 1)) - ceiling(I_L * (length(t) - 1)) + 1
+    cy <- floor(I_U * ((length(tQ) - 1))) - ceiling(I_L * ((length(tQ) - 1))) + 1
+    v1 <- ((I_L * (length(t) - 1)) + 1) : (I_U * (length(t) - 1) + 1)
+    vx <- (1/cx) * sum2(dNk2, v1)
+    v2 <- ((I_L * ((length(tQ) - 1))) + 1) :(I_U*((length(tQ) - 1)) + 1)
+    vy <- (1/cy) * sum2(dNQk2, v2)
+    a <- min(1, max(log_Q(vx, vy, Q), 0))
+    matrix(c(I_L, a))
   }
 
-  H_est_v<-Vectorize(H_est)
-  p1<-H_est_v(1:N)
-  est_data<-as.data.frame(t(p1)) #Estimated data for the Hurst function
+  H_est_v <- Vectorize(H_est)
+  p1 <- H_est_v(1:N)
+  est_data <- as.data.frame(t(p1)) #Estimated data for the Hurst function
 
-  est_data[,1] <- ((tmax1-tmin1)*est_data[,1]) + tmin1
+  est_data[,1] <- ((tmax1 - tmin1) * est_data[,1]) + tmin1
 
-  est_data<-na.omit(est_data)
-  colnames(est_data)<-c("Time","Hurst_estimate")
+  est_data <- na.omit(est_data)
+  colnames(est_data) <- c("Time", "Hurst_estimate")
 
   return(est_data)
 
@@ -160,19 +160,19 @@ Hurst<-function(X,N=100,Q=2,L=2)
 #' @examples
 #' \dontrun{
 #' #LFD of a multifractional process simulated using GHBMP function
-#' T <- seq(0,1,by=(1/2)^10)
-#' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' X <- GHBMP(T,H)
+#' T <- seq(0, 1, by = (1/2)^10)
+#' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
+#' X <- GHBMP(T, H)
 #' LFD(X)
 #' }
 #'
 #' #LFD of a fractional Browian motion simulated using FBm
-#' X<-FBm(H=0.5,x_start=0,t_start=0,t_end=2,N=1000)
+#' X <- FBm(H = 0.5, x_start = 0, t_start = 0, t_end = 2, N = 1000)
 #' LFD(X)
 #'
-LFD <- function(X,N=100,Q=2,L=2)
+LFD <- function(X, N = 100, Q = 2, L = 2)
 {
-  X<-na.omit(X)
+  X <- na.omit(X)
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
     stop("X must be a numeric data frame with time sequence from 0 to 1 given as the first column")
@@ -196,9 +196,9 @@ LFD <- function(X,N=100,Q=2,L=2)
     stop("L must be a positive integer greater than 1")
   }
 
-  Hurst_est <- Hurst(X,N,Q,L)
+  Hurst_est <- Hurst(X, N, Q, L)
 
-  D <- data.frame(Time=Hurst_est[,1],LFD_estimate=2-(Hurst_est[,2]))
+  D <- data.frame(Time = Hurst_est[,1], LFD_estimate = 2 - (Hurst_est[,2]))
 
   return(D)
 }

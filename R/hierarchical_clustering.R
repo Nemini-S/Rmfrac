@@ -50,23 +50,23 @@
 #' @examples
 #' \dontrun{
 #' #Simulation of multifractional processes
-#' t <- seq(0,1,by=(1/2)^10)
-#' H1 <- function(t) {return(0.1+0*t)}
-#' H2 <- function(t) {return(0.2+0.45*t)}
-#' H3 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H1 <- function(t) {return(0.1 + 0*t)}
+#' H2 <- function(t) {return(0.2 + 0.45*t)}
+#' H3 <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
 #' X.list.1 <- replicate(3, GHBMP(t,H1),simplify = FALSE)
 #' X.list.2 <- replicate(3, GHBMP(t,H2),simplify = FALSE)
 #' X.list.3 <- replicate(3, GHBMP(t,H3),simplify = FALSE)
-#' X.list <- c(X.list.1,X.list.2,X.list.3)
+#' X.list <- c(X.list.1, X.list.2, X.list.3)
 #'
-#' #Hierarchical clustering based on k=3 clusters with dendrogram plotted
-#' HC <- hclust_hurst(X.list,k=3,dendrogram=TRUE)
+#' #Hierarchical clustering based on k = 3 clusters with dendrogram plotted
+#' HC <- hclust_hurst(X.list, k=3, dendrogram = TRUE)
 #' print(HC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(HC,type ="ec")
+#' plot(HC,type = "ec")
 #' }
-hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complete",dendrogram=FALSE,N=100,Q=2,L=2)
+hclust_hurst <- function(X.t, k = NULL, h = NULL, dist.method = "euclidean", method = "complete", dendrogram = FALSE, N = 100, Q = 2, L = 2)
 {
   if (!is.list(X.t)) {
     stop("X.t must be a list of numeric data frames")
@@ -101,20 +101,20 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
   H<-list()
 
   for (i in 1:length(X.t)) {
-    H[[i]] <- Hurst(X.t[[i]],N,Q,L)
+    H[[i]] <- Hurst(X.t[[i]], N, Q, L)
   }
 
-  loess.fn<-function(df){
-    sm<-loess(df[,2]~df[,1],data=df,span=0.3)
+  loess.fn <- function(df){
+    sm <- loess(df[,2] ~ df[,1],data = df,span = 0.3)
     return(sm$fitted)
   }
 
-  Smooth_df0 <- data.frame(rbind(t(sapply(H,loess.fn))))
+  Smooth_df0 <- data.frame(rbind(t(sapply(H, loess.fn))))
   Smooth_df <- as.data.frame(lapply(Smooth_df0, function(x) pmax(pmin(x, 1), 0)))
 
-  Dist<-dist(Smooth_df,method = dist.method)
+  Dist <- dist(Smooth_df, method = dist.method)
 
-  hc<-hclust(Dist,method=method)
+  hc <- hclust(Dist, method = method)
 
   if (!is.null(k)){
 
@@ -122,12 +122,12 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
       stop(paste("k must be a numeric positive integer between 1 and ", length(X.t)))
     }
 
-    clusters<-cutree(hc, k =k)
-    n_cl<-k
+    clusters<-cutree(hc, k = k)
+    n_cl <- k
 
     if(dendrogram)
     {
-      plot(as.dendrogram(hc),ylab="Height",main=paste("Cluster dendogram - ",method))
+      plot(as.dendrogram(hc), ylab = "Height",main = paste("Cluster dendogram - ",method))
       rect.hclust(hc, k = k, border = "red")
     }
 
@@ -141,17 +141,17 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
       stop("h must be a numeric positive value")
     }
 
-    clusters<-cutree(hc, h=h)
+    clusters<-cutree(hc, h = h)
     n_cl<-length(unique(clusters))
 
     if(dendrogram)
     {
-      plot(as.dendrogram(hc),ylab="Height",main=paste("Cluster dendrogram - ",method))
-      rect.hclust(hc, h=h, border = "red")
+      plot(as.dendrogram(hc),ylab="Height",main = paste("Cluster dendrogram - ",method))
+      rect.hclust(hc, h = h, border = "red")
     }
   }
 
-  DF<-data.frame(Item=row.names.data.frame(Smooth_df),Cluster=factor(clusters))
+  DF<-data.frame(Item = row.names.data.frame(Smooth_df),Cluster = factor(clusters))
   DF <- DF[order(clusters), ]
   rownames(DF)<-NULL
 
@@ -162,18 +162,18 @@ hclust_hurst<-function(X.t,k=NULL,h=NULL,dist.method="euclidean",method="complet
   df2<-list()
 
   for(i in 1:n_cl){
-    cl_df[[i]]<-Smooth_df[clusters == i,]
-    center[[i]]<-colMeans(cl_df[[i]])
-    df1[[i]]<-rbind(cl_df[[i]],center[[i]])
-    dist_df[[i]]<-as.matrix(dist(df1[[i]],method=dist.method))
-    df2[[i]]<-as.numeric(dist_df[[i]][1:(nrow(cl_df[[i]])), nrow(df1[[i]])])
+    cl_df[[i]] <- Smooth_df[clusters == i,]
+    center[[i]] <- colMeans(cl_df[[i]])
+    df1[[i]] <- rbind(cl_df[[i]], center[[i]])
+    dist_df[[i]] <- as.matrix(dist(df1[[i]], method=dist.method))
+    df2[[i]] <- as.numeric(dist_df[[i]][1:(nrow(cl_df[[i]])), nrow(df1[[i]])])
   }
 
-  clust_DF<-data.frame(DF,Distance_from_centre=unlist(df2))
+  clust_DF<-data.frame(DF, Distance_from_centre = unlist(df2))
 
-  structure(list(cluster_info=clust_DF, cluster=clusters, cluster_sizes=as.vector(table(clusters)),
-                 centers=as.data.frame(do.call(rbind,center)), smoothed_Hurst_estimates=Smooth_df,
-                 raw_Hurst_estimates=H, call=match.call()),class="hc_hurst")
+  structure(list(cluster_info = clust_DF, cluster = clusters, cluster_sizes = as.vector(table(clusters)),
+                 centers = as.data.frame(do.call(rbind,center)), smoothed_Hurst_estimates = Smooth_df,
+                 raw_Hurst_estimates = H, call = match.call()), class = "hc_hurst")
 }
 
 
@@ -203,12 +203,12 @@ print.hc_hurst <- function(x, ...)
 #' @importFrom ggplot2 autoplot ggplot facet_wrap geom_line labs aes
 #' @importFrom rlang .data
 #' @export
-autoplot.hc_hurst<-function(object,...,type="estimates")
+autoplot.hc_hurst <- function(object, ..., type = "estimates")
 {
-  smth_h<-object$smoothed_Hurst_estimates
-  raw_h<-object$raw_Hurst_estimates
-  cluster<-object$cluster
-  cent<-object$centers
+  smth_h <- object$smoothed_Hurst_estimates
+  raw_h <- object$raw_Hurst_estimates
+  cluster <- object$cluster
+  cent <- object$centers
 
   DF<-data.frame(
     clus = rep(cluster, each = ncol(smth_h)),
@@ -217,38 +217,35 @@ autoplot.hc_hurst<-function(object,...,type="estimates")
     smth_est = as.vector(t(smth_h))
   )
 
-  DF1<-aggregate(smth_est~clus+t,data=DF,FUN=mean)
+  DF1<-aggregate(smth_est ~ clus + t, data = DF, FUN = mean)
 
   DF1["item"] <- DF1["clus"]
 
   if (type == "estimates")
   {
-    p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
-      facet_wrap(~clus, ncol=2, scales= "free_x") +
+    p <- ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
+      facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "black") +
-      labs(title = "Smoothed Hurst estimates in each cluster",
-           x = "Time", y = "Smoothed Hurst estimates")
+      labs(title = "Smoothed Hurst estimates in each cluster", x = "Time", y = "Smoothed Hurst estimates")
 
 
   }
   else if (type == "centers")
   {
-    p<-ggplot(DF1,aes(.data$t,.data$smth_est)) +
-      facet_wrap(~clus, ncol=2, scales= "free_x") +
+    p <- ggplot(DF1,aes(.data$t,.data$smth_est)) +
+      facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "red") +
-      labs(title = "Cluster centers",
-           x = "Time", y = "Smoothed Hurst estimates")
+      labs(title = "Cluster centers", x = "Time", y = "Smoothed Hurst estimates")
 
 
   }
   else if (type == "ec")
   {
-    p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
+    p <- ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
       geom_line(color = "black") +
       geom_line(data = DF1, aes(.data$t, .data$smth_est), color = "red") +
-      facet_wrap(~clus, ncol=2, scales= "free_x") +
-      labs(title = "Smoothed Hurst estimates in each cluster and cluster center",
-           x = "Time", y = "Smoothed Hurst estimates")
+      facet_wrap(~clus, ncol = 2, scales= "free_x") +
+      labs(title = "Smoothed Hurst estimates in each cluster and cluster center", x = "Time", y = "Smoothed Hurst estimates")
 
 
   }
@@ -284,22 +281,22 @@ autoplot.hc_hurst<-function(object,...,type="estimates")
 #' @examples
 #' \dontrun{
 #' #Simulation of multifractional processes
-#' t <- seq(0,1,by=(1/2)^10)
-#' H1 <- function(t) {return(0.1+0*t)}
-#' H2 <- function(t) {return(0.2+0.45*t)}
-#' H3 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' X.list.1 <- replicate(3, GHBMP(t,H1),simplify = FALSE)
-#' X.list.2 <- replicate(3, GHBMP(t,H2),simplify = FALSE)
-#' X.list.3 <- replicate(3, GHBMP(t,H3),simplify = FALSE)
-#' X.list <- c(X.list.1,X.list.2,X.list.3)
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H1 <- function(t) {return(0.1 + 0*t)}
+#' H2 <- function(t) {return(0.2 + 0.45*t)}
+#' H3 <- function(t) {return(0.5 - 0.4*sin(6*3.14*t))}
+#' X.list.1 <- replicate(3, GHBMP(t,H1), simplify = FALSE)
+#' X.list.2 <- replicate(3, GHBMP(t,H2), simplify = FALSE)
+#' X.list.3 <- replicate(3, GHBMP(t,H3), simplify = FALSE)
+#' X.list <- c(X.list.1, X.list.2, X.list.3)
 #'
 #' #Hierarchical clustering based on k=3 clusters with dendrogram plotted
-#' HC<- hclust_hurst(X.list,k=3,dendrogram=TRUE)
+#' HC<- hclust_hurst(X.list, k = 3, dendrogram = TRUE)
 #' print(HC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(HC,type ="ec")
+#' plot(HC, type = "ec")
 #' }
-plot.hc_hurst<-function(x,type="estimates",...) {
-  print(autoplot(x,type=type))
+plot.hc_hurst <- function(x, type = "estimates", ...) {
+  print(autoplot(x, type = type))
 }

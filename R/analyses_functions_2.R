@@ -21,11 +21,11 @@
 #' @export cross_T
 #'
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' cross_T(TS,0.1,subI=c(0.2,0.8),plot=TRUE,vline=TRUE)
+#' t <- seq(0, 1, length = 100)
+#' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
+#' cross_T(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE, vline = TRUE)
 #'
-cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
+cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -47,27 +47,27 @@ cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("C1","C2")
+  colnames(X) <- c("C1", "C2")
 
   if (is.null(subI)){
 
-    X.I<-X
-    t<-X.I[,1]
-    x<-X.I[,2]
+    X.I <- X
+    t <- X.I[,1]
+    x <- X.I[,2]
 
     cross_df <- data.frame(cross_t = numeric(0), cross_x = numeric(0))
 
     for (i in 1:(nrow(X.I) - 1)) {
 
-      if ((x[i]<A && x[i+1]>A) || (x[i]>A && x[i+1]<A)) {
-        cross_t <- t[i] + (A-x[i])*(t[i+1]-t[i])/(x[i+1]-x[i])
+      if ((x[i] < A && x[i+1] > A) || (x[i] > A && x[i+1] < A)) {
+        cross_t <- t[i] + (A - x[i])*(t[i + 1 ]- t[i]) / (x[i + 1] - x[i])
         cross_df <- rbind(cross_df, data.frame(cross_t = cross_t, cross_x = A))
       }
 
-      if (x[i+1] == A) {
-        if (i>1 && (i+2) <= length(x)) {
-          if ((x[i]<A && x[i+2]>A) || (x[i]>A && x[i+2]<A)) {
-            cross_df <- rbind(cross_df, data.frame(cross_t = t[i+1], cross_x = A))
+      if (x[i + 1] == A) {
+        if (i>1 && (i + 2) <= length(x)) {
+          if ((x[i] < A && x[i + 2] > A) || (x[i] > A && x[i + 2] < A)) {
+            cross_df <- rbind(cross_df, data.frame(cross_t = t[i + 1], cross_x = A))
           }
         }
       }
@@ -94,11 +94,11 @@ cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
       stop("subI must be a numeric vector")
     }
 
-    Time<-X[,1]
-    X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
+    Time <- X[,1]
+    X.I <- subset(X, Time >= subI[1] & Time <= subI[2])
 
-    t<-X.I[,1]
-    x<-X.I[,2]
+    t <- X.I[,1]
+    x <- X.I[,2]
 
     cross_df <- data.frame(cross_t = numeric(0), cross_x = numeric(0))
 
@@ -158,10 +158,10 @@ cross_T <- function(X,A,subI=NULL,plot=FALSE,vline= FALSE){
 #' @importFrom rlang .data
 #' @seealso \code{\link{cross_T}}, \code{\link{cross_mean}}
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' cross_rate(TS,0.1,subI=c(0.2,0.8),plot=TRUE)
-cross_rate <- function(X,A,subI=NULL,plot=FALSE){
+#' t <- seq(0, 1, length = 100)
+#' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
+#' cross_rate(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
+cross_rate <- function(X, A, subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -178,20 +178,20 @@ cross_rate <- function(X,A,subI=NULL,plot=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("C1","C2")
+  colnames(X) <- c("C1", "C2")
 
 if (is.null(subI)){
 
-  X.I<-X
-  t<-X.I[,1]
-  x<-X.I[,2]
+  X.I <- X
+  t <- X.I[,1]
+  x <- X.I[,2]
 
   cross_df <- data.frame(cross_t = numeric(0), cross_x = numeric(0))
 
   for (i in 1:(nrow(X.I) - 1)) {
 
-    if ((x[i] < A && x[i+1] > A) || (x[i] > A && x[i+1] < A)) {
-      cross_t <- t[i] + (A - x[i]) * (t[i+1] - t[i]) / (x[i+1] - x[i])
+    if ((x[i] < A && x[i + 1] > A) || (x[i] > A && x[i + 1] < A)) {
+      cross_t <- t[i] + (A - x[i]) * (t[i + 1] - t[i]) / (x[i + 1] - x[i])
       cross_df <- rbind(cross_df, data.frame(cross_t = cross_t, cross_x = A))
     }
 
@@ -204,9 +204,9 @@ if (is.null(subI)){
     }
   }
 
-  total_t <- X.I[nrow(X.I),1]-X.I[1,1]
+  total_t <- X.I[nrow(X.I), 1] - X.I[1, 1]
 
-  crossing_rate <- nrow(cross_df)/total_t
+  crossing_rate <- nrow(cross_df) / total_t
 
   if (plot){
     p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
@@ -225,18 +225,18 @@ if (is.null(subI)){
       stop("subI must be a numeric vector")
     }
 
-    Time<-X[,1]
-    X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
+    Time <- X[,1]
+    X.I <- subset(X, Time >= subI[1] & Time <= subI[2])
 
-    t<-X.I[,1]
-    x<-X.I[,2]
+    t <- X.I[,1]
+    x <- X.I[,2]
 
     cross_df <- data.frame(cross_t = numeric(0), cross_x = numeric(0))
 
     for (i in 1:(nrow(X.I) - 1)) {
 
-      if ((x[i] < A && x[i+1] > A) || (x[i] > A && x[i+1] < A)) {
-        cross_t <- t[i] + (A - x[i]) * (t[i+1] - t[i]) / (x[i+1] - x[i])
+      if ((x[i] < A && x[i + 1] > A) || (x[i] > A && x[i + 1] < A)) {
+        cross_t <- t[i] + (A - x[i]) * (t[i + 1] - t[i]) / (x[i + 1] - x[i])
         cross_df <- rbind(cross_df, data.frame(cross_t = cross_t, cross_x = A))
       }
 
@@ -249,9 +249,9 @@ if (is.null(subI)){
       }
     }
 
-    total_t <- X.I[nrow(X.I),1]-X.I[1,1]
+    total_t <- X.I[nrow(X.I), 1] - X.I[1, 1]
 
-    crossing_rate <- nrow(cross_df)/total_t
+    crossing_rate <- nrow(cross_df) / total_t
 
     if (plot){
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
@@ -289,10 +289,10 @@ if (is.null(subI)){
 #' @importFrom rlang .data
 #' @seealso \code{\link{cross_T}}, \code{\link{cross_rate}}
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' cross_mean(TS,0.1,subI=c(0.2,0.8),plot=TRUE)
-cross_mean <- function(X,A,subI=NULL,plot=FALSE){
+#' t <- seq(0, 1, length = 100)
+#' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
+#' cross_mean(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
+cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -309,23 +309,23 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("C1","C2")
+  colnames(X) <- c("C1", "C2")
 
   if (is.null(subI)){
 
-    X.I<-X
-    t<-X.I[,1]
-    x<-X.I[,2]
+    X.I <- X
+    t <- X.I[,1]
+    x <- X.I[,2]
 
     cross_df <- data.frame(cross_t = numeric(0), cross_x = numeric(0))
     for (i in 1:(nrow(X.I) - 1)) {
 
-      if ((x[i] < A && x[i+1] > A) || (x[i] > A && x[i+1] < A)) {
+      if ((x[i] < A && x[i + 1] > A) || (x[i] > A && x[i + 1] < A)) {
         cross_t <- t[i] + (A - x[i]) * (t[i+1] - t[i]) / (x[i+1] - x[i])
         cross_df <- rbind(cross_df, data.frame(cross_t = cross_t, cross_x = A))
       }
 
-      if (x[i+1] == A && i > 1 && i + 1 <= nrow(X.I)) {
+      if (x[i + 1] == A && i > 1 && i + 1 <= nrow(X.I)) {
         if ((x[i] < A && x[i + 2] > A) || (x[i] > A && x[i + 2] < A)) {
           cross_df <- rbind(cross_df, data.frame(cross_t = t[i + 1], cross_x = A))
         }
@@ -370,17 +370,17 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
       stop("subI must be a numeric vector")
     }
 
-    Time<-X[,1]
-    X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
+    Time <- X[,1]
+    X.I <- subset(X, Time >= subI[1] & Time <= subI[2])
 
-    t<-X.I[,1]
-    x<-X.I[,2]
+    t <- X.I[,1]
+    x <- X.I[,2]
 
     cross_df <- data.frame(cross_t = numeric(0), cross_x = numeric(0))
     for (i in 1:(nrow(X.I) - 1)) {
 
-      if ((x[i] < A && x[i+1] > A) || (x[i] > A && x[i+1] < A)) {
-        cross_t <- t[i] + (A - x[i]) * (t[i+1] - t[i]) / (x[i+1] - x[i])
+      if ((x[i] < A && x[i + 1] > A) || (x[i] > A && x[i + 1] < A)) {
+        cross_t <- t[i] + (A - x[i]) * (t[i + 1] - t[i]) / (x[i + 1] - x[i])
         cross_df <- rbind(cross_df, data.frame(cross_t = cross_t, cross_x = A))
       }
 
@@ -450,10 +450,10 @@ cross_mean <- function(X,A,subI=NULL,plot=FALSE){
 #' @importFrom rlang .data
 #' @seealso \code{\link{mean_streak}}
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' long_streak(TS,direction='decreasing',subI=c(0.2,0.8),plot=TRUE)
-long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
+#' t <- seq(0, 1, length = 100)
+#' TS <- data.frame("t" = t,"X(t)" = rnorm(100))
+#' long_streak(TS, direction = 'decreasing', subI = c(0.2, 0.8), plot = TRUE)
+long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -470,15 +470,15 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("C1","C2")
+  colnames(X) <- c("C1", "C2")
 
   if (is.null(subI)){
 
-    X.I<-X
-    t<-X.I[,1]
-    x<-X.I[,2]
+    X.I <- X
+    t <- X.I[,1]
+    x <- X.I[,2]
 
-    if(direction=='increasing'){
+    if(direction == 'increasing'){
 
       streak <- list()
       start <- 1
@@ -500,7 +500,7 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
     }
 
-    if (direction=='decreasing'){
+    if (direction == 'decreasing'){
 
       streak <- list()
       start <- 1
@@ -539,11 +539,11 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
       }
 
       for (j in longest_streak) {
-        cat(sprintf("t from %f to %f (X(t) from %f to %f)\n",t[j[1]], t[j[2]],x[j[1]], x[j[2]]))}
+        cat(sprintf("t from %f to %f (X(t) from %f to %f)\n", t[j[1]], t[j[2]], x[j[1]], x[j[2]]))}
     }
 
     else{
-      message(sprintf("No %s streaks",direction))
+      message(sprintf("No %s streaks", direction))
       long_streak_df <- NULL
     }
 
@@ -562,17 +562,17 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
   }
   else{
 
-    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
+    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1, 1] & subI[2] <= X[nrow(X), 1]))){
       stop("subI must be a numeric vector")
     }
 
-    Time<-X[,1]
-    X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
+    Time <- X[,1]
+    X.I <- subset(X, Time >= subI[1] & Time <= subI[2])
 
-    t<-X.I[,1]
-    x<-X.I[,2]
+    t <- X.I[,1]
+    x <- X.I[,2]
 
-    if(direction=='increasing'){
+    if(direction == 'increasing'){
 
       streak <- list()
       start <- 1
@@ -594,7 +594,7 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
     }
 
-    if (direction=='decreasing'){
+    if (direction == 'decreasing'){
 
       streak <- list()
       start <- 1
@@ -633,18 +633,18 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
       }
 
       for (j in longest_streak) {
-        cat(sprintf("t from %f to %f (X(t) from %f to %f)\n",t[j[1]], t[j[2]],x[j[1]], x[j[2]]))}
+        cat(sprintf("t from %f to %f (X(t) from %f to %f)\n", t[j[1]], t[j[2]], x[j[1]], x[j[2]]))}
     }
 
     else{
-      message(sprintf("No %s streaks",direction))
+      message(sprintf("No %s streaks", direction))
       long_streak_df <- NULL
     }
 
     if (plot){
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
         geom_line() +
-        labs(x = "t",y = "X(t)")
+        labs(x = "t", y = "X(t)")
 
       if (!is.null(long_streak_df)) {
         p <- p + geom_line(data = long_streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)
@@ -679,11 +679,11 @@ long_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' @importFrom rlang .data
 #' @seealso \code{\link{long_streak}}
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' mean_streak(TS,direction='decreasing',subI=c(0.2,0.8),plot=TRUE)
+#' t <- seq(0, 1 ,length = 100)
+#' TS <- data.frame("t" = t,"X(t)" = rnorm(100))
+#' mean_streak(TS, direction = 'decreasing', subI = c(0.2,0.8), plot = TRUE)
 #'
-mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
+mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -700,15 +700,15 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("C1","C2")
+  colnames(X) <- c("C1", "C2")
 
   if (is.null(subI)){
 
-    X.I<-X
-    t<-X.I[,1]
-    x<-X.I[,2]
+    X.I <- X
+    t <- X.I[,1]
+    x <- X.I[,2]
 
-    if(direction=='increasing'){
+    if(direction == 'increasing'){
 
       streak <- list()
       start <- 1
@@ -730,7 +730,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
     }
 
-    if (direction=='decreasing'){
+    if (direction == 'decreasing'){
 
       streak <- list()
       start <- 1
@@ -770,7 +770,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_line(data = streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)+
-          labs(x = "t",y = "X(t)")
+          labs(x = "t", y = "X(t)")
 
         print(p)
       }
@@ -782,29 +782,29 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
       if (plot){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
-          labs(x = "t",y = "X(t)")
+          labs(x = "t", y = "X(t)")
 
         print(p)
       }
 
-      message(sprintf("No %s streaks",direction))
+      message(sprintf("No %s streaks", direction))
     }
 
   }
 
   else{
 
-    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
+    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1, 1] & subI[2] <= X[nrow(X), 1]))){
       stop("subI must be a numeric vector")
     }
 
-    Time<-X[,1]
-    X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
+    Time <- X[,1]
+    X.I <- subset(X, Time >= subI[1] & Time <= subI[2])
 
-    t<-X.I[,1]
-    x<-X.I[,2]
+    t <- X.I[,1]
+    x <- X.I[,2]
 
-    if(direction=='increasing'){
+    if(direction == 'increasing'){
 
       streak <- list()
       start <- 1
@@ -826,7 +826,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 
     }
 
-    if (direction=='decreasing'){
+    if (direction == 'decreasing'){
 
       streak <- list()
       start <- 1
@@ -866,7 +866,7 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_line(data = streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)+
-          labs(x = "t",y = "X(t)")
+          labs(x = "t", y = "X(t)")
 
         print(p)
       }
@@ -878,12 +878,12 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
       if (plot){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
-          labs(x = "t",y = "X(t)")
+          labs(x = "t", y = "X(t)")
 
         print(p)
       }
 
-      message(sprintf("No %s streaks",direction))
+      message(sprintf("No %s streaks", direction))
     }
 
 
@@ -921,14 +921,14 @@ mean_streak <- function(X,direction='increasing',subI=NULL,plot=FALSE){
 #' X <- c(74.44,74.19,74.25,73.65,74.37,74.73,75.15,75.46,75.88,76.78,
 #'             75.81,76.53,75.11,76.28,76.68,76.08,76.53,76.11,76.42,75.58,
 #'             75.44,75.46,74.98)
-#' RS_Index(X,plot=TRUE)
+#' RS_Index(X, plot = TRUE)
 #'
-RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
+RS_Index <- function(X, period = 14, plot = FALSE,overbought = 70, oversold = 30)
 {
 
   if(!is.vector(X)){
     stop("X must be a vector")
-  } else if (!(length(X)>=(period + 1))){
+  } else if (!(length(X) >= (period + 1))){
     stop("Not enough data to compute RSI for the given period")
   }
 
@@ -949,39 +949,39 @@ RS_Index <- function(X,period=14,plot=FALSE,overbought=70,oversold=30)
     stop("overbought and oversold should range from 0 to 100")
   }
 
-  X<-na.omit(X)
+  X <- na.omit(X)
   t <- 1:length(X)
 
   N <- length(X)
   diff <- diff(X)
 
-  gain <- ifelse(diff>0,diff,0)
-  loss <- ifelse(diff<0,-diff,0)
+  gain <- ifelse(diff > 0, diff, 0)
+  loss <- ifelse(diff < 0, -diff, 0)
 
-  gain_mean <- rep(NA,length(X))
-  loss_mean <- rep(NA,length(X))
+  gain_mean <- rep(NA, length(X))
+  loss_mean <- rep(NA, length(X))
 
-  gain_mean[period + 1] <- mean(gain[1:period],na.rm=TRUE)
-  loss_mean[period + 1] <- mean(loss[1:period],na.rm=TRUE)
+  gain_mean[period + 1] <- mean(gain[1:period], na.rm = TRUE)
+  loss_mean[period + 1] <- mean(loss[1:period], na.rm = TRUE)
 
   for (i in (period + 2):N) {
-    gain_mean[i] <- (gain_mean[i-1]*(period-1)+gain[i-1])/period
-    loss_mean[i] <- (loss_mean[i-1]*(period-1)+loss[i-1])/period
+    gain_mean[i] <- (gain_mean[i - 1] * (period - 1) + gain[i - 1]) / period
+    loss_mean[i] <- (loss_mean[i - 1] * (period - 1) + loss[i - 1]) / period
   }
 
-  RSI <- 100 * (gain_mean)/(gain_mean+loss_mean)
+  RSI <- 100 * (gain_mean) / (gain_mean + loss_mean)
 
-  RSI_df <- data.frame(t=rep(t,2),value=c(X, RSI),group=rep(c("X", "RSI"), each=N))
+  RSI_df <- data.frame(t = rep(t, 2), value = c(X, RSI),group = rep(c("X", "RSI"), each = N))
 
   if (plot)
   {
-    df1 <- data.frame(group="RSI",hline=c(overbought, oversold))
+    df1 <- data.frame(group = "RSI",hline = c(overbought, oversold))
 
-    p <- ggplot(RSI_df,aes(x=.data$t,y=.data$value)) +
+    p <- ggplot(RSI_df, aes(x = .data$t, y = .data$value)) +
       geom_line() +
-      geom_hline(data=df1,aes(yintercept=.data$hline),color=c("blue","blue"), linetype="dashed") +
-      facet_wrap(~group,ncol=1,scales="free_y") +
-      labs(title="X and Relative Strength Index",y="X(t)",x="t")
+      geom_hline(data = df1, aes(yintercept = .data$hline),color = c("blue","blue"), linetype = "dashed") +
+      facet_wrap(~group, ncol = 1, scales = "free_y") +
+      labs(title = "X and Relative Strength Index", y = "X(t)", x = "t")
 
     options(warn = -1)
     print(p)

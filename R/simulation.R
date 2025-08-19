@@ -44,29 +44,29 @@
 #' @examples
 #' \dontrun{
 #' #Constant Hurst function
-#' t <- seq(0,1,by=(1/2)^10)
-#' H <- function(t) {return(0.4 +0*t)}
-#' GHBMP(t,H)
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H <- function(t) {return(0.4 + 0*t)}
+#' GHBMP(t, H)
 #'
 #' #Linear Hurst function
-#' t <- seq(0,1,by=(1/2)^10)
-#' H <- function(t) {return(0.2+0.45*t)}
-#' GHBMP(t,H)
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H <- function(t) {return(0.2 + 0.45*t)}
+#' GHBMP(t, H)
 #'
 #' #Oscillating Hurst function
-#' t <- seq(0,1,by=(1/2)^10)
-#' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' GHBMP(t,H)
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
+#' GHBMP(t, H)
 #'
 #' #Piecewise Hurst function
-#' t <- seq(0,1,by=(1/2)^10)
+#' t <- seq(0, 1, by = (1/2)^10)
 #' H <- function(x) {
 #' ifelse(x >= 0 & x <= 0.8, 0.375 * x + 0.2,
 #'       ifelse(x > 0.8 & x <= 1,-1.5 * x + 1.7, NA))
 #' }
-#' GHBMP(t,H)
+#' GHBMP(t, H)
 #' }
-GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
+GHBMP<-function(t, H, J = 15, num.cores = availableCores(omit = 1))
 {
   if (!is.numeric(t)|!all(t >= 0 & t<= 1)) {
     stop("t must be a numeric sequence between 0 and 1")
@@ -92,26 +92,26 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
   options(warn = -1)
   cl <- makeClusterPSOCK(num.cores) #Creation of a cluster using PSOCK connections for parallel computing
 
-  t<-sort(t)
+  t <- sort(t)
 
   x1 <- 0:J
-  x2 <- 0:(2^(J)-1)
+  x2 <- 0:(2^(J) - 1)
 
-  Aind <- outer(x1,x2, function(x,y) as.integer(as.logical(y<2^x)))
+  Aind <- outer(x1, x2, function(x,y) as.integer(as.logical(y < 2^x)))
   Aindv <- unlist(asplit(Aind, 2))
-  ind0 <- which(Aindv >0)
+  ind0 <- which(Aindv > 0)
 
-  A1 <- outer(x1,x2, function(x,y) 2^x)
-  A2 <- outer(x1,x2, function(x,y) y)
+  A1 <- outer(x1, x2, function(x, y) 2^x)
+  A2 <- outer(x1, x2, function(x, y) y)
 
-  m <- rnorm((J+1) * 2^(J))
-  dim(m) <- c(J+1, 2^(J))
+  m <- rnorm((J + 1) * 2^(J))
+  dim(m) <- c(J + 1, 2^(J))
 
-  H1 <- outer(x1,x2, function(x,y) H(y/2^x))
+  H1 <- outer(x1, x2, function(x, y) H(y / 2^x))
 
-  A3 <- outer(x1,x2, function(x,y) 2^(-x*H(y/2^x)))
+  A3 <- outer(x1, x2, function(x, y) 2^(-x * H(y / 2^x)))
 
-  m <- ((H1+0.5)^(-1))*m*A3
+  m <- ((H1 + 0.5)^(-1)) * m * A3
 
   A1v <- unlist(asplit(A1, 2))[ind0]
   A2v <- unlist(asplit(A2, 2))[ind0]
@@ -120,18 +120,18 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 
   Xt<-function(t)
   {
-    tv <- A1v*t-A2v
-    ind1 <- which(tv >0)
-    ind2 <- which(tv >0.5)
-    ind3 <- which(tv >1)
-    return(sum(mv[ind1]*(tv[ind1]^(Hv[ind1]+0.5)))-2*sum(mv[ind2]*((tv[ind2]-0.5)^(Hv[ind2]+0.5)))+sum(mv[ind3]*((tv[ind3]-1)^(Hv[ind3]+0.5))))
+    tv <- A1v * t - A2v
+    ind1 <- which(tv > 0)
+    ind2 <- which(tv > 0.5)
+    ind3 <- which(tv > 1)
+    return(sum(mv[ind1] * (tv[ind1]^(Hv[ind1] + 0.5))) - 2 * sum(mv[ind2] * ((tv[ind2] - 0.5)^(Hv[ind2] + 0.5))) + sum(mv[ind3] * ((tv[ind3] - 1)^(Hv[ind3] + 0.5))))
   }
 
-  clusterExport(cl,c("t","A1v","A2v","Hv","mv"),envir = environment())
-  XN <- do.call(c, parLapply(cl,t,Xt))
+  clusterExport(cl, c("t", "A1v", "A2v", "Hv", "mv"),envir = environment())
+  XN <- do.call(c, parLapply(cl, t, Xt))
 
-  sim_data<-data.frame("t"=t,"X"=XN)
-  class(sim_data)<-c("mp",class(sim_data))
+  sim_data <- data.frame("t" = t, "X" = XN)
+  class(sim_data) <- c("mp", class(sim_data))
   return(sim_data)
 
   stopCluster(cl)
@@ -165,8 +165,8 @@ GHBMP<-function(t,H,J=15,num.cores=availableCores(omit = 1))
 #' @seealso \code{\link{GHBMP}}, \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #'
 #' @examples
-#' Bm(t_end=2,plot=TRUE)
-Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
+#' Bm(t_end = 2, plot = TRUE)
+Bm<-function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
 {
 
   if (!is.numeric(x_start)) {
@@ -197,14 +197,14 @@ Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  diff <- (t_end-t_start)/N
-  increments <- rnorm(N,mean=0,sd=sqrt(diff))
-  X <- c(x_start,x_start+cumsum(increments))
-  t <- seq(t_start,t_end,length.out=N+1)
-  sim_data <- data.frame(t=t,X=X)
+  diff <- (t_end - t_start) / N
+  increments <- rnorm(N, mean = 0, sd = sqrt(diff))
+  X <- c(x_start, x_start + cumsum(increments))
+  t <- seq(t_start, t_end, length.out = N + 1)
+  sim_data <- data.frame(t = t, X = X)
 
   if(plot){
-    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+    p<- ggplot(sim_data, aes(x = .data$t, y = .data$X)) +
       geom_line() +
       labs(y="X(t)",x="t") +
       ggtitle("Realisation of Brownian motion")
@@ -244,8 +244,8 @@ Bm<-function(x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE)
 #' @seealso \code{\link{FGn}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #'
 #' @examples
-#' FBm(H=0.5,plot=TRUE)
-FBm <- function(H,x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE){
+#' FBm(H = 0.5, plot = TRUE)
+FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -281,32 +281,32 @@ FBm <- function(H,x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  diff <- (t_end-t_start)/N
-  t <- seq(t_start,t_end,length.out=N+1)
+  diff <- (t_end - t_start) / N
+  t <- seq(t_start, t_end, length.out = N + 1)
 
-  c<- function(k,H){
-    0.5 * ((k+1)^(2*H)+(abs(k-1))^(2*H)-2*(k)^(2*H))
+  c<- function(k, H){
+    0.5 * ((k + 1)^(2*H) + (abs(k - 1))^(2*H) - 2*(k)^(2*H))
   }
 
-  cov_mat <- toeplitz(sapply(0:(N-1),c,H=H))
+  cov_mat <- toeplitz(sapply(0:(N-1), c, H = H))
 
   L <- t(chol(cov_mat))
 
-  z <- rnorm(N,0,1)
+  z <- rnorm(N, 0, 1)
 
   x <- L%*%z
 
   B <- cumsum(x)
-  B <- B*diff^H
+  B <- B * diff^H
   B <- x_start + B
-  B <- append(B,x_start,after=0)
+  B <- append(B, x_start, after = 0)
 
-  sim_data <- data.frame(t=t,X=B)
+  sim_data <- data.frame(t = t, X = B)
 
   if(plot){
-    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+    p<- ggplot(sim_data, aes(x = .data$t, y = .data$X)) +
       geom_line() +
-      labs(y="X(t)",x="t") +
+      labs(y = "X(t)",x = "t") +
       ggtitle("Realisation of fractional Brownian motion")
 
     print(p)
@@ -342,7 +342,7 @@ FBm <- function(H,x_start=0,t_start=0,t_end=1,N=1000,plot=FALSE){
 #' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #' @examples
 #' FGn(H=0.5,plot=TRUE)
-FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
+FGn <- function(H, t_start = 0, t_end = 1, n = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -374,26 +374,26 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  t <- seq(t_start,t_end,length.out=n)
+  t <- seq(t_start, t_end, length.out = n)
 
-  c<- function(k,H){
-    0.5 * ((k+1)^(2*H)+(abs(k-1))^(2*H)-2*(k)^(2*H))
+  c<- function(k, H){
+    0.5 * ((k + 1)^(2*H) + (abs(k - 1))^(2*H) - 2*(k)^(2*H))
   }
 
-  cov_mat <- toeplitz(sapply(0:(n-1),c,H=H))
+  cov_mat <- toeplitz(sapply(0:(n - 1), c, H = H))
 
   L <- t(chol(cov_mat))
 
-  z <- rnorm(n,0,1)
+  z <- rnorm(n, 0, 1)
 
   x <- L%*%z
 
-  sim_data <- data.frame(t=t,X=x)
+  sim_data <- data.frame(t = t, X = x)
 
   if(plot){
-    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X))+
+    p<- ggplot(sim_data,aes(x = .data$t,y = .data$X)) +
       geom_line() +
-      labs(y="X(t)",x="t") +
+      labs(y = "X(t)",x = "t") +
       ggtitle("Realisation of fractional Guassian noise")
 
     print(p)
@@ -426,7 +426,7 @@ FGn <- function(H,t_start=0,t_end=1,n=1000,plot=FALSE){
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' Bbridge(x_end=2,t_end=1,plot=TRUE)
-Bbridge <- function(x_end,t_end,N=1000,plot=FALSE){
+Bbridge <- function(x_end, t_end, N = 1000, plot = FALSE){
 
   if (!is.numeric(x_end)) {
     stop("x_end must be numeric")
@@ -452,14 +452,14 @@ Bbridge <- function(x_end,t_end,N=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  Bm_sim <- Bm(x_start=0,t_start=0,t_end=t_end,N=N)
-  X <- Bm_sim[,2]-((Bm_sim[,1]/t_end)*(Bm_sim[N+1,2]-x_end))
-  sim_data <- data.frame(t=Bm_sim[,1],X=X)
+  Bm_sim <- Bm(x_start = 0, t_start = 0, t_end = t_end, N = N)
+  X <- Bm_sim[,2] - ((Bm_sim[,1] / t_end) * (Bm_sim[N + 1, 2] - x_end))
+  sim_data <- data.frame(t = Bm_sim[,1], X = X)
 
   if(plot){
-    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+    p<- ggplot(sim_data, aes(x = .data$t, y = .data$X)) +
       geom_line() +
-      labs(y="X(t)",x="t") +
+      labs(y = "X(t)",x = "t") +
       ggtitle("Realisation of Brownian bridge")
 
     print(p)
@@ -495,8 +495,8 @@ Bbridge <- function(x_end,t_end,N=1000,plot=FALSE){
 #' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
-#' FBbridge(H=0.5,x_end=2,t_end=1,plot=TRUE)
-FBbridge <- function(H,x_end,t_end,N=1000,plot=FALSE){
+#' FBbridge(H = 0.5, x_end = 2, t_end = 1,plot = TRUE)
+FBbridge <- function(H, x_end, t_end, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -526,14 +526,14 @@ FBbridge <- function(H,x_end,t_end,N=1000,plot=FALSE){
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  FBm_sim <- FBm(H=H,x_start=0,t_start=0,t_end=t_end,N=N)
-  X <- FBm_sim[,2]-(0.5*(FBm_sim[N+1,2]-x_end)*(1+(FBm_sim[,1]/t_end)^(2*H)-(1-(FBm_sim[,1]/t_end))^(2*H)))
-  sim_data <- data.frame(t=FBm_sim[,1],X=X)
+  FBm_sim <- FBm(H = H, x_start = 0, t_start = 0, t_end = t_end, N = N)
+  X <- FBm_sim[,2] - (0.5 * (FBm_sim[N + 1, 2] - x_end) * (1 + (FBm_sim[,1] / t_end)^(2*H) - (1 - (FBm_sim[,1] / t_end))^(2*H)))
+  sim_data <- data.frame(t = FBm_sim[,1], X = X)
 
   if(plot){
-    p<- ggplot(sim_data,aes(x=.data$t,y=.data$X)) +
+    p<- ggplot(sim_data, aes(x = .data$t, y = .data$X)) +
       geom_line() +
-      labs(y="X(t)",x="t") +
+      labs(y = "X(t)", x = "t") +
       ggtitle("Realisation of fractional Brownian bridge")
 
     print(p)

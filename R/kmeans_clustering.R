@@ -44,23 +44,23 @@
 #' @examples
 #' \dontrun{
 #' #Simulation of multifractional processes
-#' t <- seq(0,1,by=(1/2)^10)
-#' H1 <- function(t) {return(0.1+0*t)}
-#' H2 <- function(t) {return(0.2+0.45*t)}
-#' H3 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' X.list.1 <- replicate(3, GHBMP(t,H1),simplify = FALSE)
-#' X.list.2 <- replicate(3, GHBMP(t,H2),simplify = FALSE)
-#' X.list.3 <- replicate(3, GHBMP(t,H3),simplify = FALSE)
-#' X.list <- c(X.list.1,X.list.2,X.list.3)
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H1 <- function(t) {return(0.1 + 0*t)}
+#' H2 <- function(t) {return(0.2 + 0.45*t)}
+#' H3 <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
+#' X.list.1 <- replicate(3, GHBMP(t, H1),simplify = FALSE)
+#' X.list.2 <- replicate(3, GHBMP(t, H2),simplify = FALSE)
+#' X.list.3 <- replicate(3, GHBMP(t, H3),simplify = FALSE)
+#' X.list <- c(X.list.1, X.list.2, X.list.3)
 #'
-#' #K-means clustering based on k=3 clusters
-#' KC <- kmeans_hurst(X.list,k=3)
+#' #K-means clustering based on k = 3 clusters
+#' KC <- kmeans_hurst(X.list, k = 3)
 #' print(KC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(KC,type ="ec")
+#' plot(KC, type = "ec")
 #' }
-kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
+kmeans_hurst <- function(X.t, k, ..., N = 100, Q = 2, L = 2)
 {
   if (!is.list(X.t)) {
     stop("X.t must be a list of numeric data frames")
@@ -91,22 +91,22 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
   H<-list()
 
   for (i in 1:length(X.t)) {
-    H[[i]] <- Hurst(X.t[[i]],N,Q,L)
+    H[[i]] <- Hurst(X.t[[i]], N, Q, L)
   }
 
   loess.fn<-function(df){
-    sm<-loess(df[,2]~df[,1],data=df,span=0.3)
+    sm<-loess(df[,2] ~ df[,1], data = df, span = 0.3)
     return(sm$fitted)
   }
 
-  Smooth_df0 <- data.frame(rbind(t(sapply(H,loess.fn))))
+  Smooth_df0 <- data.frame(rbind(t(sapply(H, loess.fn))))
   Smooth_df <- as.data.frame(lapply(Smooth_df0, function(x) pmax(pmin(x, 1), 0)))
 
-  km<-kmeans(Smooth_df,k,...)
-  clusters<-km$cluster
-  n_cl<-length(unique(clusters))
+  km <- kmeans(Smooth_df, k, ...)
+  clusters <- km$cluster
+  n_cl <- length(unique(clusters))
 
-  DF<-data.frame(Item=row.names.data.frame(Smooth_df),Cluster=factor(clusters))
+  DF <- data.frame(Item = row.names.data.frame(Smooth_df), Cluster = factor(clusters))
   DF <- DF[order(clusters), ]
   rownames(DF)<-NULL
 
@@ -117,17 +117,17 @@ kmeans_hurst<- function(X.t,k,...,N=100,Q=2,L=2)
   df2<-list()
 
   for(i in 1:n_cl){
-    cl_df[[i]]<-Smooth_df[clusters == i,]
-    center[[i]]<-colMeans(cl_df[[i]])
-    df1[[i]]<-rbind(cl_df[[i]],center[[i]])
-    dist_df[[i]]<-as.matrix(dist(df1[[i]]))
-    df2[[i]]<-as.numeric(dist_df[[i]][1:(nrow(cl_df[[i]])), nrow(df1[[i]])])
+    cl_df[[i]] <- Smooth_df[clusters == i,]
+    center[[i]] <- colMeans(cl_df[[i]])
+    df1[[i]] <- rbind(cl_df[[i]], center[[i]])
+    dist_df[[i]] <- as.matrix(dist(df1[[i]]))
+    df2[[i]] <- as.numeric(dist_df[[i]][1:(nrow(cl_df[[i]])), nrow(df1[[i]])])
   }
 
-  clust_DF<-data.frame(DF,Distance_from_center=unlist(df2))
-  structure(list(h=DF,cluster_info=clust_DF, cluster=clusters, cluster_sizes=as.vector(table(clusters)),
-                 centers=as.data.frame(do.call(rbind,center)),smoothed_Hurst_estimates=Smooth_df,
-                 raw_Hurst_estimates=H,call=match.call()),class = "k_hurst")
+  clust_DF <- data.frame(DF, Distance_from_center = unlist(df2))
+  structure(list(h = DF, cluster_info = clust_DF, cluster = clusters, cluster_sizes = as.vector(table(clusters)),
+                 centers=as.data.frame(do.call(rbind,center)), smoothed_Hurst_estimates = Smooth_df,
+                 raw_Hurst_estimates = H, call = match.call()), class = "k_hurst")
 
 
 }
@@ -159,21 +159,21 @@ print.k_hurst <- function(x, ...)
 #' @importFrom rlang .data
 #' @export
 #'
-autoplot.k_hurst<-function(object,...,type="estimates")
+autoplot.k_hurst <- function(object, ..., type = "estimates")
 {
-  smth_h<-object$smoothed_Hurst_estimates
-  raw_h<-object$raw_Hurst_estimates
-  cluster<-object$cluster
-  cent<-object$centers
+  smth_h <- object$smoothed_Hurst_estimates
+  raw_h <- object$raw_Hurst_estimates
+  cluster <- object$cluster
+  cent <- object$centers
 
-  DF<-data.frame(
+  DF <- data.frame(
     clus = rep(cluster, each = ncol(smth_h)),
     item = rep(1:nrow(smth_h), each = ncol(smth_h)),
     t = unlist(lapply(raw_h, function(df) df[[1]])),
     smth_est = as.vector(t(smth_h))
   )
 
-  DF1<-aggregate(smth_est~clus+t,data=DF,FUN=mean)
+  DF1 <- aggregate(smth_est ~ clus+t, data = DF, FUN = mean)
 
   DF1["item"] <- DF1["clus"]
 
@@ -182,18 +182,16 @@ autoplot.k_hurst<-function(object,...,type="estimates")
     p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
       facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "black") +
-      labs(title = "Smoothed Hurst estimates in each cluster",
-           x = "Time", y = "Smoothed Hurst estimates")
+      labs(title = "Smoothed Hurst estimates in each cluster", x = "Time", y = "Smoothed Hurst estimates")
 
 
   }
   else if (type == "centers")
   {
-    p<-ggplot(DF1,aes(.data$t,.data$smth_est)) +
+    p<-ggplot(DF1, aes(.data$t, .data$smth_est)) +
       facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "red") +
-      labs(title = "Cluster centers",
-           x = "Time", y = "Smoothed Hurst estimates")
+      labs(title = "Cluster centers", x = "Time", y = "Smoothed Hurst estimates")
 
 
   }
@@ -203,8 +201,7 @@ autoplot.k_hurst<-function(object,...,type="estimates")
       geom_line(color = "black") +
       geom_line(data = DF1, aes(.data$t, .data$smth_est), color = "red") +
       facet_wrap(~clus, ncol = 2, scales = "free_x") +
-      labs(title = "Smoothed Hurst estimates in each cluster and cluster center",
-           x = "Time", y = "Smoothed Hurst estimates")
+      labs(title = "Smoothed Hurst estimates in each cluster and cluster center", x = "Time", y = "Smoothed Hurst estimates")
 
 
   }
@@ -241,22 +238,22 @@ autoplot.k_hurst<-function(object,...,type="estimates")
 #' @examples
 #' \dontrun{
 #' #Simulation of multifractional processes
-#' t <- seq(0,1,by=(1/2)^10)
-#' H1 <- function(t) {return(0.1+0*t)}
-#' H2 <- function(t) {return(0.2+0.45*t)}
-#' H3 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-#' X.list.1 <- replicate(3, GHBMP(t,H1),simplify = FALSE)
-#' X.list.2 <- replicate(3, GHBMP(t,H2),simplify = FALSE)
-#' X.list.3 <- replicate(3, GHBMP(t,H3),simplify = FALSE)
-#' X.list <- c(X.list.1,X.list.2,X.list.3)
+#' t <- seq(0, 1, by = (1/2)^10)
+#' H1 <- function(t) {return(0.1 + 0*t)}
+#' H2 <- function(t) {return(0.2 + 0.45*t)}
+#' H3 <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
+#' X.list.1 <- replicate(3, GHBMP(t, H1), simplify = FALSE)
+#' X.list.2 <- replicate(3, GHBMP(t, H2), simplify = FALSE)
+#' X.list.3 <- replicate(3, GHBMP(t, H3), simplify = FALSE)
+#' X.list <- c(X.list.1, X.list.2, X.list.3)
 #'
 #' #K-means clustering based on k=3 clusters
-#' KC <- kmeans_hurst(X.list,k=3)
+#' KC <- kmeans_hurst(X.list, k = 3)
 #' print(KC)
 #'
 #' #Plot of smoothed Hurst functions in each cluster with cluster centers
-#' plot(KC,type ="ec")
+#' plot(KC, type = "ec")
 #' }
-plot.k_hurst<-function(x,type="estimates",...) {
-  print(autoplot(x,type=type))
+plot.k_hurst <- function(x, type = "estimates", ...) {
+  print(autoplot(x, type = type))
 }

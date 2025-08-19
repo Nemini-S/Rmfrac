@@ -24,16 +24,16 @@
 #' @examples
 #' \dontrun{
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
-#' t <- seq(0,1,by=(1/2)^8)
-#' H <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
+#' t <- seq(0, 1, by = (1/2)^8)
+#' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
 #' #Only 5 realisations of GHBMP are used in this example to reduce the computational time.
-#' X.t <- replicate(5, GHBMP(t,H), simplify = FALSE)
+#' X.t <- replicate(5, GHBMP(t, H), simplify = FALSE)
 #' X <- do.call(rbind, lapply(X.t, function(df) df[, 2]))
-#' Data <- data.frame(t,t(X))
-#' cov.mat <- est_cov(Data,theta=0.2,plot=TRUE)
+#' Data <- data.frame(t, t(X))
+#' cov.mat <- est_cov(Data, theta = 0.2, plot = TRUE)
 #' cov.mat
 #' }
-est_cov<-function(X,theta=0.1,plot=FALSE)
+est_cov<-function(X, theta = 0.1, plot = FALSE)
 {
 
   if (!is.data.frame(X) | !(all(sapply(X, is.numeric)))) {
@@ -60,7 +60,7 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
 
   X_mean <- colMeans(X.data)
 
-  C <- matrix(0,m,m)
+  C <- matrix(0, m, m)
 
   for (i in 1:m) {
     for (j in 1:i) {  # Compute only for j ≤ i (lower)
@@ -73,20 +73,15 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
   if(!is.null(theta))
   {
     D <- mean(diff(t))
-    Smooth_data <- image.smooth(C,theta=theta,dx=D,dy=D)
+    Smooth_data <- image.smooth(C, theta = theta, dx = D,dy = D)
     C <- Smooth_data$z
   }
 
   if(plot)
   {
-    cov.fig <- plot_ly(
-      x = ~t, y = ~t, z = ~C,
-      type = 'surface',
-      colorbar = list(title = "Covariance"))
+    cov.fig <- plot_ly(x = ~t, y = ~t, z = ~C, type = 'surface', colorbar = list(title = "Covariance"))
 
-    cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"),
-                                             yaxis = list(title = "s"),
-                                             zaxis = list(title = "Covariance")))
+    cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"), yaxis = list(title = "s"), zaxis = list(title = "Covariance")))
 
     # cov.fig <- persp(t, t, C,
     #       theta = 30, phi = 35,col = "lightblue", border = "black",
@@ -134,16 +129,16 @@ est_cov<-function(X,theta=0.1,plot=FALSE)
 #'
 #' @examples
 #' \dontrun{
-#' t <- seq(0,1,by=0.01)
-#' H <- function(t) {return(0.5-0.4* sin(6*3.14*t))}
+#' t <- seq(0, 1, by = 0.01)
+#' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
 #'
 #' #Smoothed covariance function
-#' cov_GHBMP(t,H,theta=0.1,plot=TRUE)
+#' cov_GHBMP(t, H, theta = 0.1, plot = TRUE)
 #'
 #' #Non-smoothed covariance function
-#' cov_GHBMP(t,H,plot=TRUE)
+#' cov_GHBMP(t, H, plot = TRUE)
 #' }
-cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit = 1))
+cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = FALSE, num.cores = availableCores(omit = 1))
 {
 
   if (!is.numeric(t)|!all(t >= 0 & t<= 1)) {
@@ -171,21 +166,21 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
     stop("num.cores must be a positive integer")
   }
 
-  h<-function(x,lambda)
+  h<-function(x, lambda)
   {
-    ((lambda+0.5)^(-1))*((x*(x>0))^(lambda+0.5)-(2*(((x-0.5)*((x-0.5)>0))^(lambda+0.5)))+(((x-1)*((x-1)>0))^(lambda+0.5)))
+    ((lambda + 0.5)^(-1)) * ((x * (x>0))^(lambda + 0.5)-(2 * (((x-0.5) * ((x - 0.5) > 0))^(lambda + 0.5))) + (((x - 1) * ((x - 1) > 0)) ^ (lambda + 0.5)))
   }
 
-  int<-function(j,k,t,H1){
+  int<-function(j, k, t, H1){
     H11 <- H1(t)
-    return((2^(-j*H11))*h(((2^j)*t)-k,H11))
+    return((2^(-j * H11)) * h(((2^j) * t) - k, H11))
   }
 
   x1 <- 0:J
-  x2 <- 0:(2^(J)-1)
+  x2 <- 0:(2^(J) - 1)
 
   X<-function(t,s){
-    A <- outer(x1,x2, function(j,k){int(j,k,t,H)*int(j,k,s,H)})
+    A <- outer(x1, x2, function(j, k){int(j, k, t, H)*int(j, k, s, H)})
     return(sum(A))
   }
 
@@ -193,8 +188,7 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
   registerDoParallel(cl)
 
   i <- NULL
-  cov.mat <- foreach(i = 1:length(t), .combine = rbind) %dopar% {
-    sapply(t, function(j) X(t[i], j))}
+  cov.mat <- foreach(i = 1:length(t), .combine = rbind) %dopar% {sapply(t, function(j) X(t[i], j))}
 
   stopCluster(cl)
 
@@ -209,7 +203,7 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
     }
 
     D <- mean(diff(t))
-    Smooth_data <- image.smooth(cov.mat,theta=theta,dx=D,dy=D)
+    Smooth_data <- image.smooth(cov.mat, theta = theta, dx = D,dy = D)
     cov.mat <- Smooth_data$z
   }
 
@@ -220,14 +214,9 @@ cov_GHBMP<-function(t,H,J=8,theta=NULL,plot=FALSE,num.cores=availableCores(omit 
     #       xlab = "h1", ylab = "h2", zlab = "Covariance",
     #       main = "3D Covariance Function")
 
-    cov.fig <- plot_ly(
-      x = ~t, y = ~t, z = ~cov.mat,
-      type = 'surface',
-      colorbar = list(title = "Covariance"))
+    cov.fig <- plot_ly(x = ~t, y = ~t, z = ~cov.mat, type = 'surface', colorbar = list(title = "Covariance"))
 
-    cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"),
-                                             yaxis = list(title = "s"),
-                                             zaxis = list(title = "Covariance")))
+    cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"), yaxis = list(title = "s"), zaxis = list(title = "Covariance")))
     print(cov.fig)
   }
 

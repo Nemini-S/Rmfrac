@@ -21,10 +21,10 @@
 #' @importFrom rlang .data
 #' @seealso \code{\link{exc_Area}}
 #' @examples
-#' t <- seq(0,1,length=1000)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(1000))
-#' sojourn(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
-sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
+#' t <- seq(0, 1, length = 1000)
+#' TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
+#' sojourn(TS, 0.8, level='lower',subI = c(0.5,0.8), plot = TRUE)
+sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -51,47 +51,47 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]),]
-  colnames(X) <- c("x","y")
+  colnames(X) <- c("x", "y")
 
   if (is.null(subI)){
 
-    ag_df <- aggregate(X[,2]~X[,1],FUN=mean)
-    t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
-    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
-    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+    ag_df <- aggregate(X[,2] ~ X[,1], FUN = mean)
+    t <- seq(ag_df[1, 1], ag_df[nrow(ag_df), 1], length.out = N + 1)
+    int_X <- approx(x = ag_df[,1], y=ag_df[,2], xout = t)$y
+    diff<-((ag_df[nrow(ag_df), 1] - ag_df[1, 1]) / N)
 
-    if(level=='greater'){
+    if(level == 'greater'){
 
       S <- 0
-      seg <- data.frame(T_start=rep(NA_real_,N), T_end=rep(NA_real_,N))
+      seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
 
-      for(i in 1:(N)){
+      for(i in 1:N){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1>=A) && (x2>=A)){
+        if((x1 >= A) && (x2 >= A)){
 
           S = S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
-        } else if ((x1>=A) && (x2<A)){
+        } else if ((x1 >= A) && (x2 < A)){
 
-          S = S + (diff * (x1-A)/(x1-x2))
+          S = S + (diff * (x1 - A) / (x1 - x2))
 
           seg$T_start[i] <- t1
-          seg$T_end[i] <- t1 + (diff * (x1-A)/(x1-x2))
+          seg$T_end[i] <- t1 + (diff * (x1 - A) / (x1 - x2))
 
-        } else if ((x1<A) && (x2>=A)){
+        } else if ((x1 < A) && (x2 >= A)){
 
-          S = S + (diff * (A-x2)/(x1-x2))
+          S = S + (diff * (A - x2) / (x1 - x2))
 
-          seg$T_start[i] <- t2 - (diff * (A-x2)/(x1-x2))
+          seg$T_start[i] <- t2 - (diff * (A - x2) / (x1 - x2))
           seg$T_end[i] <- t2
 
         } else {
@@ -105,38 +105,38 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
     }
 
-    if(level=='lower'){
+    if(level == 'lower'){
 
       S <- 0
       seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
 
-      for(i in 1:(N)){
+      for(i in 1:N){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1<=A) && (x2<=A)){
+        if((x1 <= A) && (x2 <= A)){
 
           S = S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
-        } else if ((x1<=A) && (x2>A)){
+        } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A-x1)/(x2-x1))
+          S = S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
-          seg$T_end[i] <- t1 + (diff * (A-x1)/(x2-x1))
+          seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
-        } else if ((x1>A) && (x2<=A)){
+        } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2-A)/(x2-x1))
+          S = S + (diff * (x2 - A) / (x2 - x1))
 
-          seg$T_start[i] <- t2 - (diff * (x2-A)/(x2-x1))
+          seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
@@ -156,14 +156,14 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
       p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_hline(yintercept = A,color="blue",linetype = "dashed")+
-        labs(y="X(t)",x="t")+
-        ggtitle(sprintf("Excursion region where the realisation is over the level %s", A))+
+        geom_hline(yintercept = A, color="blue", linetype = "dashed") +
+        labs(y = "X(t)", x = "t") +
+        ggtitle(sprintf("Excursion region where the realisation is over the level %s", A)) +
         theme(plot.title = element_text(size = 10))
 
-      if (nrow(seg)>0){
+      if (nrow(seg) > 0){
 
-        p <- p + geom_segment(data = seg, aes(x = .data$T_start, xend = .data$T_end, y = 0, yend = 0) ,color="red")
+        p <- p + geom_segment(data = seg, aes(x = .data$T_start, xend = .data$T_end, y = 0, yend = 0), color="red")
       }
 
       print(p)
@@ -174,50 +174,50 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
   }
   else{
 
-    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
+    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1, 1] & subI[2] <= X[nrow(X), 1]))){
       stop("subI must be a numeric vector")
     }
 
     Time<-X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
 
-    ag_df <- aggregate(X.I[,2]~X.I[,1],FUN=mean)
-    t <- seq(ag_df[1,1], ag_df[nrow(X.I),1], length.out = N+1)
-    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
-    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+    ag_df <- aggregate(X.I[,2]~X.I[,1], FUN = mean)
+    t <- seq(ag_df[1, 1], ag_df[nrow(X.I), 1], length.out = N + 1)
+    int_X <- approx(x = ag_df[,1], y=ag_df[,2], xout=t)$y
+    diff<-((ag_df[nrow(ag_df), 1] - ag_df[1, 1]) / N)
 
-    if(level=='greater'){
+    if(level == 'greater'){
 
       S <- 0
       seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
 
-      for(i in 1:(N)){
+      for(i in 1:N){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1>=A) && (x2>=A)){
+        if((x1 >= A) && (x2 >= A)){
 
           S = S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
-        } else if ((x1>=A) && (x2<A)){
+        } else if ((x1 >= A) && (x2 < A)){
 
-          S = S + (diff * (x1-A)/(x1-x2))
+          S = S + (diff * (x1 - A) / (x1 - x2))
 
           seg$T_start[i] <- t1
-          seg$T_end[i] <- t1 + (diff * (x1-A)/(x1-x2))
+          seg$T_end[i] <- t1 + (diff * (x1 - A) / (x1 - x2))
 
-        } else if ((x1<A) && (x2>=A)){
+        } else if ((x1 < A) && (x2 >= A)){
 
-          S = S + (diff * (A-x2)/(x1-x2))
+          S = S + (diff * (A - x2) / (x1 - x2))
 
-          seg$T_start[i] <- t2 - (diff * (A-x2)/(x1-x2))
+          seg$T_start[i] <- t2 - (diff * (A - x2) / (x1 - x2))
           seg$T_end[i] <- t2
 
         } else {
@@ -230,38 +230,38 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
       }}
 
-    if(level=='lower'){
+    if(level == 'lower'){
 
       S <- 0
       seg <- data.frame(T_start = rep(NA_real_, N), T_end = rep(NA_real_, N))
 
-      for(i in 1:(N)){
+      for(i in 1:N){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1<=A) && (x2<=A)){
+        if((x1 <= A) && (x2 <= A)){
 
           S = S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
-        } else if ((x1<=A) && (x2>A)){
+        } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A-x1)/(x2-x1))
+          S = S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
-          seg$T_end[i] <- t1 + (diff * (A-x1)/(x2-x1))
+          seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
-        } else if ((x1>A) && (x2<=A)){
+        } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2-A)/(x2-x1))
+          S = S + (diff * (x2 - A) / (x2 - x1))
 
-          seg$T_start[i] <- t2 - (diff * (x2-A)/(x2-x1))
+          seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
@@ -281,14 +281,14 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
       p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_hline(yintercept=A,color="blue",linetype = "dashed")+
-        labs(y="X(t)",x="t")+
-        ggtitle(sprintf("Excursion region where the realisation is over the level %s", A))+
+        geom_hline(yintercept = A, color="blue", linetype = "dashed") +
+        labs(y="X(t)", x="t") +
+        ggtitle(sprintf("Excursion region where the realisation is over the level %s", A)) +
         theme(plot.title = element_text(size = 10))
 
-      if (nrow(seg)>0){
+      if (nrow(seg) > 0){
 
-        p <- p + geom_segment(data = seg, aes(x = .data$T_start, xend = .data$T_end, y = 0, yend = 0) ,color="red")
+        p <- p + geom_segment(data = seg, aes(x = .data$T_start, xend = .data$T_end, y = 0, yend = 0), color="red")
       }
 
       print(p)
@@ -329,11 +329,11 @@ sojourn<-function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' @seealso \code{\link{sojourn}}
 #'
 #' @examples
-#' t <- seq(0,1,length=1000)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(1000))
-#' exc_Area(TS,0.8,level='lower',subI=c(0.5,0.8),plot=TRUE)
+#' t <- seq(0, 1, length =1 000)
+#' TS <- data.frame("t" = t, "X(t)" = rnorm(1000))
+#' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5,0.8), plot = TRUE)
 #'
-exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
+exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -360,60 +360,58 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]),]
-  colnames(X) <- c("x","y")
+  colnames(X) <- c("x", "y")
 
   if (is.null(subI)){
 
-    ag_df <- aggregate(X[,2]~X[,1],FUN=mean)
-    t <- seq(ag_df[1,1],ag_df[nrow(ag_df),1],length.out=N+1)
-    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
-    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+    ag_df <- aggregate(X[,2] ~ X[,1], FUN = mean)
+    t <- seq(ag_df[1, 1], ag_df[nrow(ag_df), 1], length.out = N + 1)
+    int_X <- approx(x = ag_df[,1],y = ag_df[,2], xout = t)$y
+    diff<-((ag_df[nrow(ag_df), 1] - ag_df[1, 1]) / N)
 
 
-    if(level=='greater'){
+    if(level == 'greater'){
 
       Area <- 0
-      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      DF_Area <- data.frame(t = numeric(0),X_t = numeric(0))
       G <- 1
       polygon <- list()
 
-      for(i in 1:(N)){
+      for(i in 1:N){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1>=A) && (x2>=A)){
+        if((x1 >= A) && (x2 >= A)){
 
-          Area = Area + (diff * (((x1-A)+(x2-A))/2))
+          Area = Area + (diff * (((x1 - A) + (x2 - A)) / 2))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
-          if (i==N) {
-            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+          DF_Area <- rbind(DF_Area,data.frame(t = t1, X_t = x1))
+          if (i == N) {
+            DF_Area <- rbind(DF_Area, data.frame(t = t2,X_t = x2))}
 
-        } else if ((x1>=A) && (x2<A)){
+        } else if ((x1 >= A) && (x2 < A)){
 
-          Area = Area + ((diff * (x1-A)/(x1-x2)) * ((x1-A)/2))
+          Area = Area + ((diff * (x1 - A)/(x1 - x2)) * ((x1 - A) / 2))
 
-          x_cross <- t1+(diff * (x1-A)/(x1-x2))
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
-                           data.frame(t=x_cross,X_t=A),
-                           data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (x1 - A) / (x1 - x2))
+          DF_Area <- rbind(DF_Area,data.frame(t = t1, X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
           DF_Area$G <- G
           polygon[[G]] <- DF_Area
           G <- G + 1
-          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+          DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
 
-        } else if ((x1<A) && (x2>=A)){
+        } else if ((x1 < A) && (x2 >= A)){
 
-          Area = Area + ((diff * (A-x2)/(x1-x2)) * ((x2-A)/2))
+          Area = Area + ((diff * (A - x2) / (x1 - x2)) * ((x2 - A) / 2))
 
-          x_cross <- t1+(diff*(A-x2)/(x1-x2))
-          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (A - x2) / (x1 - x2))
+          DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
@@ -424,8 +422,8 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
-        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area <- rbind(DF_Area, data.frame(t = ag_df[nrow(ag_df), 1],X_t = ag_df[nrow(ag_df), 2]))
+        DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
       }
@@ -433,50 +431,48 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       DF_Area <- do.call(rbind, polygon)
     }
 
-    if(level=='lower'){
+    if(level == 'lower'){
 
       Area <- 0
-      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
       G <- 1
       polygon <- list()
 
       for(i in 1:(N)){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1<=A) && (x2<=A)){
+        if((x1 <= A) && (x2 <= A)){
 
-          Area = Area + (diff * (((A-x1)+(A-x2))/2))
+          Area = Area + (diff * (((A - x1) + (A - x2)) / 2))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
-          if (i==N) {
-            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+          DF_Area <- rbind(DF_Area, data.frame(t = t1, X_t = x1))
+          if (i == N) {
+            DF_Area <- rbind(DF_Area, data.frame(t = t2, X_t = x2))}
 
-        } else if ((x1<=A) && (x2>A)){
+        } else if ((x1 <= A) && (x2 > A)){
 
-          Area = Area + ((diff * (A-x1)/(x2-x1)) * ((A-x1)/2))
+          Area = Area + ((diff * (A - x1)/(x2 - x1)) * ((A - x1) / 2))
 
-          x_cross <- t1+(diff * (A-x1)/(x2-x1))
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
-                           data.frame(t=x_cross,X_t=A),
-                           data.frame(t=x_cross,X_t=A))
+          x_cross <- t1+ (diff * (A - x1)/(x2 - x1))
+          DF_Area <- rbind(DF_Area, data.frame(t = t1,X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
           DF_Area$G <- G
           polygon[[G]] <- DF_Area
           G <- G + 1
-          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+          DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
 
-        } else if ((x1>A) && (x2<=A)){
+        } else if ((x1 > A) && (x2 <= A)){
 
-          Area = Area + ((diff * (x2-A)/(x2-x1)) * ((A-x2)/2))
+          Area = Area + ((diff * (x2 - A) / (x2 - x1)) * ((A - x2) / 2))
 
-          x_cross <- t1+(diff * (x2-A)/(x2-x1))
-          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (x2 - A) / (x2 - x1))
+          DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
@@ -486,8 +482,8 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
-        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area <- rbind(DF_Area, data.frame(t = ag_df[nrow(ag_df), 1],X_t = ag_df[nrow(ag_df), 2]))
+        DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
       }
@@ -501,15 +497,15 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
     if (plot){
       p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_hline(yintercept = A,color="blue",linetype = "dashed")+
-        labs(y="X(t)",x="t")+
-        ggtitle(sprintf("Excursion area of the realisation over the level %s", A))+
+        geom_hline(yintercept = A,color="blue",linetype = "dashed") +
+        labs(y = "X(t)", x = "t") +
+        ggtitle(sprintf("Excursion area of the realisation over the level %s", A)) +
         theme(plot.title = element_text(size = 10))
 
 
       if (!is.null(DF_Area) && nrow(DF_Area)>0){
 
-        p <- p + geom_polygon(data=DF_Area,aes(x=.data$t,y=.data$X_t,group=.data$G),fill="lightblue")
+        p <- p + geom_polygon(data=DF_Area, aes(x = .data$t,y = .data$X_t, group = .data$G), fill = "lightblue")
       }
 
       print(p)
@@ -520,61 +516,59 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
   }
   else{
 
-    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
+    if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X), 1]))){
       stop("subI must be a numeric vector")
     }
 
     Time<-X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
 
-    ag_df <- aggregate(X.I[,2]~X.I[,1],FUN=mean)
-    t <- seq(ag_df[1,1], ag_df[nrow(X.I),1], length.out = N+1)
-    int_X <- approx(x=ag_df[,1],y=ag_df[,2],xout=t)$y
-    diff<-((ag_df[nrow(ag_df),1]-ag_df[1,1])/N)
+    ag_df <- aggregate(X.I[,2] ~ X.I[,1], FUN = mean)
+    t <- seq(ag_df[1,1], ag_df[nrow(X.I), 1], length.out = N + 1)
+    int_X <- approx(x=ag_df[,1], y = ag_df[,2], xout = t)$y
+    diff<-((ag_df[nrow(ag_df), 1] - ag_df[1, 1]) / N)
 
-    if(level=='greater'){
+    if(level == 'greater'){
       Area <- 0
-      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
       G <- 1
       polygon <- list()
 
       for(i in 1:(N)){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1>=A) && (x2>=A)){
+        if((x1 >= A) && (x2 >= A)){
 
-          Area = Area + (diff * (((x1-A)+(x2-A))/2))
+          Area = Area + (diff * (((x1 - A) + (x2 - A)) / 2))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
-          if (i==N) {
-            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+          DF_Area <- rbind(DF_Area, data.frame(t = t1, X_t = x1))
+          if (i == N) {
+            DF_Area <- rbind(DF_Area, data.frame(t = t2, X_t = x2))}
 
-        } else if ((x1>=A) && (x2<A)){
+        } else if ((x1 >= A) && (x2 < A)){
 
-          Area = Area + ((diff * (x1-A)/(x1-x2)) * ((x1-A)/2))
+          Area = Area + ((diff * (x1 - A) / (x1 - x2)) * ((x1 - A) / 2))
 
-          x_cross <- t1+(diff * (x1-A)/(x1-x2))
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
-                           data.frame(t=x_cross,X_t=A),
-                           data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (x1 - A) / (x1 - x2))
+          DF_Area <- rbind(DF_Area,data.frame(t = t1, X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
           DF_Area$G <- G
           polygon[[G]] <- DF_Area
           G <- G + 1
-          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+          DF_Area <- data.frame(t = numeric(0),X_t = numeric(0))
 
-        } else if ((x1<A) && (x2>=A)){
+        } else if ((x1 < A) && (x2 >= A)){
 
-          Area = Area + ((diff * (A-x2)/(x1-x2)) * ((x2-A)/2))
+          Area = Area + ((diff * (A - x2) / (x1 - x2)) * ((x2 - A) / 2))
 
-          x_cross <- t1+(diff*(A-x2)/(x1-x2))
-          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (A - x2) / (x1 - x2))
+          DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
@@ -585,8 +579,8 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && (nrow(DF_Area) > 0)) {
-        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
-        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area <- rbind(DF_Area, data.frame(t = ag_df[nrow(ag_df), 1], X_t = ag_df[nrow(ag_df), 2]))
+        DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
       }
@@ -594,50 +588,48 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       DF_Area <- do.call(rbind, polygon)
     }
 
-    if(level=='lower'){
+    if(level == 'lower'){
 
       Area <- 0
-      DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+      DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
       G <- 1
       polygon <- list()
 
       for(i in 1:(N)){
 
         x1 <- int_X[i]
-        x2 <- int_X[i+1]
+        x2 <- int_X[i + 1]
 
         t1 <- t[i]
-        t2 <- t[i+1]
+        t2 <- t[i + 1]
 
-        if((x1<=A) && (x2<=A)){
+        if((x1 <= A) && (x2 <= A)){
 
-          Area = Area + (diff * (((A-x1)+(A-x2))/2))
+          Area = Area + (diff * (((A - x1) + (A - x2)) / 2))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1))
-          if (i==N) {
-            DF_Area <- rbind(DF_Area,data.frame(t=t2,X_t=x2))}
+          DF_Area <- rbind(DF_Area, data.frame(t = t1, X_t = x1))
+          if (i == N) {
+            DF_Area <- rbind(DF_Area, data.frame(t = t2,X_t = x2))}
 
-        } else if ((x1<=A) && (x2>A)){
+        } else if ((x1 <= A) && (x2 > A)){
 
-          Area = Area + ((diff * (A-x1)/(x2-x1)) * ((A-x1)/2))
+          Area = Area + ((diff * (A - x1)/(x2 - x1)) * ((A - x1) / 2))
 
-          x_cross <- t1+(diff * (A-x1)/(x2-x1))
-          DF_Area <- rbind(DF_Area,data.frame(t=t1,X_t=x1),
-                           data.frame(t=x_cross,X_t=A),
-                           data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (A - x1) / (x2 - x1))
+          DF_Area <- rbind(DF_Area, data.frame(t = t1,X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
 
-          DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A,nrow(DF_Area))))
+          DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
           DF_Area$G <- G
           polygon[[G]] <- DF_Area
           G <- G + 1
-          DF_Area <- data.frame(t=numeric(0),X_t=numeric(0))
+          DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
 
-        } else if ((x1>A) && (x2<=A)){
+        } else if ((x1 > A) && (x2 <= A)){
 
-          Area = Area + ((diff * (x2-A)/(x2-x1)) * ((A-x2)/2))
+          Area = Area + ((diff * (x2 - A) / (x2 - x1)) * ((A - x2) / 2))
 
-          x_cross <- t1+(diff * (x2-A)/(x2-x1))
-          DF_Area <- rbind(DF_Area,data.frame(t=x_cross,X_t=A))
+          x_cross <- t1 + (diff * (x2 - A) / (x2 - x1))
+          DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
@@ -647,8 +639,8 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
       }
 
       if (!is.null(DF_Area) && nrow(DF_Area) > 0) {
-        DF_Area <- rbind(DF_Area,data.frame(t=ag_df[nrow(ag_df),1],X_t=ag_df[nrow(ag_df),2]))
-        DF_Area <- rbind(DF_Area,data.frame(t=rev(DF_Area$t),X_t=rep(A, nrow(DF_Area))))
+        DF_Area <- rbind(DF_Area, data.frame(t = ag_df[nrow(ag_df), 1],X_t = ag_df[nrow(ag_df), 2]))
+        DF_Area <- rbind(DF_Area, data.frame(t = rev(DF_Area$t), X_t = rep(A, nrow(DF_Area))))
         DF_Area$G <- G
         polygon[[G]] <- DF_Area
       }
@@ -663,15 +655,15 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 
       p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_hline(yintercept = A,color="blue",linetype = "dashed")+
-        labs(y="X(t)",x="t")+
-        ggtitle(sprintf("Excursion area of the realisation over the level %s", A))+
+        geom_hline(yintercept = A,color="blue",linetype = "dashed") +
+        labs(y = "X(t)", x = "t") +
+        ggtitle(sprintf("Excursion area of the realisation over the level %s", A)) +
         theme(plot.title = element_text(size = 10))
 
 
-      if (!is.null(DF_Area) && nrow(DF_Area)>0){
+      if (!is.null(DF_Area) && nrow(DF_Area) > 0){
 
-        p <- p + geom_polygon(data=DF_Area,aes(x=.data$t,y=.data$X_t,group=.data$G),fill="lightblue")
+        p <- p + geom_polygon(data = DF_Area, aes(x = .data$t, y = .data$X_t, group = .data$G), fill = "lightblue")
       }
 
       print(p)
@@ -709,11 +701,11 @@ exc_Area <- function(X,A,N=10000,level='greater',subI=NULL,plot=FALSE){
 #' @seealso \code{\link{X_min}}
 #'
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' X_max(TS,subI=c(0.5,0.8),plot=TRUE)
+#' t <- seq(0, 1, length = 100)
+#' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
+#' X_max(TS, subI = c(0.5,0.8), plot = TRUE)
 #'
-X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
+X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -736,21 +728,21 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("x","y")
+  colnames(X) <- c("x", "y")
 
   if (is.null(subI)){
 
-    X.maximum<-max(X[,2])
-    t.X.maximum<-((X[,1])[which(X[,2] == X.maximum)])
+    X.maximum <- max(X[,2])
+    t.X.maximum <- ((X[,1])[which(X[,2] == X.maximum)])
     max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
-    max_return <- apply(max_points_df,1, function(row) as.numeric(row),simplify = FALSE)
+    max_return <- apply(max_points_df, 1, function(row) as.numeric(row), simplify = FALSE)
 
     if(plot)
     {
-      p <- ggplot(X, aes(x=.data$x, y=.data$y)) +
+      p <- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_point(data = max_points_df, aes(x=.data$t, y=.data$x), color = "red", size = 1.5) +
-        labs(x = "t",y = "X(t)")
+        geom_point(data = max_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
+        labs(x = "t", y = "X(t)")
 
       if(vline){
         p <- p + geom_vline(xintercept = t.X.maximum, linetype = "dashed", color = "blue")
@@ -761,7 +753,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
       }
 
       if (hline && vline){
-        p <- p+
+        p <- p +
           geom_hline(yintercept = X.maximum, linetype = "dashed", color = "blue") +
           geom_vline(xintercept = t.X.maximum, linetype = "dashed", color = "blue")
       }
@@ -776,18 +768,18 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
     if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
       stop("subI must be a numeric vector")
     }
-    Time<-X[,1]
-    X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
-    X.maximum<-max(X.I[,2])
-    t.X.maximum<-((X.I[,1])[which(X.I[,2] == X.maximum)])
+    Time <- X[,1]
+    X.I <- subset(X, Time >= subI[1] & Time <= subI[2])
+    X.maximum <- max(X.I[,2])
+    t.X.maximum <- ((X.I[,1])[which(X.I[,2] == X.maximum)])
     max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
     max_return <- apply(max_points_df,1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
-      p <- ggplot(X.I, aes(x=.data$x, y=.data$y)) +
+      p <- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_point(data = max_points_df, aes(x=.data$t, y=.data$x), color = "red", size = 1.5) +
+        geom_point(data = max_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
         labs(x = "t",y = "X(t)")
 
       if(vline){
@@ -799,8 +791,7 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
       }
 
       if (hline && vline){
-        p <- p+
-          geom_hline(yintercept = X.maximum, linetype = "dashed", color = "blue") +
+        p <- p + geom_hline(yintercept = X.maximum, linetype = "dashed", color = "blue") +
           geom_vline(xintercept = t.X.maximum, linetype = "dashed", color = "blue")
       }
 
@@ -839,11 +830,11 @@ X_max<-function(X,subI=NULL,plot=FALSE,vline=FALSE,hline=FALSE){
 #' @seealso \code{\link{X_max}}
 #'
 #' @examples
-#' t <- seq(0,1,length=100)
-#' TS <- data.frame("t"=t,"X(t)"=rnorm(100))
-#' X_min(TS,subI=c(0.2,0.8),plot=TRUE)
+#' t <- seq(0, 1, length = 100)
+#' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
+#' X_min(TS, subI = c(0.2, 0.8), plot = TRUE)
 #'
-X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
+X_min <- function(X, subI = NULL, plot = FALSE,vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -866,21 +857,21 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
 
   X <- na.omit(X)
   X <- X[order(X[,1]), ]
-  colnames(X)<-c("x","y")
+  colnames(X) <- c("x", "y")
 
   if (is.null(subI)){
 
-    X.minimum<-min(X[,2])
-    t.X.minimum<-((X[,1])[which(X[,2] == X.minimum)])
+    X.minimum <- min(X[,2])
+    t.X.minimum <- ((X[,1])[which(X[,2] == X.minimum)])
     min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
-    min_return <- apply(min_points_df,1, function(row) as.numeric(row),simplify = FALSE)
+    min_return <- apply(min_points_df, 1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
-      p <- ggplot(X, aes(x=.data$x, y=.data$y)) +
+      p <- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_point(data = min_points_df, aes(x=.data$t, y=.data$x), color = "red", size = 1.5) +
-        labs(x = "t",y = "X(t)")
+        geom_point(data = min_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
+        labs(x = "t", y = "X(t)")
 
       if(vline){
        p <- p + geom_vline(xintercept = t.X.minimum, linetype = "dashed", color = "blue")
@@ -891,8 +882,7 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
       }
 
       if (hline && vline){
-        p <- p+
-          geom_hline(yintercept = X.minimum, linetype = "dashed", color = "blue") +
+        p <- p + geom_hline(yintercept = X.minimum, linetype = "dashed", color = "blue") +
           geom_vline(xintercept = t.X.minimum, linetype = "dashed", color = "blue")
       }
 
@@ -906,19 +896,19 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
     if (!is.numeric(subI) | !is.vector(subI) | !length(subI) == 2 | !(all(subI[1] >= X[1,1] & subI[2] <= X[nrow(X),1]))){
       stop("subI must be a numeric vector")
     }
-    Time<-X[,1]
+    Time <- X[,1]
     X.I<-subset(X, Time >= subI[1] & Time <= subI[2])
-    X.minimum<-min(X.I[,2])
-    t.X.minimum<-((X.I[,1])[which(X.I[,2] == X.minimum)])
+    X.minimum <- min(X.I[,2])
+    t.X.minimum <- ((X.I[,1])[which(X.I[,2] == X.minimum)])
     min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
-    min_return <- apply(min_points_df,1, function(row) as.numeric(row),simplify = FALSE)
+    min_return <- apply(min_points_df, 1, function(row) as.numeric(row),simplify = FALSE)
 
     if(plot)
     {
-      p <- ggplot(X.I, aes(x=.data$x, y=.data$y)) +
+      p <- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
-        geom_point(data = min_points_df, aes(x=.data$t, y=.data$x), color = "red", size = 1.5) +
-        labs(x = "t",y = "X(t)")
+        geom_point(data = min_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
+        labs(x = "t", y = "X(t)")
 
       if(vline){
         p <- p + geom_vline(xintercept = t.X.minimum, linetype = "dashed", color = "blue")
@@ -929,7 +919,7 @@ X_min<-function(X,subI=NULL,plot=FALSE,vline= FALSE,hline=FALSE){
       }
 
       if (hline && vline){
-        p <- p+
+        p <- p +
           geom_hline(yintercept = X.minimum, linetype = "dashed", color = "blue") +
           geom_vline(xintercept = t.X.minimum, linetype = "dashed", color = "blue")
       }
