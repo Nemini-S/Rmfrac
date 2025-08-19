@@ -321,7 +321,7 @@ plot_tsest<-function(X, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_S
   }
 
   X <- X[order(X[,1]),]
-  H_est < -Hurst(X, N, Q, L)
+  H_est <- Hurst(X, N, Q, L)
   colnames(H_est) <- c("x", "y")
   colnames(X) <- c("t1", "PP")
   t1 <- X[,1]
