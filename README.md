@@ -30,14 +30,14 @@ library(Rmfrac)
 ```
 To simulate a Gaussian Haar-based multifractional process for a constant Hurst function
 ```{r}
-t <- seq(0,1,by=(1/2)^10)
-H1 <- function(t) {return(0.5 +0*t)}
-X1 <- GHBMP(t,H1,J=12)
+t <- seq(0, 1, by = (1/2)^10)
+H1 <- function(t) {return(0.5 + 0 * t)}
+X1 <- GHBMP(t, H1, J = 12)
 ```
 Oscillating Hurst function
 ```{r}
-H2 <- function(t) {return(0.5-0.4*sin(6*3.14*t))}
-X2 <- GHBMP(t,H2,J=12)
+H2 <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
+X2 <- GHBMP(t, H2, J = 12)
 ```
 Piecewise Hurst function
 ```{r}
@@ -45,14 +45,14 @@ H3 <- function(x) {
 ifelse(x >= 0 & x <= 0.8, 0.375 * x + 0.2,
       ifelse(x > 0.8 & x <= 1,-1.5 * x + 1.7, NA))
 }
-X3 <- GHBMP(t,H3,J=12)
+X3 <- GHBMP(t, H3, J = 12)
 ```
 To estimate the Hurst function and Local Fractal Dimension with visualizations
 ```{r}
-Hurst_estimates <- Hurst(X2,N=100)
-LFD_estimates <- LFD(X2,N=100)
+Hurst_estimates <- Hurst(X2, N = 100)
+LFD_estimates <- LFD(X2, N = 100)
 
-plot(X2,Raw_EST_H=TRUE,Smooth_Est_H=TRUE,LFD_Est=TRUE,LFD_Smooth_Est=TRUE)
+plot(X2, Raw_EST_H = TRUE, Smooth_Est_H = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE)
 ```
 <img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/c7df246f-368f-41b2-b108-1b0f1dc002fa" />
 
