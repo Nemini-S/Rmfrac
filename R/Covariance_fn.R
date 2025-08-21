@@ -83,11 +83,6 @@ est_cov<-function(X, theta = 0.1, plot = FALSE)
 
     cov.fig <- layout(cov.fig, scene = list (xaxis = list(title = "t"), yaxis = list(title = "s"), zaxis = list(title = "Covariance")))
 
-    # cov.fig <- persp(t, t, C,
-    #       theta = 30, phi = 35,col = "lightblue", border = "black",
-    #       xlab = "h1", ylab = "h2", zlab = "Covariance",
-    #       main = "3D Covariance Function")
-
     print(cov.fig)
   }
 
@@ -209,10 +204,6 @@ cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = FALSE, num.cores = availab
 
   if(plot)
   {
-    # cov.fig <- persp(t, t, C,
-    #       theta = 30, phi = 35,col = "lightblue", border = "black",
-    #       xlab = "h1", ylab = "h2", zlab = "Covariance",
-    #       main = "3D Covariance Function")
 
     cov.fig <- plot_ly(x = ~t, y = ~t, z = ~cov.mat, type = 'surface', colorbar = list(title = "Covariance"))
 

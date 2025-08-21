@@ -183,7 +183,7 @@ Bm<-function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
     stop("t_end must be numeric")
   }
 
-  if (!(t_start<t_end)) {
+  if (!(t_start < t_end)) {
     stop("Incorrect inputs for t_start and t_end")
   }
 
@@ -267,7 +267,7 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
     stop("Incorrect input for t_end")
   }
 
-  if (!(t_start<t_end)) {
+  if (!(t_start < t_end)) {
     stop("Incorrect inputs for t_start and t_end")
   }
 
@@ -438,7 +438,7 @@ Bbridge <- function(x_end, t_end, N = 1000, plot = FALSE){
     stop("Incorrect input for t_end")
   }
 
-  if (!(0<t_end)) {
+  if (!(0 < t_end)) {
     stop("Incorrect inputs for t_start and t_end")
   }
 
@@ -512,7 +512,7 @@ FBbridge <- function(H, x_end, t_end, N = 1000, plot = FALSE){
     stop("Incorrect input for t_end")
   }
 
-  if (!(0<t_end)) {
+  if (!(0 < t_end)) {
     stop("Incorrect inputs for t_start and t_end")
   }
 
