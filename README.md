@@ -1,4 +1,4 @@
-## Simulation and analyses of multifractional processes 
+## Simulation and analysis of multifractional processes 
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 
 <p>
