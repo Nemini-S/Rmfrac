@@ -329,7 +329,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 #' @seealso \code{\link{sojourn}}
 #'
 #' @examples
-#' t <- seq(0, 1, length =1 000)
+#' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(1000))
 #' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5,0.8), plot = TRUE)
 #'

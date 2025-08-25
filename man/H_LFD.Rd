@@ -32,7 +32,7 @@ Hurst function estimated using \code{\link{Hurst}}, local fractal dimension
 estimated using \code{\link{LFD}} and smoothed estimated Hurst function and LFD added.
 }
 \examples{
-TS <- data.frame("t"=seq(0,1,length=1000),"X(t)"=rnorm(1000))
+TS <- data.frame("t"=seq(0,1,length = 1000),"X(t)" = rnorm(1000))
 Object <- H_LFD(TS)
 #Plot of time series, estimated and smoothed Hurst and LFD estimates
 plot(Object)
