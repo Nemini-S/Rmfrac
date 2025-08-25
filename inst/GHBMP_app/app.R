@@ -177,7 +177,7 @@ ui <- shiny::navbarPage("",
       shiny::wellPanel(
       shiny::h4("Simulation"),
       shiny::textInput("func", "Hurst function (in terms of t)", "0.2 + 0*t"),
-      shiny::textInput("time", "Time sequence", "seq(0, 1 , by = (1/2)^10)"),
+      shiny::textInput("time", "Time sequence", "seq(0, 1, by = (1/2)^10)"),
       shiny::numericInput("num", "J (positive integer for simulation)", value = 15, min = 1, step = 1),
       shiny::actionButton("submit3", "Simulate")),
       shiny::wellPanel(
