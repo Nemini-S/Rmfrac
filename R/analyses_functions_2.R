@@ -46,7 +46,7 @@ cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
   }
 
   X <- na.omit(X)
-  X <- X[order(X[,1]), ]
+  X <- X[order(X[,1]),]
   colnames(X) <- c("C1", "C2")
 
   if (is.null(subI)){
@@ -907,7 +907,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' \code{oversold} levels are plotted.
 #' @details To compute the RSI,
 #'
-#' \eqn{\text{RSI} = 100 \dfrac{\text{Average\_gain}}{\text{Average\_gain}+\text{Average\_loss}}}
+#' \deqn{\text{RSI} = 100 \dfrac{\text{Average\_gain}}{\text{Average\_gain}+\text{Average\_loss}}}
 #'
 #' formula is used. Average gain and average loss are computed using the Wilders's smoothing method.
 #' @references Wilder, J. W. (1978). New concepts in technical trading systems. Greensboro, NC.

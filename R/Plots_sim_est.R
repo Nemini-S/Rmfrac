@@ -113,7 +113,7 @@ plot.mp <- function(x, H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TR
 #' Creates objects of class \code{H_LFD}
 #' @description
 #' For user provided time series creates objects of class \code{"H_LFD"} with the
-#' Hurst function estimated using \code{\link{Hurst}},local fractal dimension
+#' Hurst function estimated using \code{\link{Hurst}}, local fractal dimension
 #' estimated using \code{\link{LFD}} and smoothed estimated Hurst function and LFD added.
 #'
 #' @param X Data frame where the first column is a numeric time sequence \eqn{t}

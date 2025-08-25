@@ -6,7 +6,7 @@
 #' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
-#' @param N Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.
+#' @param N Number of steps on the time interval (or time sub-interval) used for computations. Default set to 10000.
 #' @param level A vector of character strings which specifies which sojourn
 #' measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -75,28 +75,28 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 
         if((x1 >= A) && (x2 >= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 >= A) && (x2 < A)){
 
-          S = S + (diff * (x1 - A) / (x1 - x2))
+          S <- S + (diff * (x1 - A) / (x1 - x2))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (x1 - A) / (x1 - x2))
 
         } else if ((x1 < A) && (x2 >= A)){
 
-          S = S + (diff * (A - x2) / (x1 - x2))
+          S <- S + (diff * (A - x2) / (x1 - x2))
 
           seg$T_start[i] <- t2 - (diff * (A - x2) / (x1 - x2))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -120,28 +120,28 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -201,28 +201,28 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 
         if((x1 >= A) && (x2 >= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 >= A) && (x2 < A)){
 
-          S = S + (diff * (x1 - A) / (x1 - x2))
+          S <- S + (diff * (x1 - A) / (x1 - x2))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (x1 - A) / (x1 - x2))
 
         } else if ((x1 < A) && (x2 >= A)){
 
-          S = S + (diff * (A - x2) / (x1 - x2))
+          S <- S + (diff * (A - x2) / (x1 - x2))
 
           seg$T_start[i] <- t2 - (diff * (A - x2) / (x1 - x2))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -245,28 +245,28 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -310,7 +310,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 #' @param X Data frame where the first column is a numeric time sequence \eqn{t}
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
-#' @param N Number of steps the time interval (or time sub-interval) is split into. Default set to 10000.
+#' @param N Number of steps on the time interval (or time sub-interval) used for computations. Default set to 10000.
 #' @param level A vector of character strings which specifies whether the excursion
 #' area is required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}. Default set to \code{"greater"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
@@ -373,7 +373,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
     if(level == 'greater'){
 
       Area <- 0
-      DF_Area <- data.frame(t = numeric(0),X_t = numeric(0))
+      DF_Area <- data.frame(t = numeric(0), X_t = numeric(0))
       G <- 1
       polygon <- list()
 
@@ -448,7 +448,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         if((x1 <= A) && (x2 <= A)){
 
-          Area = Area + (diff * (((A - x1) + (A - x2)) / 2))
+          Area <- Area + (diff * (((A - x1) + (A - x2)) / 2))
 
           DF_Area <- rbind(DF_Area, data.frame(t = t1, X_t = x1))
           if (i == N) {
@@ -456,7 +456,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          Area = Area + ((diff * (A - x1)/(x2 - x1)) * ((A - x1) / 2))
+          Area <- Area + ((diff * (A - x1)/(x2 - x1)) * ((A - x1) / 2))
 
           x_cross <- t1+ (diff * (A - x1)/(x2 - x1))
           DF_Area <- rbind(DF_Area, data.frame(t = t1,X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
@@ -469,14 +469,14 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          Area = Area + ((diff * (x2 - A) / (x2 - x1)) * ((A - x2) / 2))
+          Area <- Area + ((diff * (x2 - A) / (x2 - x1)) * ((A - x2) / 2))
 
           x_cross <- t1 + (diff * (x2 - A) / (x2 - x1))
           DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
-          Area = Area
+          Area <- Area
         }
 
       }
@@ -544,7 +544,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         if((x1 >= A) && (x2 >= A)){
 
-          Area = Area + (diff * (((x1 - A) + (x2 - A)) / 2))
+          Area <- Area + (diff * (((x1 - A) + (x2 - A)) / 2))
 
           DF_Area <- rbind(DF_Area, data.frame(t = t1, X_t = x1))
           if (i == N) {
@@ -552,7 +552,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         } else if ((x1 >= A) && (x2 < A)){
 
-          Area = Area + ((diff * (x1 - A) / (x1 - x2)) * ((x1 - A) / 2))
+          Area <- Area + ((diff * (x1 - A) / (x1 - x2)) * ((x1 - A) / 2))
 
           x_cross <- t1 + (diff * (x1 - A) / (x1 - x2))
           DF_Area <- rbind(DF_Area,data.frame(t = t1, X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
@@ -565,14 +565,14 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         } else if ((x1 < A) && (x2 >= A)){
 
-          Area = Area + ((diff * (A - x2) / (x1 - x2)) * ((x2 - A) / 2))
+          Area <- Area + ((diff * (A - x2) / (x1 - x2)) * ((x2 - A) / 2))
 
           x_cross <- t1 + (diff * (A - x2) / (x1 - x2))
           DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
-          Area = Area
+          Area <- Area
 
         }
 
@@ -605,7 +605,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         if((x1 <= A) && (x2 <= A)){
 
-          Area = Area + (diff * (((A - x1) + (A - x2)) / 2))
+          Area <- Area + (diff * (((A - x1) + (A - x2)) / 2))
 
           DF_Area <- rbind(DF_Area, data.frame(t = t1, X_t = x1))
           if (i == N) {
@@ -613,7 +613,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          Area = Area + ((diff * (A - x1)/(x2 - x1)) * ((A - x1) / 2))
+          Area <- Area + ((diff * (A - x1)/(x2 - x1)) * ((A - x1) / 2))
 
           x_cross <- t1 + (diff * (A - x1) / (x2 - x1))
           DF_Area <- rbind(DF_Area, data.frame(t = t1,X_t = x1), data.frame(t = x_cross, X_t = A), data.frame(t = x_cross, X_t = A))
@@ -626,14 +626,14 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          Area = Area + ((diff * (x2 - A) / (x2 - x1)) * ((A - x2) / 2))
+          Area <- Area + ((diff * (x2 - A) / (x2 - x1)) * ((A - x2) / 2))
 
           x_cross <- t1 + (diff * (x2 - A) / (x2 - x1))
           DF_Area <- rbind(DF_Area, data.frame(t = x_cross, X_t = A))
 
         } else {
 
-          Area = Area
+          Area <- Area
         }
 
       }

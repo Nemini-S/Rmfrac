@@ -17,7 +17,7 @@
 #'   \item{\code{Number of sub-intervals for estimation}}{Default is set to 100.}
 #'   \item{\code{Q}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
 #'   \item{\code{L}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
-#'   \item{\code{Plot}}{Select: \code{Theoretical Hurst function}, \code{Raw estimate of Hurst function}, \code{Smoothed estimate of Hurst function}, \code{Raw estimate of Local Fractal Dimension}, \code{Smoothed estimate of Local Fractal Dimension}.}}
+#'   \item{\code{Plot}}{Choose the required from: \code{Theoretical Hurst function}, \code{Raw estimate of Hurst function}, \code{Smoothed estimate of Hurst function}, \code{Raw estimate of Local Fractal Dimension}, \code{Smoothed estimate of Local Fractal Dimension}.}}
 #' **Excursion set and area**
 #'  \describe{
 #'   \item{\code{Number of time steps}}{Input the number of steps the time interval needs to be split into.}
@@ -33,9 +33,9 @@
 #' @importFrom shiny runApp
 #' @importFrom shinycssloaders withSpinner
 #' @details
-#' For \code{Input time series}, provide a \code{.csv} file that include headers
-#' with two columns: the first column should contain the numeric time sequence \eqn{t},
-#' and the second the corresponding time series values \eqn{X(t)}. To get reliable
+#' For \code{Input time series}, provide a \code{.csv} file that has headers of its columns.
+#' It must have two columns: the first column should contain the numeric time sequence \eqn{t},
+#' and the second the corresponding time series values \eqn{X(t)}. To get reliable estimation
 #' results for time series, it is recommended to use at least 500 time points.
 #' Make sure there are no extra header rows or footnotes.
 #'

@@ -15,11 +15,11 @@
 #' @details
 #' The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2025) was used in simulating Gaussian Haar-based multifractional process.
 #'
-#' \eqn{X(t) := \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k},}
+#' \deqn{X(t) := \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k},}
 #'
 #' where
 #'
-#' \eqn{  \int_{0}^{1} (t-s)_{+}^{H_{j,k}-\frac{1}{2}} h_{j,k} (s) ds = 2^{-j H_{j,k}} h^{[H_{j,k}]} (2^jt-k)}
+#' \deqn{  \int_{0}^{1} (t-s)_{+}^{H_{j,k}-\frac{1}{2}} h_{j,k} (s) ds = 2^{-j H_{j,k}} h^{[H_{j,k}]} (2^jt-k)}
 #'
 #' with \eqn{h^{[\lambda]} (x) =  \int_{\mathbb{R}} (x-s)_{+}^{\lambda-\frac{1}{2}} h(s) ds}.
 #' \eqn{h} is the Haar mother wavelet, \eqn{j} and \eqn{k} are positive integers, \eqn{t} is time, \eqn{H} is the Hurst function and
@@ -150,7 +150,7 @@ GHBMP<-function(t, H, J = 15, num.cores = availableCores(omit = 1))
 #' @param x_start Value of the process at the initial time point (additive constant mean).
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of time steps on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian
 #' motion is plotted.
@@ -220,13 +220,14 @@ Bm<-function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
 #'
 #' @description
 #' This function simulates a realisation of the fractional Brownian motion over
-#' the time interval \code{[t_start,t_end]} for a provided Hurst parameter.
+#' the time interval \code{[t_start,t_end]} for a provided Hurst parameter, which has
+#' the initial value \code{x_start}.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param x_start Value of the process at the initial time point (additive constant mean).
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param N Number of sub-intervals the interval \code{[t_start,t_end]} is split into.
+#' @param N Number of time steps on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian
 #' motion is plotted.
@@ -284,7 +285,7 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
   diff <- (t_end - t_start) / N
   t <- seq(t_start, t_end, length.out = N + 1)
 
-  c<- function(k, H){
+  c <- function(k, H){
     0.5 * ((k + 1)^(2*H) + (abs(k - 1))^(2*H) - 2*(k)^(2*H))
   }
 
@@ -325,7 +326,7 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param t_start Initial time point.
 #' @param t_end Terminal time point.
-#' @param n Number of time points where the simulation is performed on the interval \code{[t_start,t_end]}.
+#' @param N Number of time steps on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise
 #' is plotted.
@@ -342,7 +343,7 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 #' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
 #' @examples
 #' FGn(H=0.5,plot=TRUE)
-FGn <- function(H, t_start = 0, t_end = 1, n = 1000, plot = FALSE){
+FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -364,27 +365,27 @@ FGn <- function(H, t_start = 0, t_end = 1, n = 1000, plot = FALSE){
     stop("Incorrect inputs for t_start and t_end")
   }
 
-  if (!is.numeric(n)) {
-    stop("n must be numeric")
-  } else if (!(n %% 1 == 0) | !(n > 0)) {
-    stop("n must be a positive integer")
+  if (!is.numeric(N)) {
+    stop("N must be numeric")
+  } else if (!(N %% 1 == 0) | !(N > 0)) {
+    stop("N must be a positive integer")
   }
 
   if (!is.logical(plot)) {
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  t <- seq(t_start, t_end, length.out = n)
+  t <- seq(t_start, t_end, length.out = N + 1)
 
-  c<- function(k, H){
+  c <- function(k, H){
     0.5 * ((k + 1)^(2*H) + (abs(k - 1))^(2*H) - 2*(k)^(2*H))
   }
 
-  cov_mat <- toeplitz(sapply(0:(n - 1), c, H = H))
+  cov_mat <- toeplitz(sapply(0:(N), c, H = H))
 
   L <- t(chol(cov_mat))
 
-  z <- rnorm(n, 0, 1)
+  z <- rnorm(N + 1, 0, 1)
 
   x <- L%*%z
 
@@ -407,11 +408,12 @@ FGn <- function(H, t_start = 0, t_end = 1, n = 1000, plot = FALSE){
 #'
 #' @description
 #' This function simulates a realisation of the Brownian bridge over the
-#' time interval \code{[0,t_end]} which terminates at \code{x_end} with \code{N} time steps.
+#' time interval \code{[0,t_end]} which has the initial value 0 and terminates
+#' at \code{x_end} with \code{N} time steps.
 #'
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
-#' @param N Number of sub-intervals the interval \code{[0,t_end]} is split into.
+#' @param N Number of time steps on the interval \code{[0,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the Brownian bridge
 #' is plotted.
@@ -475,13 +477,13 @@ Bbridge <- function(x_end, t_end, N = 1000, plot = FALSE){
 #'
 #' @description
 #' This function simulates a realisation of the fractional Brownian bridge
-#' for a provided Hurst parameter over the time interval \code{[0,t_end]}
-#' which  terminates at \code{x_end} with \code{N} time steps.
+#' for a provided Hurst parameter over the time interval \code{[0,t_end]},
+#' which has the initial value 0 and terminates at \code{x_end} with \code{N} time steps.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
-#' @param N Number of sub-intervals the interval \code{[0,t_end]} is split into.
+#' @param N Number of time steps on the interval \code{[0,t_end]}.
 #' Default set to 1000.
 #' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
 #' is plotted.
