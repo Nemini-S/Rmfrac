@@ -3054,7 +3054,7 @@ server <- function(input, output, session) {
     t_start <- input$t_start_FGN
     t_end <- input$t_end_FGN
     n <- input$N_FGN
-    FGn(H = H, t_start = t_start, t_end = t_end, n = n)
+    FGn(H = H, t_start = t_start, t_end = t_end, N = n)
   })
 
   output$fgnPlot <- shiny::renderPlot({
