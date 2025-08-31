@@ -1,7 +1,7 @@
 Package: Rmfrac
 Type: Package
 Title: Simulation and Statistical Analysis of Multifractional Processes
-Version: 0.1.0
+Version: 0.1.1
 Description: Simulation of several fractional and multifractional processes. Includes Brownian and fractional Brownian motions, bridges and Gaussian Haar-based multifractional processes (GHBMP). Implements the methods from Ayache, Olenko and Samarakoon (2025)<doi:10.48550/arXiv.2503.07286> for simulation of GHBMP. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions. Several functions to estimate and plot geometric statistics of the processes and time series. Provides a 'shiny' application for interactive use of the functions from the package.
 License: GPL-3
 Encoding: UTF-8
