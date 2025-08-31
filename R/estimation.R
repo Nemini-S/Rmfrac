@@ -30,7 +30,7 @@
 #' @seealso \code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Hurst function of a multifractional process simulated using GHBMP function
 #' T <- seq(0, 1, by = (1/2)^10)
 #' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
@@ -158,7 +158,7 @@ Hurst <- function(X, N = 100, Q = 2, L = 2)
 #' that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282.
 #' \doi{doi:10.1137/S0036144501394387}.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #LFD of a multifractional process simulated using GHBMP function
 #' T <- seq(0, 1, by = (1/2)^10)
 #' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}

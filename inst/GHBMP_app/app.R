@@ -513,7 +513,7 @@ server <- function(input, output, session) {
       }
     }
 
-    print(p6)
+    p6
 
   })
 
@@ -919,7 +919,7 @@ server <- function(input, output, session) {
       }
     }
 
-    print(p7)
+    p7
 
   })
 
@@ -1386,7 +1386,7 @@ server <- function(input, output, session) {
       }
     }
 
-    print(p)
+    p
 
   })
 
@@ -1799,11 +1799,7 @@ server <- function(input, output, session) {
       }
     }
 
-
-
-
-
-    print(p1)
+    p1
   })
 
   #Brownian Bridge
@@ -2214,7 +2210,7 @@ server <- function(input, output, session) {
           ggplot2::geom_polygon(data = DF_Area, ggplot2::aes(x = t, y = X_t, group = .data$G), fill = "lightblue")
       }
     }
-    print(p2)
+    p2
   })
 
   #Fractional Brownian Motion
@@ -2630,7 +2626,7 @@ server <- function(input, output, session) {
       }
     }
 
-    print(p3)
+    p3
   })
 
   #Fractional Brownian bridge
@@ -3044,7 +3040,7 @@ server <- function(input, output, session) {
       }
     }
 
-    print(p4)
+    p4
   })
 
 
@@ -3456,7 +3452,7 @@ server <- function(input, output, session) {
       }
     }
 
-    print(p5)
+    p5
   })
 
 

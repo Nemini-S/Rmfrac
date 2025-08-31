@@ -4,7 +4,13 @@
 \alias{RS_Index}
 \title{Relative strength index}
 \usage{
-RS_Index(X, period = 14, plot = FALSE, overbought = 70, oversold = 30)
+RS_Index(
+  X,
+  period = 14,
+  plot = getOption("Rmfrac.plot", FALSE),
+  overbought = 70,
+  oversold = 30
+)
 }
 \arguments{
 \item{X}{A vector.}

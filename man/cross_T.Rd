@@ -4,7 +4,13 @@
 \alias{cross_T}
 \title{Estimated crossing times}
 \usage{
-cross_T(X, A, subI = NULL, plot = FALSE, vline = FALSE)
+cross_T(
+  X,
+  A,
+  subI = NULL,
+  plot = getOption("Rmfrac.plot", FALSE),
+  vline = FALSE
+)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}

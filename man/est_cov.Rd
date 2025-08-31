@@ -4,7 +4,7 @@
 \alias{est_cov}
 \title{Empirical covariance function}
 \usage{
-est_cov(X, theta = 0.1, plot = FALSE)
+est_cov(X, theta = 0.1, plot = getOption("Rmfrac.plot", FALSE))
 }
 \arguments{
 \item{X}{A data frame where the first column is the numeric time sequence and the remaining
@@ -28,7 +28,7 @@ The smoothing parameter \code{theta} can help to better visualise changes betwee
 neighbour estimated values.
 }
 \examples{
-\dontrun{
+\donttest{
 #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 t <- seq(0, 1, by = (1/2)^8)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}

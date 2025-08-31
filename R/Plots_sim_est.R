@@ -58,7 +58,6 @@ autoplot.mp <- function(object, ..., H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE
 
   }
 
-  print(p)
 }
 
 
@@ -92,7 +91,7 @@ autoplot.mp <- function(object, ..., H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE
 #' @seealso \code{\link{GHBMP}}, \code{\link{Hurst}}, \code{\link{LFD}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Simulation of the multifractional process and estimation of the Hurst function
 #' T <- seq(0, 1, by = (1/2)^10)
 #' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
@@ -106,8 +105,13 @@ autoplot.mp <- function(object, ..., H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE
 #' }
 plot.mp <- function(x, H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE, N = 100, Q = 2,L = 2, ...) {
 
-  print(autoplot(x, H = H, H_Est = H_Est, H_Smooth_Est = H_Smooth_Est, LFD_Est = LFD_Est, LFD_Smooth_Est = LFD_Smooth_Est, N = N, Q = Q, L = L))
+  pp <- autoplot(x, H = H, H_Est = H_Est, H_Smooth_Est = H_Smooth_Est, LFD_Est = LFD_Est, LFD_Smooth_Est = LFD_Smooth_Est, N = N, Q = Q, L = L)
 
+  if (interactive()) {
+    print(pp)
+  }
+
+  invisible(pp)
 }
 
 #' Creates objects of class \code{H_LFD}
@@ -124,11 +128,11 @@ plot.mp <- function(x, H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TR
 #' @param L Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @return The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 #' \describe{
-#' \item{Raw_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
-#' \item{Smoothed_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
-#' \item{Raw_LFD_estimates}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-#' \item{Smoothed_LFD_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
-#' \item{Data}{User provided time series.}}
+#' \item{\code{Raw_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
+#' \item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
+#' \item{\code{Raw_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
+#' \item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
+#' \item{\code{Data}}{User provided time series.}}
 #' @export H_LFD
 #' @seealso \code{plot.H_LFD} \code{\link{Hurst}}, \code{\link{LFD}}
 #' @examples
@@ -225,11 +229,8 @@ autoplot.H_LFD<-function(object, ..., H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est
                          , method = "loess", se = FALSE, span = 0.3, linewidth = 1) +
              scale_y_continuous(name = "Time Series", limits = range_L,
                          sec.axis = sec_axis(transform = function(x){(x - q1_L) / (IQR_L)}, name = "Estimator"))
-
-
   }
 
-  print(p)
 }
 
 
@@ -265,8 +266,13 @@ autoplot.H_LFD<-function(object, ..., H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est
 #'
 plot.H_LFD <- function(x, H_Est = TRUE,H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE,...) {
 
-  print(autoplot(x, H_Est = H_Est, H_Smooth_Est = H_Smooth_Est, LFD_Est = LFD_Est, LFD_Smooth_Est = LFD_Smooth_Est))
+  pp <- (autoplot(x, H_Est = H_Est, H_Smooth_Est = H_Smooth_Est, LFD_Est = LFD_Est, LFD_Smooth_Est = LFD_Smooth_Est))
 
+  if (interactive()) {
+    print(pp)
+  }
+
+  invisible(pp)
 }
 
 
@@ -373,6 +379,11 @@ plot_tsest<-function(X, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_S
                          sec.axis = sec_axis(transform = function(x){(x - q1_H) / (IQR_H)} ,name = "Estimator"))
   }
 
-  print(p)
+  if(interactive()){
+    print(p)
+  }
+
+  invisible(p)
+
 }
 

@@ -4,7 +4,13 @@
 \alias{X_min}
 \title{Estimated minimum of a time series}
 \usage{
-X_min(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE)
+X_min(
+  X,
+  subI = NULL,
+  plot = getOption("Rmfrac.plot", FALSE),
+  vline = FALSE,
+  hline = FALSE
+)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}

@@ -4,7 +4,14 @@
 \alias{exc_Area}
 \title{Excursion area}
 \usage{
-exc_Area(X, A, N = 10000, level = "greater", subI = NULL, plot = FALSE)
+exc_Area(
+  X,
+  A,
+  N = 10000,
+  level = "greater",
+  subI = NULL,
+  plot = getOption("Rmfrac.plot", FALSE)
+)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}

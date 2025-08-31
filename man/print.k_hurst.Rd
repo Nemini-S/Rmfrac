@@ -11,6 +11,9 @@
 
 \item{...}{Other arguments}
 }
+\value{
+Prints an object of class \code{"k_hurst"}.
+}
 \description{
 Prints the results of k-means clustering of realisations of processes.
 }

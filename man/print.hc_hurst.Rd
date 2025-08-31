@@ -11,6 +11,9 @@
 
 \item{...}{Other arguments}
 }
+\value{
+Prints an object of class \code{"hc_hurst"}.
+}
 \description{
 Prints the results of hierarchical clustering of realisations of processes.
 }

@@ -4,7 +4,7 @@
 \alias{cross_rate}
 \title{Crossing rate}
 \usage{
-cross_rate(X, A, subI = NULL, plot = FALSE)
+cross_rate(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE))
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}

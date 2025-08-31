@@ -22,7 +22,7 @@
 #' @export est_cov
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
 #' t <- seq(0, 1, by = (1/2)^8)
 #' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
@@ -33,7 +33,7 @@
 #' cov.mat <- est_cov(Data, theta = 0.2, plot = TRUE)
 #' cov.mat
 #' }
-est_cov<-function(X, theta = 0.1, plot = FALSE)
+est_cov<-function(X, theta = 0.1, plot = getOption("Rmfrac.plot", FALSE))
 {
 
   if (!is.data.frame(X) | !(all(sapply(X, is.numeric)))) {
@@ -77,7 +77,7 @@ est_cov<-function(X, theta = 0.1, plot = FALSE)
     C <- Smooth_data$z
   }
 
-  if(plot)
+  if (isTRUE(plot) && interactive())
   {
     cov.fig <- plot_ly(x = ~t, y = ~t, z = ~C, type = 'surface', colorbar = list(title = "Covariance"))
 
@@ -123,7 +123,7 @@ est_cov<-function(X, theta = 0.1, plot = FALSE)
 #' @seealso \code{\link{GHBMP}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' t <- seq(0, 1, by = 0.01)
 #' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
 #'
@@ -133,7 +133,7 @@ est_cov<-function(X, theta = 0.1, plot = FALSE)
 #' #Non-smoothed covariance function
 #' cov_GHBMP(t, H, plot = TRUE)
 #' }
-cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = FALSE, num.cores = availableCores(omit = 1))
+cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = getOption("Rmfrac.plot", FALSE), num.cores = availableCores(omit = 1))
 {
 
   if (!is.numeric(t)|!all(t >= 0 & t<= 1)) {
@@ -202,7 +202,7 @@ cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = FALSE, num.cores = availab
     cov.mat <- Smooth_data$z
   }
 
-  if(plot)
+  if (isTRUE(plot) && interactive())
   {
 
     cov.fig <- plot_ly(x = ~t, y = ~t, z = ~cov.mat, type = 'surface', colorbar = list(title = "Covariance"))

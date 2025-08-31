@@ -26,7 +26,7 @@ Creates a plot of the smoothed Hurst functions of realisations of multifractiona
 \code{\link{kmeans_hurst}}. Options to plot only estimates, only centers or both are available.
 }
 \examples{
-\dontrun{
+\donttest{
 #Simulation of multifractional processes
 t <- seq(0, 1, by = (1/2)^10)
 H1 <- function(t) {return(0.1 + 0*t)}

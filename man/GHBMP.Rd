@@ -41,7 +41,7 @@ For simulations, the truncated version of this formula with first summation up t
 See Examples for the usage of constant, time-varying, piecewise or step Hurst functions.
 }
 \examples{
-\dontrun{
+\donttest{
 #Constant Hurst function
 t <- seq(0, 1, by = (1/2)^10)
 H <- function(t) {return(0.4 + 0*t)}
@@ -73,5 +73,5 @@ Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 }
 \seealso{
 \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBm}},
-\code{\link{FGn}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
+\code{\link{FGn}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 }

@@ -9,7 +9,7 @@ cov_GHBMP(
   H,
   J = 8,
   theta = NULL,
-  plot = FALSE,
+  plot = getOption("Rmfrac.plot", FALSE),
   num.cores = availableCores(omit = 1)
 )
 }
@@ -37,7 +37,7 @@ To make it comparable with the empirical covariance function the same smoothing 
 \code{theta} can be used if needed.
 }
 \examples{
-\dontrun{
+\donttest{
 t <- seq(0, 1, by = 0.01)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
 

@@ -46,11 +46,9 @@ results for time series, it is recommended to use at least 500 time points.
 Make sure there are no extra header rows or footnotes.
 }
 \examples{
-\dontrun{
-#To run the Shiny app
-shinyapp_sim()
+if (interactive()) {
+  shinyapp_sim()
 }
-
 
 }
 \seealso{

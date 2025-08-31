@@ -12,9 +12,9 @@
 #' @param subI Time sub-interval is a vector, where the lower bound is
 #' the first element and the upper bound is the second. Optional: If provided,
 #' the estimated sojourn measure for the sub-interval is returned, otherwise the whole time interval is considered.
-#' @param plot Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.
+#' @param plot Logical: If \code{TRUE}, the time series, constant level (in blue) and the sojourn measure (in red) are plotted.
 #'
-#' @return Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level (in blue) and the excursion region (in red) are plotted.
+#' @return Estimated sojourn measure.
 #' @export sojourn
 #' @importFrom ggplot2 ggplot geom_line geom_hline geom_segment labs aes ggtitle theme element_text
 #' @importFrom stats approx aggregate
@@ -24,7 +24,7 @@
 #' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
 #' sojourn(TS, 0.8, level='lower',subI = c(0.5,0.8), plot = TRUE)
-sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
+sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -152,7 +152,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
     }
 
     seg <- na.omit(seg)
-    if (plot){
+    if (isTRUE(plot) && interactive()) {
 
       p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
@@ -277,7 +277,8 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
     }
 
     seg <- na.omit(seg)
-    if (plot){
+
+    if (isTRUE(plot) && interactive()) {
 
       p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
@@ -318,8 +319,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 #' for the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted.
 #'
-#' @return Excursion area. If \code{plot=TRUE}, the time series, the constant level and excursion area
-#' are plotted.
+#' @return Excursion area.
 #' @importFrom ggplot2 ggplot geom_line geom_hline geom_polygon labs aes ggtitle theme element_text
 #' @importFrom stats approx aggregate
 #' @importFrom rlang .data
@@ -333,7 +333,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(1000))
 #' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5,0.8), plot = TRUE)
 #'
-exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
+exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -494,7 +494,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
     DF_Area <- na.omit(DF_Area)
 
-    if (plot){
+    if (isTRUE(plot) && interactive()) {
       p<- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
         geom_hline(yintercept = A,color="blue",linetype = "dashed") +
@@ -651,7 +651,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 
     DF_Area <- na.omit(DF_Area)
 
-    if (plot){
+    if (isTRUE(plot) && interactive()) {
 
       p<- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
@@ -705,7 +705,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' X_max(TS, subI = c(0.5,0.8), plot = TRUE)
 #'
-X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
+X_max <- function(X, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -737,8 +737,8 @@ X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
     max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
     max_return <- apply(max_points_df, 1, function(row) as.numeric(row), simplify = FALSE)
 
-    if(plot)
-    {
+    if (isTRUE(plot) && interactive()) {
+
       p <- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
         geom_point(data = max_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
@@ -775,8 +775,8 @@ X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
     max_points_df <- data.frame(t = t.X.maximum, x = rep(X.maximum, length(t.X.maximum)))
     max_return <- apply(max_points_df,1, function(row) as.numeric(row),simplify = FALSE)
 
-    if(plot)
-    {
+    if (isTRUE(plot) && interactive()) {
+
       p <- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
         geom_point(data = max_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
@@ -834,7 +834,7 @@ X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' X_min(TS, subI = c(0.2, 0.8), plot = TRUE)
 #'
-X_min <- function(X, subI = NULL, plot = FALSE,vline = FALSE, hline = FALSE){
+X_min <- function(X, subI = NULL, plot = getOption("Rmfrac.plot", FALSE),vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -866,8 +866,8 @@ X_min <- function(X, subI = NULL, plot = FALSE,vline = FALSE, hline = FALSE){
     min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
     min_return <- apply(min_points_df, 1, function(row) as.numeric(row),simplify = FALSE)
 
-    if(plot)
-    {
+    if (isTRUE(plot) && interactive()) {
+
       p <- ggplot(X, aes(x = .data$x, y = .data$y)) +
         geom_line() +
         geom_point(data = min_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +
@@ -903,8 +903,7 @@ X_min <- function(X, subI = NULL, plot = FALSE,vline = FALSE, hline = FALSE){
     min_points_df <- data.frame(t = t.X.minimum, x = rep(X.minimum, length(t.X.minimum)))
     min_return <- apply(min_points_df, 1, function(row) as.numeric(row),simplify = FALSE)
 
-    if(plot)
-    {
+    if (isTRUE(plot) && interactive()) {
       p <- ggplot(X.I, aes(x = .data$x, y = .data$y)) +
         geom_line() +
         geom_point(data = min_points_df, aes(x = .data$t, y = .data$x), color = "red", size = 1.5) +

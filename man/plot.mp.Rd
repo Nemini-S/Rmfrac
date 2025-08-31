@@ -53,7 +53,7 @@ Hurst function and local fractal dimension estimated using \code{\link{LFD}}
 and smoothed estimates of local fractal dimension.
 }
 \examples{
-\dontrun{
+\donttest{
 #Simulation of the multifractional process and estimation of the Hurst function
 T <- seq(0, 1, by = (1/2)^10)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}

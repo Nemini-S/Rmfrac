@@ -4,7 +4,12 @@
 \alias{long_streak}
 \title{Longest increasing/decreasing streak}
 \usage{
-long_streak(X, direction = "increasing", subI = NULL, plot = FALSE)
+long_streak(
+  X,
+  direction = "increasing",
+  subI = NULL,
+  plot = getOption("Rmfrac.plot", FALSE)
+)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
@@ -21,7 +26,8 @@ times of the sub-interval is returned, otherwise the whole time interval is cons
 increasing/decreasing is plotted.}
 }
 \value{
-Time span \eqn{t} and the corresponding \eqn{X(t)} of the longest increasing/decreasing streak.
+A data frame with one row for each longest streak, containing the time interval
+and the corresponding values of \eqn{X(t)} at the streak endpoints.
 }
 \description{
 Computes the time span of the longest increasing or decreasing streak

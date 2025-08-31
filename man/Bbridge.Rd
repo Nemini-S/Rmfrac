@@ -4,7 +4,7 @@
 \alias{Bbridge}
 \title{Simulation of Brownian bridge}
 \usage{
-Bbridge(x_end, t_end, N = 1000, plot = FALSE)
+Bbridge(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALSE))
 }
 \arguments{
 \item{x_end}{Value of the process at the terminating time point.}
@@ -14,7 +14,7 @@ Bbridge(x_end, t_end, N = 1000, plot = FALSE)
 \item{N}{Number of time steps on the interval \code{[0,t_end]}.
 Default set to 1000.}
 
-\item{plot}{Logical: If \code{TRUE}, the realisation of the Brownian bridge
+\item{plot}{Logical: If \code{TRUE} and interactive(), the realisation of the Brownian bridge
 is plotted.}
 }
 \value{
@@ -36,5 +36,5 @@ Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences an
 MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 }
 \seealso{
-\code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{FBbridge }}
+\code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{FBbridge}}
 }

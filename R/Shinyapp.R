@@ -45,11 +45,9 @@
 #' \code{\link{Bbridge}}, \code{\link{FBbridge}}, \code{\link{GHBMP}}, \code{\link{Hurst}}
 #'
 #' @examples
-#' \dontrun{
-#' #To run the Shiny app
-#' shinyapp_sim()
+#' if (interactive()) {
+#'   shinyapp_sim()
 #' }
-#'
 #'
 shinyapp_sim<- function() {
   appDir <- system.file("GHBMP_app", package = "Rmfrac")

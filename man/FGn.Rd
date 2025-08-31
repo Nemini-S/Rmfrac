@@ -4,7 +4,13 @@
 \alias{FGn}
 \title{Simulation of fractional Gaussian noise}
 \usage{
-FGn(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
+FGn(
+  H,
+  t_start = 0,
+  t_end = 1,
+  N = 1000,
+  plot = getOption("Rmfrac.plot", FALSE)
+)
 }
 \arguments{
 \item{H}{Hurst parameter which lies between 0 and 1.}
@@ -16,7 +22,7 @@ FGn(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
 \item{N}{Number of time steps on the interval \code{[t_start,t_end]}.
 Default set to 1000.}
 
-\item{plot}{Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise
+\item{plot}{Logical: If \code{TRUE} and interactive(), the realisation of the fractional Gaussian noise
 is plotted.}
 }
 \value{
@@ -35,5 +41,5 @@ Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian
 Approximations and Projections. John Wiley & Sons. \doi{doi:10.1002/9781119476771.app3}.
 }
 \seealso{
-\code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge }}, \code{\link{FBbridge }}
+\code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 }

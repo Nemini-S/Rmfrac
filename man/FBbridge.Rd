@@ -4,7 +4,7 @@
 \alias{FBbridge}
 \title{Simulation of fractional Brownian bridge}
 \usage{
-FBbridge(H, x_end, t_end, N = 1000, plot = FALSE)
+FBbridge(H, x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALSE))
 }
 \arguments{
 \item{H}{Hurst parameter which lies between 0 and 1.}
@@ -16,7 +16,7 @@ FBbridge(H, x_end, t_end, N = 1000, plot = FALSE)
 \item{N}{Number of time steps on the interval \code{[0,t_end]}.
 Default set to 1000.}
 
-\item{plot}{Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
+\item{plot}{Logical: If \code{TRUE} and interactive(), the realisation of the fractional Brownian bridge
 is plotted.}
 }
 \value{

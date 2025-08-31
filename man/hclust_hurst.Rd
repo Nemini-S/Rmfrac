@@ -66,7 +66,7 @@ for the cluster analysis. The distances between smoothed Hurst estimates are  co
 the \code{\link[stats]{hclust}} for hierarchical clustering.
 }
 \examples{
-\dontrun{
+\donttest{
 #Simulation of multifractional processes
 t <- seq(0, 1, by = (1/2)^10)
 H1 <- function(t) {return(0.1 + 0*t)}

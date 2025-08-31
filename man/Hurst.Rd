@@ -30,7 +30,7 @@ of the process associated with its increments.
 Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
 }
 \examples{
-\dontrun{
+\donttest{
 #Hurst function of a multifractional process simulated using GHBMP function
 T <- seq(0, 1, by = (1/2)^10)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}

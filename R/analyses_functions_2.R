@@ -13,8 +13,7 @@
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted.
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted at the crossing point(s).
 #'
-#' @return The estimated crossing times at a given level. If \code{plot=TRUE}, the time series with
-#' the constant level crossing and level crossing times are plotted.
+#' @return The estimated crossing times at a given level.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
 #' @seealso \code{\link{cross_rate}} \code{\link{cross_mean}}
@@ -25,7 +24,7 @@
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' cross_T(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE, vline = TRUE)
 #'
-cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
+cross_T <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), vline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -73,7 +72,7 @@ cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
       }
     }
 
-    if (plot){
+    if (isTRUE(plot) && interactive()){
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
         geom_line() +
         geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -118,7 +117,7 @@ cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
       }
     }
 
-    if (plot){
+    if (isTRUE(plot) && interactive()){
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
         geom_line() +
         geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -151,8 +150,7 @@ cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and crossing
 #' points are plotted.
 #'
-#' @return The crossing rate, which gives average number of crossings per time unit. If \code{plot=TRUE}, the time series with
-#' the constant level and crossing points are plotted.
+#' @return The crossing rate, which gives average number of crossings per time unit.
 #' @export cross_rate
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_hline labs aes
 #' @importFrom rlang .data
@@ -161,7 +159,7 @@ cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' cross_rate(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
-cross_rate <- function(X, A, subI = NULL, plot = FALSE){
+cross_rate <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -208,7 +206,7 @@ if (is.null(subI)){
 
   crossing_rate <- nrow(cross_df) / total_t
 
-  if (plot){
+  if (isTRUE(plot) && interactive()){
     p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
       geom_line() +
       geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -253,7 +251,7 @@ if (is.null(subI)){
 
     crossing_rate <- nrow(cross_df) / total_t
 
-    if (plot){
+    if (isTRUE(plot) && interactive()){
       p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
         geom_line() +
         geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -282,8 +280,7 @@ if (is.null(subI)){
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and crossing
 #' points are plotted.
 #'
-#' @return The estimated mean time between crossings. If \code{plot=TRUE}, the time series with
-#' the constant level and crossing points are plotted.
+#' @return The estimated mean time between crossings.
 #' @export cross_mean
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_hline labs aes
 #' @importFrom rlang .data
@@ -292,7 +289,7 @@ if (is.null(subI)){
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' cross_mean(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
-cross_mean <- function(X, A, subI = NULL, plot = FALSE){
+cross_mean <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -334,9 +331,9 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
     if (nrow(cross_df) < 2) {
 
-      cat("Insufficient number of crossings to compute the mean time between crossings.\n")
+      message("Insufficient number of crossings to compute the mean time between crossings.\n")
 
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -348,7 +345,7 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
     } else {
 
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -393,9 +390,9 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
     if (nrow(cross_df) < 2) {
 
-      cat("Insufficient number of crossings to compute the mean time between crossings.\n")
+      message("Insufficient number of crossings to compute the mean time between crossings.\n")
 
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -407,7 +404,7 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
       } else {
 
-      if (plot){
+        if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_hline(yintercept = A, linetype = "dashed", color = "blue") +
@@ -444,7 +441,9 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 #' @param plot Logical: If \code{TRUE}, the time series and the longest streak of
 #' increasing/decreasing is plotted.
 #'
-#' @return Time span \eqn{t} and the corresponding \eqn{X(t)} of the longest increasing/decreasing streak.
+#' @return A data frame with one row for each longest streak, containing the time interval
+#' and the corresponding values of \eqn{X(t)} at the streak endpoints.
+#'
 #' @export long_streak
 #' @importFrom ggplot2 ggplot geom_line labs aes
 #' @importFrom rlang .data
@@ -453,7 +452,7 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(100))
 #' long_streak(TS, direction = 'decreasing', subI = c(0.2, 0.8), plot = TRUE)
-long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
+long_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -538,26 +537,42 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
         long_streak_df <- rbind(long_streak_df, df1)
       }
 
-      for (j in longest_streak) {
-        cat(sprintf("t from %f to %f (X(t) from %f to %f)\n", t[j[1]], t[j[2]], x[j[1]], x[j[2]]))}
+      t_start <- aggregate(t ~ group, long_streak_df, head, 1)
+      t_end <- aggregate(t ~ group, long_streak_df, tail, 1)
+      X_start <- aggregate(x ~ group, long_streak_df, head, 1)
+      X_end <- aggregate(x ~ group, long_streak_df, tail, 1)
+
+      Return_DF <- data.frame(streak_no = t_start$group, t_start = t_start$t, t_end = t_end$t, X_start = X_start$x, X_end = X_end$x)
+      row.names(Return_DF) <- NULL
+
+      if (isTRUE(plot) && interactive()){
+        p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
+             geom_line() +
+             geom_line(data = long_streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1) +
+             labs(x = "t",y = "X(t)")
+
+        print(p)
+      }
+
+      return(Return_DF)
+
     }
 
     else{
-      message(sprintf("No %s streaks", direction))
-      long_streak_df <- NULL
-    }
 
-    if (plot){
-      p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
-        geom_line() +
-        labs(x = "t",y = "X(t)")
+      if (isTRUE(plot) && interactive()){
 
-      if (!is.null(long_streak_df)) {
-        p <- p + geom_line(data = long_streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)
+          p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
+               geom_line() +
+               labs(x = "t",y = "X(t)")
+
+        print(p)
       }
 
-      print(p)
+      message(sprintf("No %s streaks", direction))
+
     }
+
 
   }
   else{
@@ -632,25 +647,39 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
         long_streak_df <- rbind(long_streak_df, df1)
       }
 
-      for (j in longest_streak) {
-        cat(sprintf("t from %f to %f (X(t) from %f to %f)\n", t[j[1]], t[j[2]], x[j[1]], x[j[2]]))}
+      t_start <- aggregate(t ~ group, long_streak_df, head, 1)
+      t_end <- aggregate(t ~ group, long_streak_df, tail, 1)
+      X_start <- aggregate(x ~ group, long_streak_df, head, 1)
+      X_end <- aggregate(x ~ group, long_streak_df, tail, 1)
+
+      Return_DF <- data.frame(streak_no = t_start$group, t_start = t_start$t, t_end = t_end$t, X_start = X_start$x, X_end = X_end$x)
+      row.names(Return_DF) <- NULL
+
+      if (isTRUE(plot) && interactive()){
+        p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
+          geom_line() +
+          geom_line(data = long_streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1) +
+          labs(x = "t", y = "X(t)")
+
+        print(p)
+      }
+
+      return(Return_DF)
+
     }
 
     else{
-      message(sprintf("No %s streaks", direction))
-      long_streak_df <- NULL
-    }
 
-    if (plot){
-      p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
-        geom_line() +
-        labs(x = "t", y = "X(t)")
+      if (isTRUE(plot) && interactive()){
+        p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
+          geom_line() +
+          labs(x = "t", y = "X(t)")
 
-      if (!is.null(long_streak_df)) {
-        p <- p + geom_line(data = long_streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)
+        print(p)
       }
 
-      print(p)
+      message(sprintf("No %s streaks", direction))
+
     }
 
   }
@@ -673,7 +702,7 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' @param plot Logical: If \code{TRUE}, the time series and the increasing/decreasing
 #' streaks are plotted.
 #'
-#' @return Mean time span of the increasing/decreasing streaks
+#' @return Mean time span of the increasing/decreasing streaks.
 #' @export mean_streak
 #' @importFrom ggplot2 ggplot geom_line labs aes
 #' @importFrom rlang .data
@@ -683,7 +712,7 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(100))
 #' mean_streak(TS, direction = 'decreasing', subI = c(0.2,0.8), plot = TRUE)
 #'
-mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
+mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -766,7 +795,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
         streak_df <- rbind(streak_df, df1)
       }
 
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_line(data = streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)+
@@ -779,7 +808,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
     }
     else{
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           labs(x = "t", y = "X(t)")
@@ -862,7 +891,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
         streak_df <- rbind(streak_df, df1)
       }
 
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           geom_line(data = streak_df, aes(x = .data$t, y = .data$x, group = .data$group), color = "blue",linewidth = 1)+
@@ -875,7 +904,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
     }
     else{
-      if (plot){
+      if (isTRUE(plot) && interactive()){
         p <- ggplot(X.I, aes(x = .data$C1, y = .data$C2)) +
           geom_line() +
           labs(x = "t", y = "X(t)")
@@ -898,13 +927,12 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' @param X A vector.
 #' @param period Period length used for smoothing. Default is set to 14.
 #' @param plot Logical: If \code{TRUE}, the time series and the
-#' RSI are plotted in the same window.
+#' RSI are plotted (with \code{overbought} and
+#' \code{oversold} levels) in the same window.
 #' @param overbought Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.
 #' @param oversold Horizontal line which indicates an oversold level in the RSI plot. Default is set to 30.
 #'
-#' @return A list, vector or \code{xts} object of the RSI values. If \code{plot=TRUE},
-#' the time series and the RSI with \code{overbought} and
-#' \code{oversold} levels are plotted.
+#' @return A list, vector or \code{xts} object of the RSI values.
 #' @details To compute the RSI,
 #'
 #' \deqn{\text{RSI} = 100 \dfrac{\text{Average\_gain}}{\text{Average\_gain}+\text{Average\_loss}}}
@@ -923,7 +951,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #'             75.44,75.46,74.98)
 #' RS_Index(X, plot = TRUE)
 #'
-RS_Index <- function(X, period = 14, plot = FALSE,overbought = 70, oversold = 30)
+RS_Index <- function(X, period = 14, plot = getOption("Rmfrac.plot", FALSE), overbought = 70, oversold = 30)
 {
 
   if(!is.vector(X)){
@@ -973,19 +1001,17 @@ RS_Index <- function(X, period = 14, plot = FALSE,overbought = 70, oversold = 30
 
   RSI_df <- data.frame(t = rep(t, 2), value = c(X, RSI),group = rep(c("X", "RSI"), each = N))
 
-  if (plot)
+  if (isTRUE(plot) && interactive())
   {
     df1 <- data.frame(group = "RSI",hline = c(overbought, oversold))
 
     p <- ggplot(RSI_df, aes(x = .data$t, y = .data$value)) +
-      geom_line() +
+      geom_line(na.rm = TRUE) +
       geom_hline(data = df1, aes(yintercept = .data$hline),color = c("blue","blue"), linetype = "dashed") +
       facet_wrap(~group, ncol = 1, scales = "free_y") +
       labs(title = "X and Relative Strength Index", y = "X(t)", x = "t")
 
-    options(warn = -1)
     print(p)
-    options(warn = 0)
 
   }
 

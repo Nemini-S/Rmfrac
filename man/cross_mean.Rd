@@ -4,7 +4,7 @@
 \alias{cross_mean}
 \title{Mean time between crossings}
 \usage{
-cross_mean(X, A, subI = NULL, plot = FALSE)
+cross_mean(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE))
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}

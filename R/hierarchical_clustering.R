@@ -48,7 +48,7 @@
 #' @seealso \code{\link{print.hc_hurst}}, \code{\link{plot.hc_hurst}}, \code{\link{kmeans_hurst}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Simulation of multifractional processes
 #' t <- seq(0, 1, by = (1/2)^10)
 #' H1 <- function(t) {return(0.1 + 0*t)}
@@ -182,9 +182,10 @@ hclust_hurst <- function(X.t, k = NULL, h = NULL, dist.method = "euclidean", met
 #' @description
 #' Prints the results of hierarchical clustering of realisations of processes.
 #'
-#'
 #' @param x Object of class \code{"hc_hurst"}.
-#' @param ... Other arguments
+#' @param ... Other arguments.
+#'
+#' @return Prints an object of class \code{"hc_hurst"}.
 #'
 #' @seealso \code{\link{hclust_hurst}}
 #'
@@ -251,7 +252,7 @@ autoplot.hc_hurst <- function(object, ..., type = "estimates")
   }
   else
   {
-    print("Invalid type")
+    message("Invalid type")
   }
 
 
@@ -267,10 +268,10 @@ autoplot.hc_hurst <- function(object, ..., type = "estimates")
 #' @param type The type of plot required:
 #' \describe{
 #' \item{\code{"estimates"}}{Only the smoothed Hurst functions in each cluster.}
-#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster}
+#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster.}
 #' \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 #' }
-#' @param ... Other arguments
+#' @param ... Other arguments.
 #'
 #' @return A ggplot object which is used to plot the relevant \code{type} of plot: \code{"estimates"}, \code{"centers"} or \code{"ec"}.
 #' @exportS3Method Rmfrac::plot
@@ -279,7 +280,7 @@ autoplot.hc_hurst <- function(object, ..., type = "estimates")
 #' @seealso \code{\link{hclust_hurst}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Simulation of multifractional processes
 #' t <- seq(0, 1, by = (1/2)^10)
 #' H1 <- function(t) {return(0.1 + 0*t)}
@@ -298,5 +299,11 @@ autoplot.hc_hurst <- function(object, ..., type = "estimates")
 #' plot(HC, type = "ec")
 #' }
 plot.hc_hurst <- function(x, type = "estimates", ...) {
-  print(autoplot(x, type = type))
+  pp <- (autoplot(x, type = type))
+
+  if (interactive()) {
+    print(pp)
+  }
+
+  invisible(pp)
 }

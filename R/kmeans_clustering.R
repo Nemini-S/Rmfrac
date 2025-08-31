@@ -26,7 +26,7 @@
 #'   \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote time points in which estimates were obtained.
 #'   Rows denote estimates for each realisation.}
 #'   \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
-#'   \item{\code{call}}{Information about the input parameters used}
+#'   \item{\code{call}}{Information about the input parameters used.}
 #' }
 #'
 #' @details
@@ -42,7 +42,7 @@
 #' @seealso \code{\link{print.k_hurst}}, \code{\link{plot.k_hurst}}, \code{\link{hclust_hurst}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Simulation of multifractional processes
 #' t <- seq(0, 1, by = (1/2)^10)
 #' H1 <- function(t) {return(0.1 + 0*t)}
@@ -139,7 +139,9 @@ kmeans_hurst <- function(X.t, k, ..., N = 100, Q = 2, L = 2)
 #' Prints the results of k-means clustering of realisations of processes.
 #'
 #' @param x Object of class \code{"k_hurst"}.
-#' @param ... Other arguments
+#' @param ... Other arguments.
+#'
+#' @return Prints an object of class \code{"k_hurst"}.
 #'
 #' @seealso \code{\link{kmeans_hurst}}
 #'
@@ -179,7 +181,7 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
 
   if (type == "estimates")
   {
-    p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
+    p <- ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
       facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "black") +
       labs(title = "Smoothed Hurst estimates in each cluster", x = "Time", y = "Smoothed Hurst estimates")
@@ -188,7 +190,7 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
   }
   else if (type == "centers")
   {
-    p<-ggplot(DF1, aes(.data$t, .data$smth_est)) +
+    p <- ggplot(DF1, aes(.data$t, .data$smth_est)) +
       facet_wrap(~clus, ncol = 2, scales = "free_x") +
       geom_line(color = "red") +
       labs(title = "Cluster centers", x = "Time", y = "Smoothed Hurst estimates")
@@ -197,7 +199,7 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
   }
   else if (type == "ec")
   {
-    p<-ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
+    p <- ggplot(DF, aes(.data$t, .data$smth_est, group = .data$item)) +
       geom_line(color = "black") +
       geom_line(data = DF1, aes(.data$t, .data$smth_est), color = "red") +
       facet_wrap(~clus, ncol = 2, scales = "free_x") +
@@ -207,7 +209,7 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
   }
   else
   {
-    print("Invalid type")
+    message("Invalid type")
   }
 
 }
@@ -223,10 +225,10 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
 #' @param type The type of plot required.
 #' \describe{
 #' \item{\code{"estimates"}}{Only the smoothed Hurst functions in each cluster.}
-#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster}
+#' \item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster.}
 #' \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 #' }
-#' @param ... Other arguments
+#' @param ... Other arguments.
 #'
 #' @return A ggplot object which is used to plot the relevant \code{type} of plot: \code{"estimates"}, \code{"centers"} or \code{"ec"}.
 #' @exportS3Method Rmfrac::plot
@@ -236,7 +238,7 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
 #' @seealso \code{\link{kmeans_hurst}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #Simulation of multifractional processes
 #' t <- seq(0, 1, by = (1/2)^10)
 #' H1 <- function(t) {return(0.1 + 0*t)}
@@ -255,5 +257,12 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
 #' plot(KC, type = "ec")
 #' }
 plot.k_hurst <- function(x, type = "estimates", ...) {
-  print(autoplot(x, type = type))
+
+  pp <- (autoplot(x, type = type))
+
+  if (interactive()) {
+    print(pp)
+  }
+
+  invisible(pp)
 }

@@ -47,7 +47,7 @@ used for k-means clustering in \code{\link[stats]{kmeans}}. The Hartigan and Won
 default k-means clustering algorithm.
 }
 \examples{
-\dontrun{
+\donttest{
 #Simulation of multifractional processes
 t <- seq(0, 1, by = (1/2)^10)
 H1 <- function(t) {return(0.1 + 0*t)}

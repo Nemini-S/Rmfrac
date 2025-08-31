@@ -4,7 +4,13 @@
 \alias{Bm}
 \title{Simulation of Brownian motion}
 \usage{
-Bm(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
+Bm(
+  x_start = 0,
+  t_start = 0,
+  t_end = 1,
+  N = 1000,
+  plot = getOption("Rmfrac.plot", FALSE)
+)
 }
 \arguments{
 \item{x_start}{Value of the process at the initial time point (additive constant mean).}
@@ -16,7 +22,7 @@ Bm(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
 \item{N}{Number of time steps on the interval \code{[t_start,t_end]}.
 Default set to 1000.}
 
-\item{plot}{Logical: If \code{TRUE}, the realisation of the Brownian
+\item{plot}{Logical: If \code{TRUE} and interactive(), the realisation of the Brownian
 motion is plotted.}
 }
 \value{

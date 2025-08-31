@@ -4,7 +4,12 @@
 \alias{mean_streak}
 \title{Mean time span of increasing/decreasing streaks}
 \usage{
-mean_streak(X, direction = "increasing", subI = NULL, plot = FALSE)
+mean_streak(
+  X,
+  direction = "increasing",
+  subI = NULL,
+  plot = getOption("Rmfrac.plot", FALSE)
+)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
