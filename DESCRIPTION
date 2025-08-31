@@ -5,7 +5,7 @@ Version: 0.1.1
 Description: Simulation of several fractional and multifractional processes. Includes Brownian and fractional Brownian motions, bridges and Gaussian Haar-based multifractional processes (GHBMP). Implements the methods from Ayache, Olenko and Samarakoon (2025)<doi:10.48550/arXiv.2503.07286> for simulation of GHBMP. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions. Several functions to estimate and plot geometric statistics of the processes and time series. Provides a 'shiny' application for interactive use of the functions from the package.
 License: GPL-3
 Encoding: UTF-8
-Imports: parallel, parallelly, ggplot2(>= 3.5.0), zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, fields
+Imports: parallel, parallelly, ggplot2(>= 3.5.0), zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, fields, utils 
 LazyData: false
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)

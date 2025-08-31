@@ -159,6 +159,7 @@ print.k_hurst <- function(x, ...)
 
 #' @importFrom ggplot2 autoplot ggplot facet_wrap geom_line labs aes
 #' @importFrom rlang .data
+#' @importFrom stats aggregate
 #' @export
 #'
 autoplot.k_hurst <- function(object, ..., type = "estimates")

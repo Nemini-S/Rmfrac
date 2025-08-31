@@ -272,7 +272,7 @@ server <- function(input, output, session) {
 
   data_input <- shiny::reactive({
     req(input$file)
-    DF_Input <- read.csv(input$file$datapath, header = TRUE)
+    DF_Input <- utils::read.csv(input$file$datapath, header = TRUE)
     DF_Input
   })
 

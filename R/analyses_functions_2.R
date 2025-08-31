@@ -447,6 +447,8 @@ cross_mean <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)
 #' @export long_streak
 #' @importFrom ggplot2 ggplot geom_line labs aes
 #' @importFrom rlang .data
+#' @importFrom stats aggregate
+#' @importFrom utils head tail
 #' @seealso \code{\link{mean_streak}}
 #' @examples
 #' t <- seq(0, 1, length = 100)
