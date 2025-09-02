@@ -10,7 +10,8 @@
 #' @param subI Time sub-interval as a vector, where the lower bound is
 #' the first element and the upper bound is the second. Optional: If provided level crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
-#' @param plot Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted.
+#' @param plot Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted
+#' in interactive sessions.
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted at the crossing point(s).
 #'
 #' @return The estimated crossing times at a given level.
@@ -24,7 +25,7 @@
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' cross_T(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE, vline = TRUE)
 #'
-cross_T <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), vline = FALSE){
+cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -148,7 +149,7 @@ cross_T <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), v
 #' the first element and the upper bound is the second. Optional: If provided crossing rate
 #' for the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and crossing
-#' points are plotted.
+#' points are plotted in interactive sessions.
 #'
 #' @return The crossing rate, which gives average number of crossings per time unit.
 #' @export cross_rate
@@ -159,7 +160,7 @@ cross_T <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), v
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' cross_rate(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
-cross_rate <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
+cross_rate <- function(X, A, subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -278,7 +279,7 @@ if (is.null(subI)){
 #' the first element and the upper bound is the second. Optional: If provided mean crossing
 #' times for the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and crossing
-#' points are plotted.
+#' points are plotted in interactive sessions.
 #'
 #' @return The estimated mean time between crossings.
 #' @export cross_mean
@@ -289,7 +290,7 @@ if (is.null(subI)){
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' cross_mean(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
-cross_mean <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
+cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -439,7 +440,7 @@ cross_mean <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)
 #' the first element and the upper bound is the second. Optional: If provided level crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series and the longest streak of
-#' increasing/decreasing is plotted.
+#' increasing/decreasing is plotted in interactive sessions.
 #'
 #' @return A data frame with one row for each longest streak, containing the time interval
 #' and the corresponding values of \eqn{X(t)} at the streak endpoints.
@@ -454,7 +455,7 @@ cross_mean <- function(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE)
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(100))
 #' long_streak(TS, direction = 'decreasing', subI = c(0.2, 0.8), plot = TRUE)
-long_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
+long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -702,7 +703,7 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOpti
 #' the first element and the upper bound is the second. Optional: If provided level crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series and the increasing/decreasing
-#' streaks are plotted.
+#' streaks are plotted in interactive sessions.
 #'
 #' @return Mean time span of the increasing/decreasing streaks.
 #' @export mean_streak
@@ -714,7 +715,7 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOpti
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(100))
 #' mean_streak(TS, direction = 'decreasing', subI = c(0.2,0.8), plot = TRUE)
 #'
-mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
+mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
     stop("X must be a numeric data frame")
@@ -930,7 +931,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOpti
 #' @param period Period length used for smoothing. Default is set to 14.
 #' @param plot Logical: If \code{TRUE}, the time series and the
 #' RSI are plotted (with \code{overbought} and
-#' \code{oversold} levels) in the same window.
+#' \code{oversold} levels) in the same window in interactive sessions.
 #' @param overbought Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.
 #' @param oversold Horizontal line which indicates an oversold level in the RSI plot. Default is set to 30.
 #'
@@ -953,7 +954,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = getOpti
 #'             75.44,75.46,74.98)
 #' RS_Index(X, plot = TRUE)
 #'
-RS_Index <- function(X, period = 14, plot = getOption("Rmfrac.plot", FALSE), overbought = 70, oversold = 30)
+RS_Index <- function(X, period = 14, plot = FALSE, overbought = 70, oversold = 30)
 {
 
   if(!is.vector(X)){

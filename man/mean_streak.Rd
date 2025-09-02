@@ -26,7 +26,7 @@ times of the sub-interval is returned, otherwise the whole time interval is cons
 streaks are plotted.}
 }
 \value{
-Mean time span of the increasing/decreasing streaks
+Mean time span of the increasing/decreasing streaks.
 }
 \description{
 Computes the mean time span of the increasing/decreasing streaks

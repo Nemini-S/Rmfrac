@@ -27,8 +27,7 @@ times of the sub-interval is returned, otherwise the whole time interval is cons
 \item{vline}{Logical: If \code{TRUE}, a vertical line is plotted at the crossing point(s).}
 }
 \value{
-The estimated crossing times at a given level. If \code{plot=TRUE}, the time series with
-the constant level crossing and level crossing times are plotted.
+The estimated crossing times at a given level.
 }
 \description{
 Computes the estimated \eqn{t} value(s), in which a time series crosses a specific

@@ -26,8 +26,8 @@ autoplot.mp <- function(object, ..., H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE
   }
 
   if(H_Smooth_Est){
-    p <- p + geom_smooth(data = H_est, aes(x = .data$x, y = .data$y, color = factor("Smoothed Estimate H"))
-                         ,method = "loess", se = FALSE, span = 0.3, linewidth = 1)
+    p <- p + geom_smooth(data = H_est, aes(x = .data$x, y = .data$y, color = factor("Smoothed Estimate H")),
+                         method = "loess", se = FALSE, span = 0.3, linewidth = 1)
 
   }
 

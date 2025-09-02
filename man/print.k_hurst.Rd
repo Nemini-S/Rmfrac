@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{Object of class \code{"k_hurst"}.}
 
-\item{...}{Other arguments}
+\item{...}{Other arguments.}
 }
 \value{
 Prints an object of class \code{"k_hurst"}.

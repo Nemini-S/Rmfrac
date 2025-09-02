@@ -20,8 +20,7 @@ for the sub-interval is returned, otherwise the whole time interval is considere
 points are plotted.}
 }
 \value{
-The crossing rate, which gives average number of crossings per time unit. If \code{plot=TRUE}, the time series with
-the constant level and crossing points are plotted.
+The crossing rate, which gives average number of crossings per time unit.
 }
 \description{
 Computes the rate at which a time series crosses a specific

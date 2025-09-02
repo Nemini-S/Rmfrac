@@ -28,10 +28,10 @@ measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}.
 the first element and the upper bound is the second. Optional: If provided,
 the estimated sojourn measure for the sub-interval is returned, otherwise the whole time interval is considered.}
 
-\item{plot}{Logical: If \code{TRUE}, the time series, constant level and the sojourn measure are plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, constant level (in blue) and the sojourn measure (in red) are plotted.}
 }
 \value{
-Estimated sojourn measure. If \code{plot=TRUE}, the time series, the constant level (in blue) and the excursion region (in red) are plotted.
+Estimated sojourn measure.
 }
 \description{
 Computes the estimated sojourn measure for a time series \eqn{X(t)} greater or lower than the

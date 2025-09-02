@@ -18,16 +18,15 @@ RS_Index(
 \item{period}{Period length used for smoothing. Default is set to 14.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series and the
-RSI are plotted in the same window.}
+RSI are plotted (with \code{overbought} and
+\code{oversold} levels) in the same window.}
 
 \item{overbought}{Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.}
 
 \item{oversold}{Horizontal line which indicates an oversold level in the RSI plot. Default is set to 30.}
 }
 \value{
-A list, vector or \code{xts} object of the RSI values. If \code{plot=TRUE},
-the time series and the RSI with \code{overbought} and
-\code{oversold} levels are plotted.
+A list, vector or \code{xts} object of the RSI values.
 }
 \description{
 This function computes the Relative Strength Index (RSI) for a time series.

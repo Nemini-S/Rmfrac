@@ -12,11 +12,11 @@
 \item{type}{The type of plot required:
 \describe{
 \item{\code{"estimates"}}{Only the smoothed Hurst functions in each cluster.}
-\item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster}
+\item{\code{"centers"}}{Only the cluster centers. Center denotes average of all smoothed Hurst functions in the cluster.}
 \item{\code{"ec"}}{Both \code{"estimates"} and \code{"centers"}.}
 }}
 
-\item{...}{Other arguments}
+\item{...}{Other arguments.}
 }
 \value{
 A ggplot object which is used to plot the relevant \code{type} of plot: \code{"estimates"}, \code{"centers"} or \code{"ec"}.

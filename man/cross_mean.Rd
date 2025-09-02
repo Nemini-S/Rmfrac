@@ -20,8 +20,7 @@ times for the sub-interval is returned, otherwise the whole time interval is con
 points are plotted.}
 }
 \value{
-The estimated mean time between crossings. If \code{plot=TRUE}, the time series with
-the constant level and crossing points are plotted.
+The estimated mean time between crossings.
 }
 \description{
 Computes the mean duration between crossings of a time series

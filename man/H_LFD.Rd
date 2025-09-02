@@ -20,11 +20,11 @@ To get reliable results, it is recommended to use at least 500 time points.}
 \value{
 The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 \describe{
-\item{Raw_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
-\item{Smoothed_Hurst_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
-\item{Raw_LFD_estimates}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-\item{Smoothed_LFD_estimates}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
-\item{Data}{User provided time series.}}
+\item{\code{Raw_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
+\item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
+\item{\code{Raw_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
+\item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
+\item{\code{Data}}{User provided time series.}}
 }
 \description{
 For user provided time series creates objects of class \code{"H_LFD"} with the

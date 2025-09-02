@@ -6,7 +6,7 @@
 #' @param theta Smoothing parameter.
 #' @param X A data frame where the first column is the numeric time sequence and the remaining
 #' columns are the values of each realisation of the process.
-#' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
+#' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted in interactive sessions.
 #'
 #' @return
 #' An \eqn{m \times m} matrix, where \eqn{m} is the number of time points.
@@ -33,7 +33,7 @@
 #' cov.mat <- est_cov(Data, theta = 0.2, plot = TRUE)
 #' cov.mat
 #' }
-est_cov<-function(X, theta = 0.1, plot = getOption("Rmfrac.plot", FALSE))
+est_cov<-function(X, theta = 0.1, plot = FALSE)
 {
 
   if (!is.data.frame(X) | !(all(sapply(X, is.numeric)))) {
@@ -100,7 +100,7 @@ est_cov<-function(X, theta = 0.1, plot = getOption("Rmfrac.plot", FALSE))
 #' @param H Hurst function \eqn{H(t)} which depends on \code{t}.
 #' @param J Positive integer. For large J values could be rather time consuming. Default is set to 8.
 #' @param theta Optional: Smoothing parameter.
-#' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted.
+#' @param plot Logical: If TRUE, a 3D surface plot of the covariance function is plotted in interactive sessions.
 #' @param num.cores Number of cores to set up the clusters for parallel computing.
 #'
 #' @return An \eqn{m \times m} matrix, where \eqn{m} is the length of \code{t}.
@@ -133,7 +133,7 @@ est_cov<-function(X, theta = 0.1, plot = getOption("Rmfrac.plot", FALSE))
 #' #Non-smoothed covariance function
 #' cov_GHBMP(t, H, plot = TRUE)
 #' }
-cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = getOption("Rmfrac.plot", FALSE), num.cores = availableCores(omit = 1))
+cov_GHBMP<-function(t, H, J = 8, theta = NULL, plot = FALSE, num.cores = availableCores(omit = 1))
 {
 
   if (!is.numeric(t)|!all(t >= 0 & t<= 1)) {

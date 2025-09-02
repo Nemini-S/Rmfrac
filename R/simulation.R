@@ -152,8 +152,8 @@ GHBMP <- function(t, H, J = 15, num.cores = availableCores(omit = 1))
 #' @param t_end Terminal time point.
 #' @param N Number of time steps on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
-#' @param plot Logical: If \code{TRUE} and interactive(), the realisation of the Brownian
-#' motion is plotted.
+#' @param plot Logical: If \code{TRUE}, the realisation of the Brownian
+#' motion is plotted in interactive sessions.
 #'
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of Brownian motion with added constant mean.
@@ -166,7 +166,7 @@ GHBMP <- function(t, H, J = 15, num.cores = availableCores(omit = 1))
 #'
 #' @examples
 #' Bm(t_end = 2, plot = TRUE)
-Bm <- function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = getOption("Rmfrac.plot", FALSE)){
+Bm <- function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 
   if (!is.numeric(x_start)) {
     stop("x_start must be numeric")
@@ -228,8 +228,8 @@ Bm <- function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = getOption("
 #' @param t_end Terminal time point.
 #' @param N Number of time steps on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
-#' @param plot Logical: If \code{TRUE} and interactive(), the realisation of the fractional Brownian
-#' motion is plotted.
+#' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian
+#' motion is plotted in interactive sessions.
 #'
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of fractional Brownian motion
@@ -245,7 +245,7 @@ Bm <- function(x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = getOption("
 #'
 #' @examples
 #' FBm(H = 0.5, plot = TRUE)
-FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = getOption("Rmfrac.plot", FALSE)){
+FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -327,8 +327,8 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = getOpti
 #' @param t_end Terminal time point.
 #' @param N Number of time steps on the interval \code{[t_start,t_end]}.
 #' Default set to 1000.
-#' @param plot Logical: If \code{TRUE} and interactive(), the realisation of the fractional Gaussian noise
-#' is plotted.
+#' @param plot Logical: If \code{TRUE}, the realisation of the fractional Gaussian noise
+#' is plotted in interactive sessions.
 #'
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of fractional Gaussian noise.
@@ -342,7 +342,7 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = getOpti
 #' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #' @examples
 #' FGn(H=0.5,plot=TRUE)
-FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = getOption("Rmfrac.plot", FALSE)){
+FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -407,19 +407,20 @@ FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = getOption("Rmfrac.pl
 #'
 #' @description
 #' This function simulates a realisation of the Brownian bridge over the
-#' time interval \code{[0,t_end]} which has the initial value 0 and terminates
+#' time interval \code{[0,t_end]} which has the initial value \code{x_start} and terminates
 #' at \code{x_end} with \code{N} time steps.
 #'
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
+#' @param x_start Value of the process at the initial time point.
 #' @param N Number of time steps on the interval \code{[0,t_end]}.
 #' Default set to 1000.
-#' @param plot Logical: If \code{TRUE} and interactive(), the realisation of the Brownian bridge
-#' is plotted.
+#' @param plot Logical: If \code{TRUE}, the realisation of the Brownian bridge
+#' is plotted in interactive sessions.
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of Brownian bridge.
-#' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{FBbridge}}
+#' @seealso \code{\link{GHBMP}}, \code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FBbridge}}
 #' @export Bbridge
 #' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
 #' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
@@ -427,7 +428,7 @@ FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = getOption("Rmfrac.pl
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' Bbridge(x_end=2,t_end=1,plot=TRUE)
-Bbridge <- function(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALSE)){
+Bbridge <- function(x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 
   if (!is.numeric(x_end)) {
     stop("x_end must be numeric")
@@ -443,6 +444,10 @@ Bbridge <- function(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALS
     stop("Incorrect inputs for t_start and t_end")
   }
 
+  if (!is.numeric(x_start)) {
+    stop("x_end must be numeric")
+  }
+
   if (!is.numeric(N)) {
     stop("N must be numeric")
   } else if (!(N %% 1 == 0) | !(N > 0)) {
@@ -453,7 +458,7 @@ Bbridge <- function(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALS
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  Bm_sim <- Bm(x_start = 0, t_start = 0, t_end = t_end, N = N)
+  Bm_sim <- Bm(x_start = x_start, t_start = 0, t_end = t_end, N = N)
   X <- Bm_sim[,2] - ((Bm_sim[,1] / t_end) * (Bm_sim[N + 1, 2] - x_end))
   sim_data <- data.frame(t = Bm_sim[,1], X = X)
 
@@ -477,15 +482,16 @@ Bbridge <- function(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALS
 #' @description
 #' This function simulates a realisation of the fractional Brownian bridge
 #' for a provided Hurst parameter over the time interval \code{[0,t_end]},
-#' which has the initial value 0 and terminates at \code{x_end} with \code{N} time steps.
+#' which has the initial value \code{x_start} and terminates at \code{x_end} with \code{N} time steps.
 #'
 #' @param H Hurst parameter which lies between 0 and 1.
 #' @param x_end Value of the process at the terminating time point.
 #' @param t_end Terminal time point.
+#' @param x_start Value of the process at the initial time point.
 #' @param N Number of time steps on the interval \code{[0,t_end]}.
 #' Default set to 1000.
-#' @param plot Logical: If \code{TRUE} and interactive(), the realisation of the fractional Brownian bridge
-#' is plotted.
+#' @param plot Logical: If \code{TRUE}, the realisation of the fractional Brownian bridge
+#' is plotted in interactive sessions.
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of fractional Brownian bridge.
@@ -497,7 +503,7 @@ Bbridge <- function(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALS
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
 #' FBbridge(H = 0.5, x_end = 2, t_end = 1,plot = TRUE)
-FBbridge <- function(H, x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALSE)){
+FBbridge <- function(H, x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
     stop("H must be a number between 0 and 1")
@@ -511,6 +517,10 @@ FBbridge <- function(H, x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", 
     stop("t_end must be numeric")
   } else if ( !(t_end > 0)) {
     stop("Incorrect input for t_end")
+  }
+
+  if (!is.numeric(x_start)) {
+    stop("x_end must be numeric")
   }
 
   if (!(0 < t_end)) {
@@ -527,7 +537,7 @@ FBbridge <- function(H, x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", 
     stop("Plot must have logical inputs either TRUE or FALSE")
   }
 
-  FBm_sim <- FBm(H = H, x_start = 0, t_start = 0, t_end = t_end, N = N)
+  FBm_sim <- FBm(H = H, x_start = x_start, t_start = 0, t_end = t_end, N = N)
   X <- FBm_sim[,2] - (0.5 * (FBm_sim[N + 1, 2] - x_end) * (1 + (FBm_sim[,1] / t_end)^(2*H) - (1 - (FBm_sim[,1] / t_end))^(2*H)))
   sim_data <- data.frame(t = FBm_sim[,1], X = X)
 

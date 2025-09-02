@@ -31,8 +31,7 @@ for the sub-interval is returned, otherwise the whole time interval is considere
 \item{plot}{Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted.}
 }
 \value{
-Excursion area. If \code{plot=TRUE}, the time series, the constant level and excursion area
-are plotted.
+Excursion area.
 }
 \description{
 Computes the excursion area where a time series \eqn{X(t)} is greater or lower than the

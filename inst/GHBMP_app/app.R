@@ -41,8 +41,9 @@ ui <- shiny::navbarPage("",
       shiny::column(4,
       shiny::wellPanel(
       shiny::h4("Simulation Parameters"),
-      shiny::numericInput("xend_BB", "Terminating value", value = 0),
+      shiny::numericInput("xend_BB", "Terminating value", value = 1),
       shiny::numericInput("t_end_BB", "Terminal time point", value = 1, min = 0),
+      shiny::numericInput("xstart_BB", "Initial value", value = 0),
       shiny::numericInput("N_BB", "Number of time steps", value = 1000, min = 0, step = 1),
       shiny::actionButton("submit_BB", "Simulate")),
 
@@ -111,8 +112,9 @@ ui <- shiny::navbarPage("",
       shiny::wellPanel(
       shiny::h4("Simulation Parameters"),
       shiny::numericInput("H_FBB", "Hurst Parameter", value = 0.5, min = 0, max = 1),
-      shiny::numericInput("xend_FBB", "Terminating value", value = 0),
+      shiny::numericInput("xend_FBB", "Terminating value", value = 1),
       shiny::numericInput("t_end_FBB", "Terminal time point", value = 1, min = 0),
+      shiny::numericInput("xstart_FBB", "Initial value", value = 0),
       shiny::numericInput("N_FBB", "Number of time steps", value = 1000, min = 0, step = 1),
       shiny::actionButton("submit_FBB", "Simulate")),
 
@@ -1808,8 +1810,9 @@ server <- function(input, output, session) {
 
     x_end <- input$xend_BB
     t_end <- input$t_end_BB
+    x_start <- input$xstart_BB
     N <- input$N_BB
-    Bbridge(x_end = x_end, t_end = t_end, N = N)
+    Bbridge(x_end = x_end, t_end = t_end, x_start = x_start, N = N)
   })
 
   output$bbPlot <- shiny::renderPlot({
@@ -2636,8 +2639,9 @@ server <- function(input, output, session) {
     H <- input$H_FBB
     x_end <- input$xend_FBB
     t_end <- input$t_end_FBB
+    x_start <- input$xstart_FBB
     N <- input$N_FBB
-    FBbridge(H = H, x_end = x_end, t_end = t_end, N = N)
+    FBbridge(H = H, x_end = x_end, t_end = t_end, x_start =x_start, N = N)
   })
 
   output$fbbPlot <- shiny::renderPlot({

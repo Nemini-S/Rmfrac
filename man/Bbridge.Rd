@@ -4,12 +4,20 @@
 \alias{Bbridge}
 \title{Simulation of Brownian bridge}
 \usage{
-Bbridge(x_end, t_end, N = 1000, plot = getOption("Rmfrac.plot", FALSE))
+Bbridge(
+  x_end,
+  t_end,
+  x_start = 0,
+  N = 1000,
+  plot = getOption("Rmfrac.plot", FALSE)
+)
 }
 \arguments{
 \item{x_end}{Value of the process at the terminating time point.}
 
 \item{t_end}{Terminal time point.}
+
+\item{x_start}{Value of the process at the initial time point.}
 
 \item{N}{Number of time steps on the interval \code{[0,t_end]}.
 Default set to 1000.}
@@ -23,7 +31,7 @@ column is simulated values of the realisation of Brownian bridge.
 }
 \description{
 This function simulates a realisation of the Brownian bridge over the
-time interval \code{[0,t_end]} which has the initial value 0 and terminates
+time interval \code{[0,t_end]} which has the initial value \code{x_start} and terminates
 at \code{x_end} with \code{N} time steps.
 }
 \examples{

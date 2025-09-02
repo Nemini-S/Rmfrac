@@ -34,7 +34,7 @@ Columns denote time points in which estimates were obtained. Row names denote cl
 \item{\code{smoothed_Hurst_estimates}}{A data frame of smoothed Hurst estimates. Columns denote time points in which estimates were obtained.
 Rows denote estimates for each realisation.}
 \item{\code{raw_Hurst_estimates}}{A list of data frames of raw Hurst estimates.}
-\item{\code{call}}{Information about the input parameters used}
+\item{\code{call}}{Information about the input parameters used.}
 }
 }
 \description{

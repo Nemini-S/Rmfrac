@@ -12,7 +12,8 @@
 #' @param subI Time sub-interval is a vector, where the lower bound is
 #' the first element and the upper bound is the second. Optional: If provided,
 #' the estimated sojourn measure for the sub-interval is returned, otherwise the whole time interval is considered.
-#' @param plot Logical: If \code{TRUE}, the time series, constant level (in blue) and the sojourn measure (in red) are plotted.
+#' @param plot Logical: If \code{TRUE}, the time series, constant level (in blue) and the sojourn measure (in red) are plotted
+#' in interactive sessions.
 #'
 #' @return Estimated sojourn measure.
 #' @export sojourn
@@ -24,7 +25,7 @@
 #' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
 #' sojourn(TS, 0.8, level='lower',subI = c(0.5,0.8), plot = TRUE)
-sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
+sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = False){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -317,7 +318,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = getO
 #' @param subI Time sub-interval is a vector, where the lower bound is
 #' the first element and the upper bound is the second. Optional: If provided, the excursion area
 #' for the sub-interval is returned, otherwise the whole time interval is considered.
-#' @param plot Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted.
+#' @param plot Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted in interactive sessions.
 #'
 #' @return Excursion area.
 #' @importFrom ggplot2 ggplot geom_line geom_hline geom_polygon labs aes ggtitle theme element_text
@@ -333,7 +334,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = getO
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(1000))
 #' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5,0.8), plot = TRUE)
 #'
-exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = getOption("Rmfrac.plot", FALSE)){
+exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = False){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -687,7 +688,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = get
 #' @param subI Time sub-interval is a vector where the lower bound is
 #' the first element and upper bound is the second. Optional: If provided maximum of the
 #' sub-interval is returned, otherwise the whole time sequence is considered.
-#' @param plot Logical: If \code{TRUE}, the time series, the maximum and corresponding \eqn{t} values are plotted.
+#' @param plot Logical: If \code{TRUE}, the time series, the maximum and corresponding \eqn{t} values are plotted in interactive sessions.
 #' @param hline Logical: If \code{TRUE}, a horizontal line is plotted across the maximum.
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the maximum.
 #'
@@ -705,7 +706,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = get
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' X_max(TS, subI = c(0.5,0.8), plot = TRUE)
 #'
-X_max <- function(X, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), vline = FALSE, hline = FALSE){
+X_max <- function(X, subI = NULL, plot = False, vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -815,7 +816,7 @@ X_max <- function(X, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), vline 
 #' @param subI Time sub-interval is a vector where the lower bound is
 #' the first element and upper bound is the second. Optional: If provided minimum of the
 #' sub-interval is returned, otherwise the whole time interval is considered.
-#' @param plot Logical: If \code{TRUE}, the time series, the minimum and corresponding \eqn{t} values are plotted.
+#' @param plot Logical: If \code{TRUE}, the time series, the minimum and corresponding \eqn{t} values are plotted in interactive sessions.
 #' @param hline Logical: If \code{TRUE}, a horizontal line is plotted across the minimum.
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the minimum.
 #'
@@ -834,7 +835,7 @@ X_max <- function(X, subI = NULL, plot = getOption("Rmfrac.plot", FALSE), vline 
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' X_min(TS, subI = c(0.2, 0.8), plot = TRUE)
 #'
-X_min <- function(X, subI = NULL, plot = getOption("Rmfrac.plot", FALSE),vline = FALSE, hline = FALSE){
+X_min <- function(X, subI = NULL, plot = False,vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {

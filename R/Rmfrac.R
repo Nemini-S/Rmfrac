@@ -1,4 +1,4 @@
-#' Rmfrac: Simulation and analyses of multifractional processes
+#' Rmfrac: Simulation and analysis of multifractional processes
 #'
 #' A collection of tools for simulating, analysing and visualising multifractional processes
 #' and time series. The package includes estimation techniques for the Hurst function,
