@@ -4,7 +4,7 @@
 \name{Rmfrac-package}
 \alias{Rmfrac}
 \alias{Rmfrac-package}
-\title{Rmfrac: Simulation and analyses of multifractional processes}
+\title{Rmfrac: Simulation and analysis of multifractional processes}
 \description{
 A collection of tools for simulating, analysing and visualising multifractional processes
 and time series. The package includes estimation techniques for the Hurst function,

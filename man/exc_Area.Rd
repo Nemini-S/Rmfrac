@@ -4,14 +4,7 @@
 \alias{exc_Area}
 \title{Excursion area}
 \usage{
-exc_Area(
-  X,
-  A,
-  N = 10000,
-  level = "greater",
-  subI = NULL,
-  plot = getOption("Rmfrac.plot", FALSE)
-)
+exc_Area(X, A, N = 10000, level = "greater", subI = NULL, plot = FALSE)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
@@ -28,7 +21,7 @@ area is required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}.
 the first element and the upper bound is the second. Optional: If provided, the excursion area
 for the sub-interval is returned, otherwise the whole time interval is considered.}
 
-\item{plot}{Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, constant level and excursion area are plotted in interactive sessions.}
 }
 \value{
 Excursion area.

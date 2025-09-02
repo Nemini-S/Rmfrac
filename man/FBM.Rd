@@ -4,14 +4,7 @@
 \alias{FBm}
 \title{Simulation of fractional Brownian motion}
 \usage{
-FBm(
-  H,
-  x_start = 0,
-  t_start = 0,
-  t_end = 1,
-  N = 1000,
-  plot = getOption("Rmfrac.plot", FALSE)
-)
+FBm(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE)
 }
 \arguments{
 \item{H}{Hurst parameter which lies between 0 and 1.}
@@ -25,8 +18,8 @@ FBm(
 \item{N}{Number of time steps on the interval \code{[t_start,t_end]}.
 Default set to 1000.}
 
-\item{plot}{Logical: If \code{TRUE} and interactive(), the realisation of the fractional Brownian
-motion is plotted.}
+\item{plot}{Logical: If \code{TRUE}, the realisation of the fractional Brownian
+motion is plotted in interactive sessions.}
 }
 \value{
 A data frame where the first column is \code{t} and second

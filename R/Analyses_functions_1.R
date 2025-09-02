@@ -25,7 +25,7 @@
 #' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
 #' sojourn(TS, 0.8, level='lower',subI = c(0.5,0.8), plot = TRUE)
-sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = False){
+sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -334,7 +334,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = Fals
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(1000))
 #' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5,0.8), plot = TRUE)
 #'
-exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = False){
+exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -706,7 +706,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = Fal
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' X_max(TS, subI = c(0.5,0.8), plot = TRUE)
 #'
-X_max <- function(X, subI = NULL, plot = False, vline = FALSE, hline = FALSE){
+X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {
@@ -835,7 +835,7 @@ X_max <- function(X, subI = NULL, plot = False, vline = FALSE, hline = FALSE){
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
 #' X_min(TS, subI = c(0.2, 0.8), plot = TRUE)
 #'
-X_min <- function(X, subI = NULL, plot = False,vline = FALSE, hline = FALSE){
+X_min <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
   {

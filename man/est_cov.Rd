@@ -4,7 +4,7 @@
 \alias{est_cov}
 \title{Empirical covariance function}
 \usage{
-est_cov(X, theta = 0.1, plot = getOption("Rmfrac.plot", FALSE))
+est_cov(X, theta = 0.1, plot = FALSE)
 }
 \arguments{
 \item{X}{A data frame where the first column is the numeric time sequence and the remaining
@@ -12,7 +12,7 @@ columns are the values of each realisation of the process.}
 
 \item{theta}{Smoothing parameter.}
 
-\item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted.}
+\item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted in interactive sessions.}
 }
 \value{
 An \eqn{m \times m} matrix, where \eqn{m} is the number of time points.

@@ -35,7 +35,7 @@ The default is set to \code{0.5+0*t}.}
 \description{
 Launches a Shiny app to visualise and analyse realisations of Brownian motion (see \code{\link{Bm}}),
 Brownian bridge (see \code{\link{Bbridge}}), fractional Brownian motion (see \code{\link{FBm}}),
-fractional Brownian bridge (see \code{\link{FBbridge}}), fractional Gaussian noise(see \code{\link{FGn}}),
+fractional Brownian bridge (see \code{\link{FBbridge}}), fractional Gaussian noise (see \code{\link{FGn}}),
 Gaussian Haar-based multifractional processes (see \code{\link{GHBMP}}) and user-provided time series data.
 }
 \details{

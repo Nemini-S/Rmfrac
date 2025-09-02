@@ -4,14 +4,7 @@
 \alias{sojourn}
 \title{Estimated sojourn measure}
 \usage{
-sojourn(
-  X,
-  A,
-  N = 10000,
-  level = "greater",
-  subI = NULL,
-  plot = getOption("Rmfrac.plot", FALSE)
-)
+sojourn(X, A, N = 10000, level = "greater", subI = NULL, plot = FALSE)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
@@ -28,7 +21,8 @@ measure required for \code{X}, \code{"greater"} or \code{"lower"} than \code{A}.
 the first element and the upper bound is the second. Optional: If provided,
 the estimated sojourn measure for the sub-interval is returned, otherwise the whole time interval is considered.}
 
-\item{plot}{Logical: If \code{TRUE}, the time series, constant level (in blue) and the sojourn measure (in red) are plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, constant level (in blue) and the sojourn measure (in red) are plotted
+in interactive sessions.}
 }
 \value{
 Estimated sojourn measure.

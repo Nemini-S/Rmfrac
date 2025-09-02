@@ -9,7 +9,7 @@ cov_GHBMP(
   H,
   J = 8,
   theta = NULL,
-  plot = getOption("Rmfrac.plot", FALSE),
+  plot = FALSE,
   num.cores = availableCores(omit = 1)
 )
 }
@@ -22,7 +22,7 @@ cov_GHBMP(
 
 \item{theta}{Optional: Smoothing parameter.}
 
-\item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted.}
+\item{plot}{Logical: If TRUE, a 3D surface plot of the covariance function is plotted in interactive sessions.}
 
 \item{num.cores}{Number of cores to set up the clusters for parallel computing.}
 }

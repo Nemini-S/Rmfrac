@@ -4,13 +4,7 @@
 \alias{RS_Index}
 \title{Relative strength index}
 \usage{
-RS_Index(
-  X,
-  period = 14,
-  plot = getOption("Rmfrac.plot", FALSE),
-  overbought = 70,
-  oversold = 30
-)
+RS_Index(X, period = 14, plot = FALSE, overbought = 70, oversold = 30)
 }
 \arguments{
 \item{X}{A vector.}
@@ -19,7 +13,7 @@ RS_Index(
 
 \item{plot}{Logical: If \code{TRUE}, the time series and the
 RSI are plotted (with \code{overbought} and
-\code{oversold} levels) in the same window.}
+\code{oversold} levels) in the same window in interactive sessions.}
 
 \item{overbought}{Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.}
 

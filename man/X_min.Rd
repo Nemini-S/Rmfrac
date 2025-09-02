@@ -4,13 +4,7 @@
 \alias{X_min}
 \title{Estimated minimum of a time series}
 \usage{
-X_min(
-  X,
-  subI = NULL,
-  plot = getOption("Rmfrac.plot", FALSE),
-  vline = FALSE,
-  hline = FALSE
-)
+X_min(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
@@ -20,7 +14,7 @@ and the second the values of the time series \eqn{X(t)}.}
 the first element and upper bound is the second. Optional: If provided minimum of the
 sub-interval is returned, otherwise the whole time interval is considered.}
 
-\item{plot}{Logical: If \code{TRUE}, the time series, the minimum and corresponding \eqn{t} values are plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, the minimum and corresponding \eqn{t} values are plotted in interactive sessions.}
 
 \item{vline}{Logical: If \code{TRUE}, a vertical line is plotted across the minimum.}
 

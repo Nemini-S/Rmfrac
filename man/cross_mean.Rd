@@ -4,7 +4,7 @@
 \alias{cross_mean}
 \title{Mean time between crossings}
 \usage{
-cross_mean(X, A, subI = NULL, plot = getOption("Rmfrac.plot", FALSE))
+cross_mean(X, A, subI = NULL, plot = FALSE)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
@@ -17,7 +17,7 @@ the first element and the upper bound is the second. Optional: If provided mean 
 times for the sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series, the constant level and crossing
-points are plotted.}
+points are plotted in interactive sessions.}
 }
 \value{
 The estimated mean time between crossings.

@@ -4,13 +4,7 @@
 \alias{cross_T}
 \title{Estimated crossing times}
 \usage{
-cross_T(
-  X,
-  A,
-  subI = NULL,
-  plot = getOption("Rmfrac.plot", FALSE),
-  vline = FALSE
-)
+cross_T(X, A, subI = NULL, plot = FALSE, vline = FALSE)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
@@ -22,7 +16,8 @@ and the second one is the values of the time series \eqn{X(t)}.}
 the first element and the upper bound is the second. Optional: If provided level crossing
 times of the sub-interval is returned, otherwise the whole time interval is considered.}
 
-\item{plot}{Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted.}
+\item{plot}{Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted
+in interactive sessions.}
 
 \item{vline}{Logical: If \code{TRUE}, a vertical line is plotted at the crossing point(s).}
 }
