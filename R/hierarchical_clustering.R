@@ -16,7 +16,7 @@
 #' are \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} and \code{"centroid"}.
 #' The default method is \code{"complete"}.
 #' @param dendrogram Logical: If \code{TRUE} the dendrogram is plotted indicating
-#' the clusters.
+#' the clusters in interactive sessions.
 #' @param N Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions. Fixed integer greater than or equal to 2. Default is set to 2.
@@ -125,9 +125,9 @@ hclust_hurst <- function(X.t, k = NULL, h = NULL, dist.method = "euclidean", met
     clusters<-cutree(hc, k = k)
     n_cl <- k
 
-    if(dendrogram)
+    if(dendrogram && interactive())
     {
-      plot(as.dendrogram(hc), ylab = "Height",main = paste("Cluster dendogram - ",method))
+      plot(as.dendrogram(hc), ylab = "Height",main = paste("Cluster dendrogram - ",method))
       rect.hclust(hc, k = k, border = "red")
     }
 
@@ -144,7 +144,7 @@ hclust_hurst <- function(X.t, k = NULL, h = NULL, dist.method = "euclidean", met
     clusters<-cutree(hc, h = h)
     n_cl<-length(unique(clusters))
 
-    if(dendrogram)
+    if(dendrogram && interactive())
     {
       plot(as.dendrogram(hc),ylab="Height",main = paste("Cluster dendrogram - ",method))
       rect.hclust(hc, h = h, border = "red")
