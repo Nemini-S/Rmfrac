@@ -13,7 +13,7 @@ and the second one is the values of the time series \eqn{X(t)}.}
 \item{A}{Constant level as a numeric value.}
 
 \item{subI}{Time sub-interval as a vector, where the lower bound is
-the first element and the upper bound is the second. Optional: If provided lestimated crossing
+the first element and the upper bound is the second. Optional: If provided estimated crossing
 times of the sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted

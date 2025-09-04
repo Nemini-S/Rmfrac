@@ -11,8 +11,8 @@
 #' **GHBMP simulation**
 #' \describe{
 #'   \item{\code{Hurst function}}{Input the Hurst function in terms of \code{t}.
-#'   The default is set to \code{0.5+0*t}.}
-#'   \item{\code{Time sequence}}{Input the time sequence which belongs to the interval \eqn{[0,1]}. The default is set to \code{seq(0,1,by=(1/2)^10)}.}
+#'   The default is set to \code{0.5 + 0*t}.}
+#'   \item{\code{Time sequence}}{Input the time sequence which belongs to the interval \eqn{[0,1]}. The default is set to \code{seq(0, 1, by = (1/2)^10)}.}
 #'   \item{\code{J}}{Input or select a positive integer. For large \code{J} could be rather time consuming. Default is set to 15.}}
 #'**Hurst function and LFD estimation**
 #'   \describe{

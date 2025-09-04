@@ -15,11 +15,11 @@ plotting functions for simulated realisations, user-provided time series and the
 
 \itemize{
 \item Simulation of Brownian motion, fractional Brownian motion, fractional Gaussian noise,
-Brownian bridge and fractional Brownian bridge
-\item Simulation of Gaussian Haar-based multifractional process (GHBMP)
-\item Estimation of Hurst function and Local Fractal Dimension
+Brownian bridge and fractional Brownian bridge.
+\item Simulation of Gaussian Haar-based multifractional process (GHBMP).
+\item Estimation of Hurst function and Local Fractal Dimension.
 \item Customisable plotting functions for GHBMP and user provided time series
-with estimates of Hurst function and Local Fractal Dimension
+with estimates of Hurst function and Local Fractal Dimension.
 \item Estimation and visualisation of geometric statistics using realisations of stochastic processes
 and time series. Clustering based on the Hurst function. Estimating sojourn measure, excursion area, etc.
 \item An interactive Shiny application that provides options to explore and visualise
