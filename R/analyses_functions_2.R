@@ -8,7 +8,7 @@
 #' and the second one is the values of the time series \eqn{X(t)}.
 #' @param A Constant level as a numeric value.
 #' @param subI Time sub-interval as a vector, where the lower bound is
-#' the first element and the upper bound is the second. Optional: If provided level crossing
+#' the first element and the upper bound is the second. Optional: If provided lestimated crossing
 #' times of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series, the constant level and corresponding \eqn{t} values are plotted
 #' in interactive sessions.
@@ -17,7 +17,7 @@
 #' @return The estimated crossing times at a given level.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
-#' @seealso \code{\link{cross_rate}} \code{\link{cross_mean}}
+#' @seealso \code{\link{cross_rate}}, \code{\link{cross_mean}}
 #' @export cross_T
 #'
 #' @examples
@@ -429,7 +429,7 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
 #' Longest increasing/decreasing streak
 #' @description
-#' Computes the time span of the longest increasing or decreasing streak
+#' Computes the time span of the longest increasing or decreasing streak(s)
 #' of a time series for the provided time interval or its sub-interval.
 #'
 #' @param X Data frame where the first column is a numeric time sequence \eqn{t}
@@ -437,12 +437,12 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 #' @param direction A character string which specifies the direction of
 #' the streak: \code{"increasing"} or \code{"decreasing"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
-#' the first element and the upper bound is the second. Optional: If provided level crossing
-#' times of the sub-interval is returned, otherwise the whole time interval is considered.
-#' @param plot Logical: If \code{TRUE}, the time series and the longest streak of
+#' the first element and the upper bound is the second. Optional: If provided
+#' longest streak(s) time span of the sub-interval is returned, otherwise the whole time interval is considered.
+#' @param plot Logical: If \code{TRUE}, the time series and the longest streaks(s) of
 #' increasing/decreasing is plotted in interactive sessions.
 #'
-#' @return A data frame with one row for each longest streak, containing the time interval
+#' @return A data frame with one row for each longest streak, containing the time span
 #' and the corresponding values of \eqn{X(t)} at the streak endpoints.
 #'
 #' @export long_streak
@@ -700,8 +700,8 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' @param direction A character string which specifies the direction of
 #' the streak: \code{"increasing"} or \code{"decreasing"}.
 #' @param subI Time sub-interval is a vector, where the lower bound is
-#' the first element and the upper bound is the second. Optional: If provided level crossing
-#' times of the sub-interval is returned, otherwise the whole time interval is considered.
+#' the first element and the upper bound is the second. Optional: If provided mean time span
+#' of the sub-interval is returned, otherwise the whole time interval is considered.
 #' @param plot Logical: If \code{TRUE}, the time series and the increasing/decreasing
 #' streaks are plotted in interactive sessions.
 #'
@@ -935,7 +935,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' @param overbought Horizontal line which indicates an overbought level in the RSI plot. Default is set to 70.
 #' @param oversold Horizontal line which indicates an oversold level in the RSI plot. Default is set to 30.
 #'
-#' @return A list, vector or \code{xts} object of the RSI values.
+#' @return A list or vector of the RSI values.
 #' @details To compute the RSI,
 #'
 #' \deqn{\text{RSI} = 100 \dfrac{\text{Average\_gain}}{\text{Average\_gain}+\text{Average\_loss}}}

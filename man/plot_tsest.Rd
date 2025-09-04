@@ -28,7 +28,8 @@ The estimated Hurst function is smoothed using the loess method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
 
-\item{LFD_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.}
+\item{LFD_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
+Smoothed using the loess method.}
 
 \item{N}{Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -37,8 +38,8 @@ The estimated Hurst function is smoothed using the loess method.}
 \item{L}{Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.}
 }
 \value{
-A ggplot object which is used to plot the time series with theoretical, raw and smoothed estimates of Hurst function
-and raw and smoothed estimates of local fractal dimension.
+A ggplot object which is used to plot the time series with raw and smoothed estimates of Hurst function
+and local fractal dimension.
 }
 \description{
 Creates a plot of the user provided time series with the

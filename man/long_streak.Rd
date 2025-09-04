@@ -14,18 +14,18 @@ and the second one is the values of the time series \eqn{X(t)}.}
 the streak: \code{"increasing"} or \code{"decreasing"}.}
 
 \item{subI}{Time sub-interval is a vector, where the lower bound is
-the first element and the upper bound is the second. Optional: If provided level crossing
-times of the sub-interval is returned, otherwise the whole time interval is considered.}
+the first element and the upper bound is the second. Optional: If provided
+longest streak(s) time span of the sub-interval is returned, otherwise the whole time interval is considered.}
 
-\item{plot}{Logical: If \code{TRUE}, the time series and the longest streak of
+\item{plot}{Logical: If \code{TRUE}, the time series and the longest streaks(s) of
 increasing/decreasing is plotted in interactive sessions.}
 }
 \value{
-A data frame with one row for each longest streak, containing the time interval
+A data frame with one row for each longest streak, containing the time span
 and the corresponding values of \eqn{X(t)} at the streak endpoints.
 }
 \description{
-Computes the time span of the longest increasing or decreasing streak
+Computes the time span of the longest increasing or decreasing streak(s)
 of a time series for the provided time interval or its sub-interval.
 }
 \examples{

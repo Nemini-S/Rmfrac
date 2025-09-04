@@ -5,7 +5,7 @@
 #' based on the estimated Hurst functions.
 #'
 #' @param X.t A list of data frames. In each data frame, the first column is a numeric time sequence
-#' and the second gives the values of the multifractional process. To get reliable results, it is
+#' and the second gives the values of the processes or time series. To get reliable results, it is
 #' recommended to use at least 500 time points. See Examples for usage.
 #'
 #' @param k The desired number of clusters.
@@ -219,7 +219,7 @@ autoplot.k_hurst <- function(object, ..., type = "estimates")
 #' Plot smoothed Hurst functions in each cluster with cluster centers
 #'
 #' @description
-#' Creates a plot of the smoothed Hurst functions of realisations of multifractional processes separately in each cluster with cluster centers using the return from
+#' Creates a plot of the smoothed Hurst functions of realisations of processes (or time series) separately in each cluster with cluster centers using the return from
 #' \code{\link{kmeans_hurst}}. Options to plot only estimates, only centers or both are available.
 #'
 #' @param x Return from \code{\link{kmeans_hurst}}.

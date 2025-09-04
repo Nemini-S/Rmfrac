@@ -20,7 +20,7 @@ RSI are plotted (with \code{overbought} and
 \item{oversold}{Horizontal line which indicates an oversold level in the RSI plot. Default is set to 30.}
 }
 \value{
-A list, vector or \code{xts} object of the RSI values.
+A list or vector of the RSI values.
 }
 \description{
 This function computes the Relative Strength Index (RSI) for a time series.

@@ -24,7 +24,8 @@ The estimated Hurst function is smoothed using the loess method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
 
-\item{LFD_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.}
+\item{LFD_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
+Smoothed using the loess method.}
 
 \item{...}{Other arguments.}
 }
@@ -36,7 +37,7 @@ and raw and smoothed estimates of local fractal dimension.
 Creates a plot of the user provided time series with the
 Hurst function estimated using \code{\link{Hurst}}, the smoothed estimated
 Hurst function and local fractal dimension estimated using \code{\link{LFD}}
-for objects of class \code{"H_LFD"}.
+and smoothed estimates of local fractal dimension for objects of class \code{"H_LFD"}.
 }
 \details{
 Compared to \code{\link{plot_tsest}}, the function's argument is a \code{"H_LFD"}
@@ -50,5 +51,5 @@ plot(Object)
 
 }
 \seealso{
-\code{H_LFD} \code{\link{Hurst}}, \code{\link{LFD}}, \code{\link{plot_tsest}}
+\code{\link{H_LFD}}, \code{\link{Hurst}}, \code{\link{LFD}}, \code{\link{plot_tsest}}
 }

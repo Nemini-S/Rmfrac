@@ -420,7 +420,7 @@ FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of Brownian bridge.
-#' @seealso \code{\link{GHBMP}}, \code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FBbridge}}
+#' @seealso \code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FBbridge}}, \code{\link{FGn}}, \code{\link{GHBMP}}
 #' @export Bbridge
 #' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
 #' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,
@@ -495,7 +495,7 @@ Bbridge <- function(x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 #' @importFrom ggplot2 ggplot geom_line labs ggtitle aes
 #' @return A data frame where the first column is \code{t} and second
 #' column is simulated values of the realisation of fractional Brownian bridge.
-#' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}
+#' @seealso \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}
 #' @export FBbridge
 #' @references Bianchi, S., Frezza, M., Pianese, A., Palazzo, A.M. (2022). Modelling
 #' H-Volatility with Fractional Brownian Bridge. In: Corazza, M., Perna, C., Pizzi, C.,

@@ -53,5 +53,5 @@ Ayache, A., Olenko, A. and Samarakoon, N. (2025).
 On Construction, Properties and Simulation of Haar-Based Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
 }
 \seealso{
-\code{\link{GHBMP}}
+\code{\link{GHBMP}}, \code{\link{est_cov}}
 }

@@ -7,7 +7,7 @@
 LFD(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X}{Data frame where the first column is a numeric time sequence and the second is the values of the multifractional process.}
+\item{X}{Data frame where the first column is a numeric time sequence and the second is the values of the process or time series.}
 
 \item{N}{The same argument that is used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -48,5 +48,5 @@ that separate fractal dimension and the Hurst effect. SIAM Review, 46(2):269-282
 \doi{doi:10.1137/S0036144501394387}.
 }
 \seealso{
-\code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
+\code{\link{Hurst}}, \code{\link{H_LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
 }

@@ -14,8 +14,8 @@ and the second one is the values of the time series \eqn{X(t)}.}
 the streak: \code{"increasing"} or \code{"decreasing"}.}
 
 \item{subI}{Time sub-interval is a vector, where the lower bound is
-the first element and the upper bound is the second. Optional: If provided level crossing
-times of the sub-interval is returned, otherwise the whole time interval is considered.}
+the first element and the upper bound is the second. Optional: If provided mean time span
+of the sub-interval is returned, otherwise the whole time interval is considered.}
 
 \item{plot}{Logical: If \code{TRUE}, the time series and the increasing/decreasing
 streaks are plotted in interactive sessions.}

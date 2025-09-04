@@ -20,7 +20,7 @@
 #' @importFrom fields image.smooth
 #' @importFrom plotly plot_ly layout
 #' @export est_cov
-#'
+#' @seealso \code{\link{cov_GHBMP}}
 #' @examples
 #' \donttest{
 #' #Matrix of empirical covariance estimates of the GHBMP with Hurst function H.
@@ -120,7 +120,7 @@ est_cov<-function(X, theta = 0.1, plot = FALSE)
 #'
 #' @export cov_GHBMP
 #'
-#' @seealso \code{\link{GHBMP}}
+#' @seealso \code{\link{GHBMP}}, \code{\link{est_cov}}
 #'
 #' @examples
 #' \donttest{

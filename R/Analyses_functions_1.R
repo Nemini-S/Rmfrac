@@ -24,7 +24,7 @@
 #' @examples
 #' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
-#' sojourn(TS, 0.8, level='lower',subI = c(0.5,0.8), plot = TRUE)
+#' sojourn(TS, 0.8, level = 'lower',subI = c(0.5, 0.8), plot = TRUE)
 sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
   if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
@@ -332,7 +332,7 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 #' @examples
 #' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(1000))
-#' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5,0.8), plot = TRUE)
+#' exc_Area(TS, 0.8, level = 'lower', subI = c(0.5, 0.8), plot = TRUE)
 #'
 exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
@@ -693,8 +693,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the maximum.
 #'
 #' @return A list of numeric vector(s). The first element in the vector is the corresponding \eqn{t} value and second the
-#' maximum of the time series. If \code{plot=TRUE}, the time series
-#' with maximum and corresponding \eqn{t} values are plotted.
+#' maximum of the time series.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
 #' @export X_max
@@ -704,7 +703,7 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 #' @examples
 #' t <- seq(0, 1, length = 100)
 #' TS <- data.frame("t" = t, "X(t)" = rnorm(100))
-#' X_max(TS, subI = c(0.5,0.8), plot = TRUE)
+#' X_max(TS, subI = c(0.5, 0.8), plot = TRUE)
 #'
 X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 
@@ -821,8 +820,7 @@ X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 #' @param vline Logical: If \code{TRUE}, a vertical line is plotted across the minimum.
 #'
 #' @return A list of numeric vector(s). The first element in the vector is the corresponding \eqn{t} value and second the
-#' minimum of the time series. If \code{plot=TRUE}, the time series with
-#' minimum and corresponding \eqn{t} values are plotted.
+#' minimum of the time series.
 #' @importFrom ggplot2 ggplot geom_line geom_point geom_vline geom_hline labs aes
 #' @importFrom rlang .data
 #'

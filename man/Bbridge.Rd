@@ -38,5 +38,5 @@ Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences an
 MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 }
 \seealso{
-\code{\link{GHBMP}}, \code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FBbridge}}
+\code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FBbridge}}, \code{\link{FGn}}, \code{\link{GHBMP}}
 }

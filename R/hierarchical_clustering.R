@@ -5,7 +5,7 @@
 #' based on the estimated Hurst functions.
 #'
 #' @param X.t A list of data frames. In each data frame, the first column is a numeric time sequence
-#' and the second gives the values of the multifractional process. To get reliable results, it is
+#' and the second gives the values of the processes or time series. To get reliable results, it is
 #' recommended to use at least 500 time points. See Examples for usage.
 #'
 #' @param k The desired number of clusters.
@@ -38,7 +38,7 @@
 #'
 #' @details
 #' The Hurst function of each realisation is estimated using the function \code{\link{Hurst}} and the smoothed Hurst estimates are used
-#' for the cluster analysis. The distances between smoothed Hurst estimates are  computed by the dist.method provided and passed into
+#' for the cluster analysis. The distances between smoothed Hurst estimates are  computed by the \code{dist.method} provided and passed into
 #' the \code{\link[stats]{hclust}} for hierarchical clustering.
 #'
 #' @importFrom proxy dist
@@ -262,7 +262,7 @@ autoplot.hc_hurst <- function(object, ..., type = "estimates")
 #' Plot smoothed Hurst functions in each cluster with cluster centers
 #'
 #' @description
-#' Creates a plot of the smoothed Hurst functions of realisations of multifractional processes separately in each cluster with cluster centers using the return from
+#' Creates a plot of the smoothed Hurst functions of realisations of processes (or time series) separately in each cluster with cluster centers using the return from
 #' \code{\link{hclust_hurst}}. Options to plot only estimates, only centers or both are available.
 #'
 #' @param x Return from \code{\link{hclust_hurst}}.

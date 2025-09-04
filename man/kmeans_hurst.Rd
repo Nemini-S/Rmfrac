@@ -8,7 +8,7 @@ kmeans_hurst(X.t, k, ..., N = 100, Q = 2, L = 2)
 }
 \arguments{
 \item{X.t}{A list of data frames. In each data frame, the first column is a numeric time sequence
-and the second gives the values of the multifractional process. To get reliable results, it is
+and the second gives the values of the processes or time series. To get reliable results, it is
 recommended to use at least 500 time points. See Examples for usage.}
 
 \item{k}{The desired number of clusters.}

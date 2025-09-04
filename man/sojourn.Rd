@@ -34,7 +34,7 @@ constant level \code{A} for the provided time interval or its sub-interval.
 \examples{
 t <- seq(0, 1, length = 1000)
 TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
-sojourn(TS, 0.8, level='lower',subI = c(0.5,0.8), plot = TRUE)
+sojourn(TS, 0.8, level = 'lower',subI = c(0.5, 0.8), plot = TRUE)
 }
 \seealso{
 \code{\link{exc_Area}}

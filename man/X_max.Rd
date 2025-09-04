@@ -22,8 +22,7 @@ sub-interval is returned, otherwise the whole time sequence is considered.}
 }
 \value{
 A list of numeric vector(s). The first element in the vector is the corresponding \eqn{t} value and second the
-maximum of the time series. If \code{plot=TRUE}, the time series
-with maximum and corresponding \eqn{t} values are plotted.
+maximum of the time series.
 }
 \description{
 This function computes the maximum of a time series for the provided
@@ -32,7 +31,7 @@ time interval or its sub-interval.
 \examples{
 t <- seq(0, 1, length = 100)
 TS <- data.frame("t" = t, "X(t)" = rnorm(100))
-X_max(TS, subI = c(0.5,0.8), plot = TRUE)
+X_max(TS, subI = c(0.5, 0.8), plot = TRUE)
 
 }
 \seealso{

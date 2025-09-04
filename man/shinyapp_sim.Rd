@@ -9,12 +9,14 @@ shinyapp_sim()
 \value{
 An interactive Shiny app with the following user interface controls.
 
-\strong{Hurst function and LFD estimation}
+\strong{GHBMP simulation}
 \describe{
 \item{\code{Hurst function}}{Input the Hurst function in terms of \code{t}.
 The default is set to \code{0.5+0*t}.}
 \item{\code{Time sequence}}{Input the time sequence which belongs to the interval \eqn{[0,1]}. The default is set to \code{seq(0,1,by=(1/2)^10)}.}
-\item{\code{J}}{Input or select a positive integer. For large \code{J} could be rather time consuming. Default is set to 15.}
+\item{\code{J}}{Input or select a positive integer. For large \code{J} could be rather time consuming. Default is set to 15.}}
+\strong{Hurst function and LFD estimation}
+\describe{
 \item{\code{Number of sub-intervals for estimation}}{Default is set to 100.}
 \item{\code{Q}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
 \item{\code{L}}{Input or select an integer greater than or equal to 2. Default is set to 2.}
@@ -52,6 +54,7 @@ if (interactive()) {
 
 }
 \seealso{
-\code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FGn}},
-\code{\link{Bbridge}}, \code{\link{FBbridge}}, \code{\link{GHBMP}}, \code{\link{Hurst}}
+\code{\link{Bm}}, \code{\link{FBm}}, \code{\link{FGn}}, \code{\link{Bbridge}}, \code{\link{FBbridge}},
+\code{\link{GHBMP}}, \code{\link{Hurst}}, \code{\link{LFD}},  \code{\link{sojourn}},  \code{\link{exc_Area}}
+\code{\link{long_streak}}, \code{\link{X_max}}, \code{\link{X_min}}
 }

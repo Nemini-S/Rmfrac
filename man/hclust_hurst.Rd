@@ -18,7 +18,7 @@ hclust_hurst(
 }
 \arguments{
 \item{X.t}{A list of data frames. In each data frame, the first column is a numeric time sequence
-and the second gives the values of the multifractional process. To get reliable results, it is
+and the second gives the values of the processes or time series. To get reliable results, it is
 recommended to use at least 500 time points. See Examples for usage.}
 
 \item{k}{The desired number of clusters.}
@@ -33,7 +33,7 @@ are \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"}, \code
 The default method is \code{"complete"}.}
 
 \item{dendrogram}{Logical: If \code{TRUE} the dendrogram is plotted indicating
-the clusters.}
+the clusters in interactive sessions.}
 
 \item{N}{Argument used for the estimation of Hurst functions. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -62,7 +62,7 @@ based on the estimated Hurst functions.
 }
 \details{
 The Hurst function of each realisation is estimated using the function \code{\link{Hurst}} and the smoothed Hurst estimates are used
-for the cluster analysis. The distances between smoothed Hurst estimates are  computed by the dist.method provided and passed into
+for the cluster analysis. The distances between smoothed Hurst estimates are  computed by the \code{dist.method} provided and passed into
 the \code{\link[stats]{hclust}} for hierarchical clustering.
 }
 \examples{

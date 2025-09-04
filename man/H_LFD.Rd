@@ -8,7 +8,7 @@ H_LFD(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
 \item{X}{Data frame where the first column is a numeric time sequence \eqn{t}
-and the second one is the values of the time series \eqn{X(t)}.
+and the second is the values of the time series \eqn{X(t)}.
 To get reliable results, it is recommended to use at least 500 time points.}
 
 \item{N}{Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
@@ -21,15 +21,18 @@ To get reliable results, it is recommended to use at least 500 time points.}
 The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 \describe{
 \item{\code{Raw_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
-\item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function.}
+\item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function. Smoothed using the loess method.}
 \item{\code{Raw_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-\item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension.}
+\item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension. Smoothed using the loess method.}
 \item{\code{Data}}{User provided time series.}}
 }
 \description{
 For user provided time series creates objects of class \code{"H_LFD"} with the
 Hurst function estimated using \code{\link{Hurst}}, local fractal dimension
 estimated using \code{\link{LFD}} and smoothed estimated Hurst function and LFD added.
+}
+\note{
+Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
 }
 \examples{
 TS <- data.frame("t"=seq(0,1,length = 1000),"X(t)" = rnorm(1000))
@@ -39,5 +42,5 @@ plot(Object)
 
 }
 \seealso{
-\code{plot.H_LFD} \code{\link{Hurst}}, \code{\link{LFD}}
+\code{\link{plot.H_LFD}}, \code{\link{Hurst}}, \code{\link{LFD}}
 }

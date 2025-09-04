@@ -40,3 +40,6 @@ cov.mat <- est_cov(Data, theta = 0.2, plot = TRUE)
 cov.mat
 }
 }
+\seealso{
+\code{\link{cov_GHBMP}}
+}

@@ -7,7 +7,7 @@
 Hurst(X, N = 100, Q = 2, L = 2)
 }
 \arguments{
-\item{X}{Data frame where the first column is a numeric time sequence and the second the values of the multifractional process.}
+\item{X}{Data frame where the first column is a numeric time sequence and the second the values of the process or time series.}
 
 \item{N}{Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -49,5 +49,5 @@ the random Hurst function of a multifractional process. Latin American Journal o
 Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 }
 \seealso{
-\code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
+\code{\link{LFD}}, \code{H_LFD}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
 }

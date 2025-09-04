@@ -3,7 +3,7 @@
 #' @description
 #' This function computes statistical estimates for the Hurst function.
 #'
-#' @param X Data frame where the first column is a numeric time sequence and the second the values of the multifractional process.
+#' @param X Data frame where the first column is a numeric time sequence and the second the values of the process or time series.
 #' @param N Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Fixed integer greater than or equal to 2. Default is set to 2.
@@ -27,7 +27,7 @@
 #' the random Hurst function of a multifractional process. Latin American Journal of
 #' Probability and Mathematical Statistics, 20(2):1587–1614. \doi{doi:10.30757/alea.v20-60}.
 #'
-#' @seealso \code{\link{LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
+#' @seealso \code{\link{LFD}}, \code{H_LFD}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD}}
 #'
 #' @examples
 #' \donttest{
@@ -140,14 +140,14 @@ Hurst <- function(X, N = 100, Q = 2, L = 2)
 #' @description
 #' This function computes the estimates for the local fractal dimension.
 #'
-#' @param X Data frame where the first column is a numeric time sequence and the second is the values of the multifractional process.
+#' @param X Data frame where the first column is a numeric time sequence and the second is the values of the process or time series.
 #' @param N The same argument that is used for the estimation of Hurst function. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q The same argument that is used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L The same argument that is used for the estimation of Hurst function. Fixed integer greater than or equal to 2. Default is set to 2.
 #'
 #' @return A data frame where the first column is a time sequence and the second column is estimated values of the local fractal dimension.
 #' @export LFD
-#' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
+#' @seealso \code{\link{Hurst}}, \code{\link{H_LFD}}, \code{\link{plot.mp}}, \code{\link{plot_tsest}}, \code{\link{plot.H_LFD }}
 #' @note
 #' Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
 #' @details
