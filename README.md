@@ -53,7 +53,7 @@ To estimate the Hurst function and Local Fractal Dimension with visualizations
 Hurst_estimates <- Hurst(X2, N = 100)
 LFD_estimates <- LFD(X2, N = 100)
 
-plot(X2, Raw_EST_H = TRUE, Smooth_Est_H = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE)
+plot(X2, H_EST = TRUE, H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE)
 ```
 <img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/c7df246f-368f-41b2-b108-1b0f1dc002fa" />
 
