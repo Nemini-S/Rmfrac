@@ -11,6 +11,6 @@ RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/Nemini-S/Rmfrac
 BugReports: https://github.com/Nemini-S/Rmfrac/issues
-Authors@R:c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role = "aut"),
-        person("Nemini", "Samarakoon", email = "neminisamarakoon95@gmail.com", role = c("aut", "cre")))
+Authors@R:c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role = "aut", comment = c(ORCID = "0000-0002-0917-7000")),
+        person("Nemini", "Samarakoon", email = "neminisamarakoon95@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0000-2107-1973")))
 Maintainer: Nemini Samarakoon <neminisamarakoon95@gmail.com> 
