@@ -1,6 +1,7 @@
 ## Simulation and analysis of multifractional processes 
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
-
+[![CRAN downloads (total)](https://cranlogs.r-pkg.org/badges/grand-total/Rmfrac)](https://cranlogs.r-pkg.org/badges/grand-total/Rmfrac)
+[![CRAN status](https://www.r-pkg.org/badges/version/Rmfrac)](https://CRAN.R-project.org/package=Rmfrac)
 <p>
 <img width="200" height="220" alt="logo" src="https://github.com/user-attachments/assets/5055ed96-bbed-4907-b609-5411c4f84f92" align="right"align="right" />
 Rmfrac provides a collection of tools for simulating, analysing and visualising multifractional processes and time series. The package includes built-in estimation techniques for the Hurst function, Local Fractal Dimension and several other geometric statistics. It provides highly customisable plotting functions for simulated realisations, user-provided time series and their statistics. 
@@ -52,7 +53,7 @@ To estimate the Hurst function and Local Fractal Dimension with visualizations
 Hurst_estimates <- Hurst(X2, N = 100)
 LFD_estimates <- LFD(X2, N = 100)
 
-plot(X2, Raw_EST_H = TRUE, Smooth_Est_H = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE)
+plot(X2, H_EST = TRUE, H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_Smooth_Est = TRUE)
 ```
 <img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/c7df246f-368f-41b2-b108-1b0f1dc002fa" />
 
