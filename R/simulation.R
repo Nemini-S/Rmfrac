@@ -341,7 +341,7 @@ FBm <- function(H, x_start = 0, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 #' Approximations and Projections. John Wiley & Sons. \doi{doi:10.1002/9781119476771.app3}.
 #' @seealso \code{\link{FBm}}, \code{\link{Bm}}, \code{\link{GHBMP}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
 #' @examples
-#' FGn(H=0.5,plot=TRUE)
+#' FGn(H = 0.5,plot = TRUE)
 FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
@@ -427,7 +427,7 @@ FGn <- function(H, t_start = 0, t_end = 1, N = 1000, plot = FALSE){
 #' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
-#' Bbridge(x_end=2,t_end=1,plot=TRUE)
+#' Bbridge(x_end = 2, t_end = 1, plot = TRUE)
 Bbridge <- function(x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 
   if (!is.numeric(x_end)) {
@@ -438,10 +438,6 @@ Bbridge <- function(x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
     stop("t_end must be numeric")
   } else if ( !(t_end > 0)) {
     stop("Incorrect input for t_end")
-  }
-
-  if (!(0 < t_end)) {
-    stop("Incorrect inputs for t_start and t_end")
   }
 
   if (!is.numeric(x_start)) {
@@ -502,7 +498,7 @@ Bbridge <- function(x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 #' Sibillo, M. (eds) Mathematical and Statistical Methods for Actuarial Sciences and Finance.
 #' MAF 2022. Springer, Cham. \doi{doi:10.1007/978-3-030-99638-3_16}.
 #' @examples
-#' FBbridge(H = 0.5, x_end = 2, t_end = 1,plot = TRUE)
+#' FBbridge(H = 0.5, x_end = 2, t_end = 1, plot = TRUE)
 FBbridge <- function(H, x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 
   if (!is.numeric(H) | !(H > 0 & H< 1)) {
@@ -521,10 +517,6 @@ FBbridge <- function(H, x_end, t_end, x_start = 0, N = 1000, plot = FALSE){
 
   if (!is.numeric(x_start)) {
     stop("x_end must be numeric")
-  }
-
-  if (!(0 < t_end)) {
-    stop("Incorrect inputs for t_start and t_end")
   }
 
   if (!is.numeric(N)) {
