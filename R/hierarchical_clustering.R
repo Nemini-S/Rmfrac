@@ -68,7 +68,7 @@
 #' }
 hclust_hurst <- function(X.t, k = NULL, h = NULL, dist.method = "euclidean", method = "complete", dendrogram = FALSE, N = 100, Q = 2, L = 2)
 {
-  if (!is.list(X.t)) {
+  if (!is.list(X.t) | !all(sapply(X.t, is.data.frame))) {
     stop("X.t must be a list of numeric data frames")
   }
 

@@ -36,8 +36,8 @@
 est_cov<-function(X, theta = 0.1, plot = FALSE)
 {
 
-  if (!is.data.frame(X) | !(all(sapply(X, is.numeric)))) {
-    stop("X must be a numeric data frame")
+  if (!is.data.frame(X) | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))) {
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(theta)) {

@@ -1,16 +1,18 @@
 Package: Rmfrac
 Type: Package
 Title: Simulation and Statistical Analysis of Multifractional Processes
-Version: 0.1.1
+Version: 0.1.2
 Description: Simulation of several fractional and multifractional processes. Includes Brownian and fractional Brownian motions, bridges and Gaussian Haar-based multifractional processes (GHBMP). Implements the methods from Ayache, Olenko and Samarakoon (2025) <doi:10.48550/arXiv.2503.07286> for simulation of GHBMP. Estimation of Hurst functions and local fractal dimension. Clustering realisations based on the Hurst functions. Several functions to estimate and plot geometric statistics of the processes and time series. Provides a 'shiny' application for interactive use of the functions from the package.
 License: GPL-3
 Encoding: UTF-8
 Imports: parallel, parallelly, ggplot2(>= 3.5.0), zoo, matrixStats, proxy, rlang, stats, foreach, doParallel, plotly, shiny, graphics, shinycssloaders, fields, utils 
 LazyData: false
-RoxygenNote: 7.3.1
+Suggests: testthat 
+Config/testthat/edition: 3
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/Nemini-S/Rmfrac
 BugReports: https://github.com/Nemini-S/Rmfrac/issues
-Authors@R:c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role = "aut", comment = c(ORCID = "0000-0002-0917-7000")),
+Authors@R: c(person("Andriy", "Olenko", email = "a.olenko@latrobe.edu.au", role = "aut", comment = c(ORCID = "0000-0002-0917-7000")),
         person("Nemini", "Samarakoon", email = "neminisamarakoon95@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0000-2107-1973")))
 Maintainer: Nemini Samarakoon <neminisamarakoon95@gmail.com> 

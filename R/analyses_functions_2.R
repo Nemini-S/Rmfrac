@@ -27,8 +27,8 @@
 #'
 cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
-    stop("X must be a numeric data frame")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))){
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(A)){
@@ -162,8 +162,8 @@ cross_T <- function(X, A, subI = NULL, plot = FALSE, vline = FALSE){
 #' cross_rate(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
 cross_rate <- function(X, A, subI = NULL, plot = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
-    stop("X must be a numeric data frame")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))){
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(A)){
@@ -292,8 +292,8 @@ if (is.null(subI)){
 #' cross_mean(TS, 0.1, subI = c(0.2, 0.8), plot = TRUE)
 cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
-    stop("X must be a numeric data frame")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))){
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(A)){
@@ -457,8 +457,8 @@ cross_mean <- function(X, A, subI = NULL, plot = FALSE){
 #' long_streak(TS, direction = 'decreasing', subI = c(0.2, 0.8), plot = TRUE)
 long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
-    stop("X must be a numeric data frame")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))){
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.logical(plot))
@@ -717,8 +717,8 @@ long_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #'
 mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric)))){
-    stop("X must be a numeric data frame")
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0))){
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.logical(plot))
@@ -927,7 +927,7 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 #' @description
 #' This function computes the Relative Strength Index (RSI) for a time series.
 #'
-#' @param X A vector.
+#' @param X A numeric vector.
 #' @param period Period length used for smoothing. Default is set to 14.
 #' @param plot Logical: If \code{TRUE}, the time series and the
 #' RSI are plotted (with \code{overbought} and
@@ -957,8 +957,8 @@ mean_streak <- function(X, direction = 'increasing', subI = NULL, plot = FALSE){
 RS_Index <- function(X, period = 14, plot = FALSE, overbought = 70, oversold = 30)
 {
 
-  if(!is.vector(X)){
-    stop("X must be a vector")
+  if(!is.numeric(X) | !is.vector(X)){
+    stop("X must be a numeric vector")
   } else if (!(length(X) >= (period + 1))){
     stop("Not enough data to compute RSI for the given period")
   }

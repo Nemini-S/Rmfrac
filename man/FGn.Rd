@@ -28,7 +28,7 @@ This function simulates a realisation of the fractional Gaussian noise over the
 time interval \code{[t_start,t_end]} for a provided Hurst parameter.
 }
 \examples{
-FGn(H=0.5,plot=TRUE)
+FGn(H = 0.5,plot = TRUE)
 }
 \references{
 Banna, O., Mishura, Y., Ralchenko, K., & Shklyar, S. (2019). Fractional Brownian motion:

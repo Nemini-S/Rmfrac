@@ -48,9 +48,9 @@
 #' H1 <- function(t) {return(0.1 + 0*t)}
 #' H2 <- function(t) {return(0.2 + 0.45*t)}
 #' H3 <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
-#' X.list.1 <- replicate(3, GHBMP(t, H1),simplify = FALSE)
-#' X.list.2 <- replicate(3, GHBMP(t, H2),simplify = FALSE)
-#' X.list.3 <- replicate(3, GHBMP(t, H3),simplify = FALSE)
+#' X.list.1 <- replicate(3, GHBMP(t, H1), simplify = FALSE)
+#' X.list.2 <- replicate(3, GHBMP(t, H2), simplify = FALSE)
+#' X.list.3 <- replicate(3, GHBMP(t, H3), simplify = FALSE)
 #' X.list <- c(X.list.1, X.list.2, X.list.3)
 #'
 #' #K-means clustering based on k = 3 clusters
@@ -62,7 +62,7 @@
 #' }
 kmeans_hurst <- function(X.t, k, ..., N = 100, Q = 2, L = 2)
 {
-  if (!is.list(X.t)) {
+  if (!is.list(X.t) | !all(sapply(X.t, is.data.frame))) {
     stop("X.t must be a list of numeric data frames")
   }
 
@@ -126,7 +126,7 @@ kmeans_hurst <- function(X.t, k, ..., N = 100, Q = 2, L = 2)
 
   clust_DF <- data.frame(DF, Distance_from_center = unlist(df2))
   structure(list(h = DF, cluster_info = clust_DF, cluster = clusters, cluster_sizes = as.vector(table(clusters)),
-                 centers=as.data.frame(do.call(rbind,center)), smoothed_Hurst_estimates = Smooth_df,
+                 centers = as.data.frame(do.call(rbind, center)), smoothed_Hurst_estimates = Smooth_df,
                  raw_Hurst_estimates = H, call = match.call()), class = "k_hurst")
 
 

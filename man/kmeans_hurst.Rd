@@ -53,9 +53,9 @@ t <- seq(0, 1, by = (1/2)^10)
 H1 <- function(t) {return(0.1 + 0*t)}
 H2 <- function(t) {return(0.2 + 0.45*t)}
 H3 <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
-X.list.1 <- replicate(3, GHBMP(t, H1),simplify = FALSE)
-X.list.2 <- replicate(3, GHBMP(t, H2),simplify = FALSE)
-X.list.3 <- replicate(3, GHBMP(t, H3),simplify = FALSE)
+X.list.1 <- replicate(3, GHBMP(t, H1), simplify = FALSE)
+X.list.2 <- replicate(3, GHBMP(t, H2), simplify = FALSE)
+X.list.3 <- replicate(3, GHBMP(t, H3), simplify = FALSE)
 X.list <- c(X.list.1, X.list.2, X.list.3)
 
 #K-means clustering based on k = 3 clusters

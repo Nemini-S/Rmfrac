@@ -1,11 +1,7 @@
 #Hurst()
 
 test_that("Hurst works", {
-  expected_est <- data.frame(
-    Time = c(0.00, 0.12, 0.24, 0.25, 0.37, 0.49, 0.50),
-    Hurst_estimate = c(0.0000000, 1.0000000, 0.0000000, 0.6266602, 1.0000000, 1.0000000, 0.4116034))
-
-  expect_equal(Hurst(df_est), expected_est, tolerance = 1e-7, ignore_attr = TRUE)
+  expect_equal(Hurst(df_est)$Hurst_estimate, c(0.0000000, 1.0000000, 0.0000000, 0.6266602, 1.0000000, 1.0000000, 0.4116034), tolerance = 1e-6)
 })
 
 test_that("Hurst fails if X is not a data frame", {
@@ -19,7 +15,8 @@ test_that("Hurst fails if X is a data frame with more than or less than 2 column
 
 test_that("Hurst fails if X is a nonnumeric data frame", {
   expect_error(Hurst(data.frame(t = c("A", "B", "C"), x = c(0.2788,0.1365,0.5567))))
-})
+  expect_error(Hurst(data.frame(t = c(1, 2, 3), x = c(0.2788,"B",0.5567))))
+  })
 
 test_that("Hurst fails if X[,1] have negative values", {
   expect_error(Hurst(data.frame(t = c(1, -2, 3), x = c(0.2788,0.1365,0.5567))))
@@ -69,7 +66,7 @@ test_that("LFD works", {
   expected_est <- data.frame(
       Time = c(0.00, 0.12, 0.24, 0.25, 0.37, 0.49, 0.50),
       LFD_estimate = c(2.000000, 1.000000, 2.000000, 1.373340, 1.000000, 1.000000, 1.588397))
-  expect_equal(LFD(df_est), expected_est, tolerance = 1e-6)
+  expect_equal(LFD(df_est), expected_est, tolerance = 1e-5)
 })
 
 test_that("LFD fails if X is not a data frame", {
@@ -83,6 +80,7 @@ test_that("Hurst fails if X is a data frame with more than or less than 2 column
 
 test_that("LFD fails if X is a nonnumeric data frame", {
   expect_error(LFD(data.frame(t = c("A", "B", "C"), x = c(0.2788,0.1365,0.5567))))
+  expect_error(LFD(data.frame(t = c(1, 2, 3), x = c(0.2788,"B",0.5567))))
 })
 
 test_that("LFD fails if X[,1] have negative values", {

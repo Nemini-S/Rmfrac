@@ -24,12 +24,12 @@
 #' @examples
 #' t <- seq(0, 1, length = 1000)
 #' TS <- data.frame("t" = t,"X(t)" = rnorm(1000))
-#' sojourn(TS, 0.8, level = 'lower',subI = c(0.5, 0.8), plot = TRUE)
+#' sojourn(TS, 0.8, level = 'lower', subI = c(0.5, 0.8), plot = TRUE)
 sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0)))
   {
-    stop("X must be a numeric data frame")
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(A)){
@@ -336,9 +336,9 @@ sojourn <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALS
 #'
 exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0)))
   {
-    stop("X must be a numeric data frame")
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.numeric(A)){
@@ -707,9 +707,9 @@ exc_Area <- function(X, A, N = 10000, level = 'greater', subI = NULL, plot = FAL
 #'
 X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0)))
   {
-    stop("X must be a numeric data frame")
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.logical(plot)) {
@@ -835,9 +835,9 @@ X_max <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 #'
 X_min <- function(X, subI = NULL, plot = FALSE, vline = FALSE, hline = FALSE){
 
-  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(sapply(X[,1], is.numeric))))
+  if (!is.data.frame(X) | !ncol(X) == 2 | !(all(sapply(X, is.numeric))) | !(all(X[[1]] >= 0)))
   {
-    stop("X must be a numeric data frame")
+    stop("X must be a numeric data frame with time sequence given as the first column")
   }
 
   if (!is.logical(plot)) {

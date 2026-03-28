@@ -23,8 +23,10 @@ This function computes statistical estimates for the Hurst function.
 }
 \details{
 Statistical estimation of the Hurst function is done based on the results of Ayache, A.,
-& Bouly, F. (2023). The estimator is built through generalized quadratic variations
-of the process associated with its increments.
+& Bouly, F. (2023).The pointwise Holder exponent of the process for data considered in
+the package is equal to the Hurst function. The estimator is built through generalized
+quadratic variations of the process associated with its increments. The integer parameters
+Q and L define the generalized quadratic variations and the corresponding estimator.
 }
 \note{
 Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.

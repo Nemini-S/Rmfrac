@@ -139,7 +139,7 @@ plot.mp <- function(x, H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TR
 #' Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
 #' @seealso \code{\link{plot.H_LFD}}, \code{\link{Hurst}}, \code{\link{LFD}}
 #' @examples
-#' TS <- data.frame("t"=seq(0,1,length = 1000),"X(t)" = rnorm(1000))
+#' TS <- data.frame("t" = seq(0,1,length = 1000),"X(t)" = rnorm(1000))
 #' Object <- H_LFD(TS)
 #' #Plot of time series, estimated and smoothed Hurst and LFD estimates
 #' plot(Object)
