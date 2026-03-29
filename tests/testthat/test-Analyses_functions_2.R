@@ -6,7 +6,7 @@ test_that("cross_T works", {
 })
 
 test_that("cross_T fails if X is not a data frame", {
-  expect_error(cross_T(c(0.2788,0.1365,0.5567), 0.1))
+  expect_error(cross_T(c(0.2788, 0.1365, 0.5567), 0.1))
 })
 
 test_that("cross_T fails if X is a data frame with more than or less than 2 columns", {
@@ -54,7 +54,7 @@ test_that("cross_rate works", {
 })
 
 test_that("cross_rate fails if X is not a data frame", {
-  expect_error(cross_rate(c(0.2788,0.1365,0.5567), 0.1))
+  expect_error(cross_rate(c(0.2788, 0.1365, 0.5567), 0.1))
 })
 
 test_that("cross_rate fails if X is a data frame with more than or less than 2 columns", {
@@ -97,7 +97,7 @@ test_that("cross_mean works", {
 })
 
 test_that("cross_mean fails if X is not a data frame", {
-  expect_error(cross_mean(c(0.2788,0.1365,0.5567), 0.1))
+  expect_error(cross_mean(c(0.2788, 0.1365, 0.5567), 0.1))
 })
 
 test_that("cross_mean fails if X is a data frame with more than or less than 2 columns", {
@@ -140,7 +140,7 @@ test_that("long_streak works", {
 })
 
 test_that("long_streak fails if X is not a data frame", {
-  expect_error(long_streak(c(0.2788,0.1365,0.5567)))
+  expect_error(long_streak(c(0.2788, 0.1365, 0.5567)))
 })
 
 test_that("long_streak fails if X is a data frame with more than or less than 2 columns", {
@@ -185,7 +185,7 @@ test_that("mean_streak works", {
 })
 
 test_that("mean_streak fails if X is not a data frame", {
-  expect_error(mean_streak(c(0.2788,0.1365,0.5567)))
+  expect_error(mean_streak(c(0.2788, 0.1365, 0.5567)))
 })
 
 test_that("mean_streak fails if X is a data frame with more than or less than 2 columns", {

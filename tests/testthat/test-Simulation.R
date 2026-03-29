@@ -1,17 +1,8 @@
 #GHBMP()
 
-# test_that("GHBMP works", {
-#   expected_sim <- structure( data.frame(
-#     t = c(0.00, 0.15, 0.30, 0.45, 0.60, 0.75, 0.90),
-#     X = c(0.00000000, 0.17136907, -0.22563262, -0.37522456, -0.46829054, -0.01514723, 0.15794085)),
-#     class = c("mp", "data.frame"))
-#
-#   expect_equal(GHBMP_sim, expected_sim, tolerance = 1e-6)
-# })
-#
-# test_that("GHBMP has the specified class", {
-#   expect_s3_class(GHBMP_sim, c("mp", "data.frame"))
-# })
+test_that("GHBMP has the specified class", {
+  expect_s3_class(GHBMP_sim, c("mp", "data.frame"))
+})
 
 test_that("GHBMP fails for nonnumeric t", {
   expect_error(GHBMP("a", H, 1))

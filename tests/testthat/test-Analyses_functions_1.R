@@ -8,7 +8,7 @@ test_that("sojourn works", {
 })
 
 test_that("sojourn fails if X is not a data frame", {
-  expect_error(sojourn(c(0.2788,0.1365,0.5567), 0.8, N = 10))
+  expect_error(sojourn(c(0.2788, 0.1365, 0.5567), 0.8, N = 10))
 })
 
 test_that("sojourn fails if X is a data frame with more than or less than 2 columns", {
@@ -69,7 +69,7 @@ test_that("exc_Area works", {
 })
 
 test_that("exc_Area fails if X is not a data frame", {
-  expect_error(exc_Area(c(0.2788,0.1365,0.5567), 0.8, N = 10))
+  expect_error(exc_Area(c(0.2788, 0.1365, 0.5567), 0.8, N = 10))
 })
 
 test_that("exc_Area fails if X is a data frame with more than or less than 2 columns", {
@@ -128,7 +128,7 @@ test_that("X_max works", {
 })
 
 test_that("X_max fails if X is not a data frame", {
-  expect_error(X_max(c(0.2788,0.1365,0.5567)))
+  expect_error(X_max(c(0.2788, 0.1365, 0.5567)))
 })
 
 test_that("X_max fails if X is a data frame with more than or less than 2 columns", {
@@ -177,7 +177,7 @@ test_that("X_min works", {
 })
 
 test_that("X_min fails if X is not a data frame", {
-  expect_error(X_min(c(0.2788,0.1365,0.5567)))
+  expect_error(X_min(c(0.2788, 0.1365, 0.5567)))
 })
 
 test_that("X_min fails if X is a data frame with more than or less than 2 columns", {

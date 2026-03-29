@@ -1,8 +1,3 @@
-# set.seed(123)
-# time <- seq(0, 1, by = 0.15)
-# H <- function(t) {return(0.2 + 0.45*t)}
-# GHBMP_sim <- GHBMP(time, H, 2)
-
 set.seed(123)
 Bm_sim <- Bm(N = 10)
 

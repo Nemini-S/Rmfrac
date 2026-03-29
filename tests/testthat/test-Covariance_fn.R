@@ -34,12 +34,6 @@ test_that("est_cov fails for non logical plot", {
 
 #cov_GHBMP
 
-# test_that("cov_GHBMP works", {
-#   expected_cov_GHBMP <- c(0.00000000, 0.40875193, 0.43845398, 0.42746161, 0.34962066,
-#     0.32772333, 0.24417567, 0.19329938, 0.13453658, 0.07284700, 0.01267025)
-#   expect_equal(diag(cov_GHBMP(t, H, J = 3)), expected_cov_GHBMP, tolerance = 1e-6)
-# })
-
 test_that("cov_GHBMP fails for nonnumeric t", {
   expect_error(cov_GHBMP("a", H, J = 4))
 })
