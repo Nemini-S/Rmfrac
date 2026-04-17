@@ -23,7 +23,7 @@ This function computes statistical estimates for the Hurst function.
 }
 \details{
 Statistical estimation of the Hurst function is done based on the results of Ayache, A.,
-& Bouly, F. (2023).The pointwise Holder exponent of the process for data considered in
+& Bouly, F. (2023). The pointwise Holder exponent of the process for data considered in
 the package is equal to the Hurst function. The estimator is built through generalized
 quadratic variations of the process associated with its increments. The integer parameters
 Q and L define the generalized quadratic variations and the corresponding estimator.
@@ -34,9 +34,9 @@ Since these are estimators of local characteristics, reliable results can only b
 \examples{
 \donttest{
 #Hurst function of a multifractional process simulated using GHBMP function
-T <- seq(0, 1, by = (1/2)^10)
+t <- seq(0, 1, by = (1/2)^10)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
-X <- GHBMP(T, H)
+X <- GHBMP(t, H)
 Hurst(X)
 }
 

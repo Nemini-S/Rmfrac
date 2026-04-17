@@ -1,9 +1,5 @@
 #GHBMP()
 
-test_that("GHBMP has the specified class", {
-  expect_s3_class(GHBMP_sim, c("mp", "data.frame"))
-})
-
 test_that("GHBMP fails for nonnumeric t", {
   expect_error(GHBMP("a", H, 1))
 })

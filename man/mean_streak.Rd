@@ -30,7 +30,7 @@ for the provided time interval or its sub-interval.
 \examples{
 t <- seq(0, 1 ,length = 100)
 TS <- data.frame("t" = t,"X(t)" = rnorm(100))
-mean_streak(TS, direction = 'decreasing', subI = c(0.2,0.8), plot = TRUE)
+mean_streak(TS, direction = 'decreasing', subI = c(0.2, 0.8), plot = TRUE)
 
 }
 \seealso{

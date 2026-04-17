@@ -115,8 +115,9 @@ est_cov<-function(X, theta = 0.1, plot = FALSE)
 #' @importFrom foreach foreach %dopar%
 #' @importFrom plotly plot_ly layout
 #' @importFrom fields image.smooth
-#' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-#' On Construction, Properties and Simulation of Haar-Based Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
+#' @references Ayache, A., Olenko, A. and Samarakoon, N. (2026).
+#' On construction, properties and simulation of Haar-based multifractional processes.
+#' Mathematics and Computers in Simulation. 246:311-332. \doi{doi:10.1016/j.matcom.2026.01.033}.
 #'
 #' @export cov_GHBMP
 #'

@@ -21,9 +21,9 @@ To get reliable results, it is recommended to use at least 500 time points.}
 The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 \describe{
 \item{\code{Raw_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
-\item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function. Smoothed using the loess method.}
+\item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function. Smoothed using the LOESS method.}
 \item{\code{Raw_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-\item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension. Smoothed using the loess method.}
+\item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension. Smoothed using the LOESS method.}
 \item{\code{Data}}{User provided time series.}}
 }
 \description{
@@ -35,7 +35,7 @@ estimated using \code{\link{LFD}} and smoothed estimated Hurst function and LFD 
 Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
 }
 \examples{
-TS <- data.frame("t" = seq(0,1,length = 1000),"X(t)" = rnorm(1000))
+TS <- data.frame("t" = seq(0, 1, length = 1000),"X(t)" = rnorm(1000))
 Object <- H_LFD(TS)
 #Plot of time series, estimated and smoothed Hurst and LFD estimates
 plot(Object)

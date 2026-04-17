@@ -27,12 +27,12 @@ to use at least 500 time points.}
 \item{H_Est}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
 \item{H_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
-The estimated Hurst function is smoothed using the loess method.}
+The estimated Hurst function is smoothed using the LOESS method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
 
 \item{LFD_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
-Smoothed using the loess method.}
+Smoothed using the LOESS method.}
 
 \item{N}{Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.}
 
@@ -56,9 +56,9 @@ and smoothed estimates of local fractal dimension.
 \examples{
 \donttest{
 #Simulation of the multifractional process and estimation of the Hurst function
-T <- seq(0, 1, by = (1/2)^10)
+t <- seq(0, 1, by = (1/2)^10)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
-X <- GHBMP(T, H)
+X <- GHBMP(t, H)
 
 #Plot of process, theoretical Hurst function, estimated and smoothed Hurst and LFD estimates
 plot(X, H = H)

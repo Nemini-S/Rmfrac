@@ -31,9 +31,9 @@ Since these are estimators of local characteristics, reliable results can only b
 \examples{
 \donttest{
 #LFD of a multifractional process simulated using GHBMP function
-T <- seq(0, 1, by = (1/2)^10)
+t <- seq(0, 1, by = (1/2)^10)
 H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
-X <- GHBMP(T, H)
+X <- GHBMP(t, H)
 LFD(X)
 }
 

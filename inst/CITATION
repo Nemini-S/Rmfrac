@@ -1,16 +1,31 @@
 citHeader("")
 
 bibentry(
-  bibtype       = "Manual",
-  title         = "On Construction, Properties and Simulation of Haar-Based Multifractional Processes",
+  bibtype       = "Article",
+  title         = "On construction, properties and simulation of Haar-based multifractional processes",
   author        =  c(person("Antoine", "Ayache"),
-            person("Andriy", "Olenko"),
-            person("Nemini", "Samarakoon")),
-  year          = 2025,
-  archivePrefix = "arXiv",
-  primaryClass  = "math.PR",
-  url           = "https://arxiv.org/abs/2503.07286",
-  doi           = "10.48550/arXiv.2503.07286",
-  note          = "submitted"
+                     person("Andriy", "Olenko"),
+                     person("Nemini", "Samarakoon")),
+  year          = 2026,
+  journal       = "Mathematics and Computers in Simulation",
+  volume        = "246",
+  pages         = "311-332",
+  url           = "https://www.sciencedirect.com/science/article/pii/S0378475426000418",
+  doi           = "10.1016/j.matcom.2026.01.033"
 )
+
+
+bibentry(
+  bibtype       = "Article",
+  title         = "Simulation and analysis of multifractional stochastic Processes with R package Rmfrac",
+  author        =  c(person("Andriy", "Olenko"),
+                     person("Nemini", "Samarakoon")),
+  year          = 2026,
+  journal       = "Methodology and Computing in Applied Probability ",
+  volume        = "28",
+  pages         = "36",
+  url           = "https://link.springer.com/article/10.1007/s11009-026-10267-w",
+  doi           = "10.1007/s11009-026-10267-w"
+)
+
 

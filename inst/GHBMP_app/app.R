@@ -736,28 +736,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -1204,28 +1204,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -1617,28 +1617,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A-x1)/(x2-x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -2030,28 +2030,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -2445,28 +2445,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -2860,28 +2860,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA
@@ -3272,28 +3272,28 @@ server <- function(input, output, session) {
 
         if((x1 <= A) && (x2 <= A)){
 
-          S = S + diff
+          S <- S + diff
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t2
 
         } else if ((x1 <= A) && (x2 > A)){
 
-          S = S + (diff * (A - x1) / (x2 - x1))
+          S <- S + (diff * (A - x1) / (x2 - x1))
 
           seg$T_start[i] <- t1
           seg$T_end[i] <- t1 + (diff * (A - x1) / (x2 - x1))
 
         } else if ((x1 > A) && (x2 <= A)){
 
-          S = S + (diff * (x2 - A) / (x2 - x1))
+          S <- S + (diff * (x2 - A) / (x2 - x1))
 
           seg$T_start[i] <- t2 - (diff * (x2 - A) / (x2 - x1))
           seg$T_end[i] <- t2
 
         } else {
 
-          S = S
+          S <- S
 
           seg$T_start[i] <- NA
           seg$T_end[i] <- NA

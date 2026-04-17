@@ -76,10 +76,10 @@ autoplot.mp <- function(object, ..., H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE
 #' @param H Theoretical Hurst function. Optional: If provided, the theoretical Hurst function is plotted.
 #' @param H_Est Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
 #' @param H_Smooth_Est Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
-#' The estimated Hurst function is smoothed using the loess method.
+#' The estimated Hurst function is smoothed using the LOESS method.
 #' @param LFD_Est Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.
 #' @param LFD_Smooth_Est Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
-#' Smoothed using the loess method.
+#' Smoothed using the LOESS method.
 #' @param N Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
@@ -94,9 +94,9 @@ autoplot.mp <- function(object, ..., H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE
 #' @examples
 #' \donttest{
 #' #Simulation of the multifractional process and estimation of the Hurst function
-#' T <- seq(0, 1, by = (1/2)^10)
+#' t <- seq(0, 1, by = (1/2)^10)
 #' H <- function(t) {return(0.5 - 0.4 * sin(6 * 3.14 * t))}
-#' X <- GHBMP(T, H)
+#' X <- GHBMP(t, H)
 #'
 #' #Plot of process, theoretical Hurst function, estimated and smoothed Hurst and LFD estimates
 #' plot(X, H = H)
@@ -130,16 +130,16 @@ plot.mp <- function(x, H = NULL, H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est = TR
 #' @return The return from \code{\link{H_LFD}} is an object list of class \code{"H_LFD"} with the following components:
 #' \describe{
 #' \item{\code{Raw_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is estimated values of the Hurst function.}
-#' \item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function. Smoothed using the loess method.}
+#' \item{\code{Smoothed_Hurst_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of the Hurst function. Smoothed using the LOESS method.}
 #' \item{\code{Raw_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is Local fractal dimension estimates.}
-#' \item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension. Smoothed using the loess method.}
+#' \item{\code{Smoothed_LFD_estimates}}{A data frame of where the first column is a time sequence and second column is smoothed estimates of Local fractal dimension. Smoothed using the LOESS method.}
 #' \item{\code{Data}}{User provided time series.}}
 #' @export H_LFD
 #' @note
 #' Since these are estimators of local characteristics, reliable results can only be obtained when a sufficiently large number of points is used.
 #' @seealso \code{\link{plot.H_LFD}}, \code{\link{Hurst}}, \code{\link{LFD}}
 #' @examples
-#' TS <- data.frame("t" = seq(0,1,length = 1000),"X(t)" = rnorm(1000))
+#' TS <- data.frame("t" = seq(0, 1, length = 1000),"X(t)" = rnorm(1000))
 #' Object <- H_LFD(TS)
 #' #Plot of time series, estimated and smoothed Hurst and LFD estimates
 #' plot(Object)
@@ -249,10 +249,10 @@ autoplot.H_LFD<-function(object, ..., H_Est = TRUE, H_Smooth_Est = TRUE, LFD_Est
 #' @param x Return from \code{\link{H_LFD}}.
 #' @param H_Est Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
 #' @param H_Smooth_Est Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
-#' The estimated Hurst function is smoothed using the loess method.
+#' The estimated Hurst function is smoothed using the LOESS method.
 #' @param LFD_Est Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.
 #' @param LFD_Smooth_Est Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
-#' Smoothed using the loess method.
+#' Smoothed using the LOESS method.
 #' @param ... Other arguments.
 #' @return A ggplot object which is used to plot the time series with theoretical, raw and smoothed estimates of Hurst function
 #' and raw and smoothed estimates of local fractal dimension.
@@ -294,10 +294,10 @@ plot.H_LFD <- function(x, H_Est = TRUE,H_Smooth_Est = TRUE, LFD_Est = TRUE, LFD_
 #' To get reliable results for time series, it is recommended to use at least 500 time points.
 #' @param H_Est Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.
 #' @param H_Smooth_Est Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
-#' The estimated Hurst function is smoothed using the loess method.
+#' The estimated Hurst function is smoothed using the LOESS method.
 #' @param LFD_Est Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.
 #' @param LFD_Smooth_Est Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
-#' Smoothed using the loess method.
+#' Smoothed using the LOESS method.
 #' @param N Argument used for the estimation of Hurst functions and LFD. Number of sub-intervals on which the estimation is performed on. Default is set to 100 sub-intervals.
 #' @param Q Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.
 #' @param L Argument used for the estimation of Hurst functions and LFD. Fixed integer greater than or equal to 2. Default is set to 2.

@@ -20,12 +20,12 @@ for objects of class \code{H_LFD}}
 \item{H_Est}{Logical: If \code{TRUE}, the Hurst function estimated by using \code{\link{Hurst}} is plotted.}
 
 \item{H_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimated Hurst function is plotted.
-The estimated Hurst function is smoothed using the loess method.}
+The estimated Hurst function is smoothed using the LOESS method.}
 
 \item{LFD_Est}{Logical: If \code{TRUE}, the local fractal dimension estimates are plotted.}
 
 \item{LFD_Smooth_Est}{Logical: If \code{TRUE}, the smoothed estimates of local fractal dimension is plotted.
-Smoothed using the loess method.}
+Smoothed using the LOESS method.}
 
 \item{...}{Other arguments.}
 }

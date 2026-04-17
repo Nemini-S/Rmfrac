@@ -13,7 +13,7 @@
 #' @return A data frame of class \code{"mp"} where the first column is time moments \code{t} and second column is simulated values of \eqn{X(t)}.
 #'
 #' @details
-#' The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2025) was used in simulating Gaussian Haar-based multifractional process.
+#' The following formula defined in Ayache, A., Olenko, A. & Samarakoon, N. (2026) was used in simulating Gaussian Haar-based multifractional process.
 #'
 #' \deqn{X(t) := \sum_{j=0}^{+\infty}  \sum_{k=0}^{2^{j}-1}\left(\int_{0}^{1} (t-s)_{+}^{H_{j}(k/{2^j})-{1}/{2}} h_{j,k}(s)ds \right)\varepsilon_{j,k},}
 #'
@@ -35,9 +35,9 @@
 #' @importFrom parallelly availableCores makeClusterPSOCK
 #' @importFrom stats rnorm
 #'
-#' @references Ayache, A., Olenko, A. and Samarakoon, N. (2025).
-#' On Construction, Properties and Simulation of Haar-Based
-#' Multifractional Processes. \doi{doi:10.48550/arXiv.2503.07286}. (submitted).
+#' @references Ayache, A., Olenko, A. and Samarakoon, N. (2026).
+#' On construction, properties and simulation of Haar-based multifractional processes.
+#' Mathematics and Computers in Simulation. 246:311-332. \doi{doi:10.1016/j.matcom.2026.01.033}.
 #'
 #' @seealso \code{\link{Hurst}}, \code{\link{plot.mp}}, \code{\link{Bm}}, \code{\link{FBm}},
 #' \code{\link{FGn}}, \code{\link{Bbridge}}, \code{\link{FBbridge}}
